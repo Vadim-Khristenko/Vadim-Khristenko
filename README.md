@@ -11,7 +11,7 @@
 
 - 💬 Ask me about **Python / Cython or about the development of Telegram / Discord bots.**
 
-- 📫 How to reach me **volt.b.bravl@gmail.com**
+- 📫 How to reach me **via.by.vai@gmail.com**
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
