@@ -121,11 +121,11 @@ Small focused repositories: bots, integration tools, ML microservices, and perfo
 
 ## Dynamic stats & languages
 <p align="center">
-  <img alt="GitHub Stats" src="https://github-readme-stats.vercel.app/api?username=vadim-khristenko&theme=midnight-purple&show_icons=true&hide_border=false&count_private=true" />
-  <img alt="Github streak" src="https://github-readme-streak-stats.herokuapp.com/?user=vadim-khristenko&theme=midnight-purple" />
+  <img alt="GitHub Stats" src="https://github-readme-stats-fast.vercel.app/api?username=vadim-khristenko&theme=midnight-purple&show_icons=true&hide_border=false&count_private=true" />
+  <img alt="Github streak" src="https://github-readme-stats-fast.vercel.app/api/streak?username=vadim-khristenko&theme=midnight-purple" />
 </p>
 <p align="center">
-  <img alt="Top Languages" src="https://github-readme-stats.vercel.app/api/top-langs/?username=vadim-khristenko&layout=compact&theme=midnight-purple" />
+  <img alt="Top Languages" src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=vadim-khristenko&layout=compact&theme=midnight-purple" />
 </p>
 
 ---
