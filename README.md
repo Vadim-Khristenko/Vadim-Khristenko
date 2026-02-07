@@ -42,7 +42,7 @@ I write code that feels both practical and a little playful. Backend services, b
 ## Quick snapshot
 - 🔭 Currently: building Telegram Bot VIA (https://t.me/VIA_by_VOLT_BOT) and Telegram Bot Sveta (https://t.me/VIA_by_VOLT).  
 - 💬 Ask me about: Python/Cython, C++/Rust, bot development (Telegram/Discord), OpenAI integrations, and model fine‑tuning.  
-- 📫 Email: <a href="mailto:via.by.vai@gmail.com">via.by.vai@gmail.com</a>  
+- 📫 Email: <a href="mailto:just@vai-prog.ru">just@vai-prog.ru</a>  
 - 🌱 Playtime: web games, small ML experiments, and performance tuning.
 
 ---
