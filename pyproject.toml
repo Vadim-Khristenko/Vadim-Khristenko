@@ -1,0 +1,16 @@
+[project]
+name = "vai-profile-engine"
+version = "1.0.0"
+description = "Self-regenerating GitHub profile engine — custom animated SVGs + live stats."
+readme = "README.md"
+requires-python = ">=3.9"
+# Intentionally zero runtime dependencies: the engine is pure stdlib so it
+# stays fast, reproducible, and immune to supply-chain churn. uv still gives
+# us a pinned interpreter and a clean `uv run` entrypoint.
+dependencies = []
+
+[project.scripts]
+profile-engine = "profile_engine:main"
+
+[tool.uv]
+package = false

@@ -1,0 +1,61 @@
+name: Refresh Game Art
+
+# Re-downloads uniform game cover art from SteamGridDB and commits it.
+# Manual only — covers rarely change, so this is not on a schedule.
+#
+# Setup: add a repository secret named STEAMGRIDDB_API_KEY
+#   (Settings → Secrets and variables → Actions → New repository secret).
+#   Get a free key at steamgriddb.com → Preferences → API.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma-separated game keys to refresh (blank = all)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          enable-cache: true
+
+      - name: Guard — key present?
+        env:
+          SGDB_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
+        run: |
+          if [ -z "$SGDB_KEY" ]; then
+            echo "::error::Missing STEAMGRIDDB_API_KEY secret. Add it in repo settings."
+            exit 1
+          fi
+
+      - name: Fetch covers
+        env:
+          SGDB_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
+        run: uv run --python 3.12 --with pillow scripts/fetch_game_art.py --only "${{ inputs.only }}"
+
+      - name: Re-render the games card
+        env:
+          GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
+        run: uv run --python 3.12 scripts/build.py --only games
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/games assets/games.svg
+          if git diff --cached --quiet; then
+            echo "No cover changes."
+          else
+            git commit -m "chore(profile): refresh game cover art [skip ci]"
+            git push
+          fi

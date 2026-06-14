@@ -1,157 +1,233 @@
-<h1 align="center">Oh, hi! 👋 I'm Vadim Khristenko</h1>
-<h3 align="center">Developer • Builder of fast systems, bots, websites, and odd little experiments</h3>
-<p align="center"><strong>Also author of short books, novellas and fanfics — I like telling tiny stories between commits.</strong></p>
+<!-- ════════════════════════════════════════════════════════════════════════        -->
+<!--  This profile is ALIVE. The header, research card, stats, language chart,       -->
+<!--  game shelf, weekly vibe and footer below are rendered as Tokyo-Night SVG       -->
+<!--  "windows" by a custom, modular engine (scripts/build.py + scripts/engine).     -->
+<!--  Edit the prose freely. NEVER touch the <!-- ENGINE:* --> <!-- markers — the    -->
+<!--  engine owns whatever lives between each START/END pair.                        -->
+<!-- ════════════════════════════════════════════════════════════════════════        -->
+
+<!-- ENGINE:HEADER:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=202624" alt="Vadim Khristenko" width="100%"/>
+</p>
+<!-- ENGINE:HEADER:END -->
 
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=vadim-khristenko&label=VIEWS&color=a30000&style=for-the-badge" alt="profile views" />
+  <img src="https://komarev.com/ghpvc/?username=vadim-khristenko&label=PROFILE+VIEWS&color=dea584&style=for-the-badge" alt="profile views" />
+  <img src="https://img.shields.io/badge/aliases-VAI__PROG%20·%20VAI%20·%20VOLT-bb9af7?style=for-the-badge&labelColor=1a1b26" alt="aliases" />
+  <img src="https://img.shields.io/badge/primary-Rust-dea584?style=for-the-badge&logo=rust&logoColor=dea584&labelColor=1a1b26" alt="primary language: Rust" />
+  <img src="https://img.shields.io/badge/open%20to-collab%20%26%20mischief-7dcfff?style=for-the-badge&labelColor=1a1b26" alt="open to collab" />
 </p>
 
-
----
-
-<p>
-I write code that feels both practical and a little playful. Backend services, bots that actually help people, and performance‑sensitive modules are my day-to-day. When the clock is free I craft micro‑stories, small technical notes, and experimental projects to learn something new — sometimes useful, sometimes weird, always instructive. I combine high-level productivity (Python, TS) with low-level control (C++, Rust, Cython) and enjoy gluing everything together via APIs and lightweight ML.
-</p>
-
----
-
-<!-- Social / channel badges -->
 <p align="center">
-  <a href="https://twitch.tv/VAI_PROG">
-    <img alt="Twitch Status Badge" src="https://img.shields.io/twitch/status/VAI_PROG?style=for-the-badge&logo=twitch&logoColor=6441A4-&logoSize=auto&label=Twitch&labelColor=1d0021" />
-  </a>
-  <a href="https://x.com/VAI_PROG">
-    <img alt="X Badge" src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=FFFFFF&logoSize=auto" />
-  </a>
-  <a href="https://t.me/vscreator_life">
-    <img alt="Telegram Channel Badge" src="https://img.shields.io/badge/Telegram-03042b?style=for-the-badge&logo=telegram&logoColor=0088CC&logoSize=auto" />
-  </a>
-  <a href="https://patreon.com/VAI_PROG">
-    <img alt="Patreon Badge" src="https://img.shields.io/badge/Patreon-33130e?style=for-the-badge&logo=patreon&logoColor=f96854&logoSize=auto" />
-  </a>
-  <a href="https://youtube.com/@VAI_PROG">
-    <img alt="YouTube Badge" src="https://img.shields.io/badge/YouTube-330000?style=for-the-badge&logo=youtube&logoColor=FF0033&logoSize=auto" />
-  </a>
-  <a href="https://codeforces.com/profile/VAI_Programmer">
-    <img alt="Codeforces Badge" src="https://img.shields.io/badge/CodeForces-000126?style=for-the-badge&logo=codeforces&logoColor=005cc4&logoSize=auto" />
-  </a>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
 </p>
 
----
+## `whoami`
 
-## Quick snapshot
-- 🔭 Currently: building Telegram Bot VIA (https://t.me/VIA_by_VOLT_BOT) and Telegram Bot Sveta (https://t.me/VIA_by_VOLT).  
-- 💬 Ask me about: Python/Cython, C++/Rust, bot development (Telegram/Discord), OpenAI integrations, and model fine‑tuning.  
-- 📫 Email: <a href="mailto:just@vai-prog.ru">just@vai-prog.ru</a>  
-- 🌱 Playtime: web games, small ML experiments, and performance tuning.
+```rust
+impl Developer for Vadim {
+    const ALIASES: &[&str] = &["VAI_PROG", "VAI_Programmer", "VAI", "VOLT"]; // + a long tail
 
----
+    fn role(&self)      -> &str { "backend & systems engineer · builder of fast, slightly unhinged things" }
+    fn known_for(&self) -> Vec<&str> { vec!["The Wall Dev", "AmneziaWG Architect", "Aethelgard TQ-1.58"] }
+    fn current(&self)   -> &str { "turning a billion on-the-fly ideas into running services" }
+}
+```
 
-## Core skills (badges)
-<p>
-  <!-- Web / Frontend -->
-  <img alt="Next.js" src="https://img.shields.io/badge/Next-000000?style=for-the-badge&logo=next.js&logoColor=white" />
-  <img alt="React" src="https://img.shields.io/badge/React-002c38?style=for-the-badge&logo=react&logoColor=61DBFB" />
-  <img alt="Vue 3" src="https://img.shields.io/badge/Vue-002414?style=for-the-badge&logo=vue.js&logoColor=41b883" />
-  <img alt="Nuxt" src="https://img.shields.io/badge/Nuxt-00DC82?style=for-the-badge&logo=nuxt&logoColor=white" />
-</p>
-<p>
-  <!-- Languages -->
-  <img alt="Python" src="https://img.shields.io/badge/Python-09131c?style=for-the-badge&logo=python&logoColor=3776AB" />
-  <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" />
-  <img alt="Rust" src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" />
-  <img alt="Java" src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white" />
-  <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-160e2b?style=for-the-badge&logo=kotlin&logoColor=7F52FF" />
-  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-211d00?style=for-the-badge&logo=javascript&logoColor=F0DB4F" />
-  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-001021?style=for-the-badge&logo=typescript&logoColor=3178c6" />
-</p>
-<p>
-  <!-- Databases & caching -->
-  <img alt="Postgres" src="https://img.shields.io/badge/Postgres-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
-  <img alt="MySQL" src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
-  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
-  <img alt="Redis" src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" />
-  <img alt="Cassandra" src="https://img.shields.io/badge/Cassandra-1287B1?style=for-the-badge&logo=apache-cassandra&logoColor=white" />
-  <img alt="SQLite" src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
-</p>
-<p>
-  <!-- Tools & infra -->
-  <img alt="OpenAI" src="https://img.shields.io/badge/OpenAI-000000?style=for-the-badge&logo=openai&logoColor=white" />
-  <img alt="Telegram" src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
-  <img alt="Discord" src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" />
-  <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" />
-  <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" />
-  <img alt="Linux" src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" />
-  <img alt="Windows" src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" />
-</p>
+I write code that is **practical and a little playful**. Backend services, bots that genuinely help people, and performance-sensitive systems are my day-to-day. These days **Rust** is my primary — I pair its zero-cost control with high-level velocity (**Python / TypeScript**) and drop into **C++ / Cython** when the profiler demands it, gluing everything together through clean APIs and lightweight ML. When the clock frees up I write short books, novellas and fanfics — tiny stories squeezed into the gaps between commits.
 
----
+> I've seen and done a surprising amount for how little life I've spent so far — from the **banal** to the **completely insane**. I run servers under just about any OS, and the ideas arrive faster than any single timeframe can hold them.
 
-## Machine learning & APIs
-- Hands-on with the OpenAI API and other model APIs; I integrate model inference into real services.  
-- Fine-tuning, prompt engineering, and building efficient inference pipelines.  
-- Extensive work with platform APIs: Telegram Bot API, Discord API, REST & WebSocket integrations.
-
----
-
-## DevOps & administration
-- Production admin for Linux & Windows servers: deployments, backups, monitoring, incident response.  
-- Docker, CI/CD (GitHub Actions), nginx, systemd, automation scripts.  
-- Reliable pipelines with Postgres, Redis, RabbitMQ, Cassandra when needed.
-
----
-
-## Notable experience
-- Production Telegram and Discord bots, webhook infrastructure, and automation tools.  
-- Performance improvements combining Python + Cython; systems code in C++ and Rust.  
-- SSR and web features with Next.js; Vue 3 & Nuxt projects.  
-- Deployed fine‑tuned models to services handling real users.
-
----
-
-## How I work (short)
-I favor pragmatic, testable solutions. Fast prototypes → validate → harden for production. And sometimes I build weird side projects just for the joy of learning.
-
----
-
-## Projects & experiments
-Small focused repositories: bots, integration tools, ML microservices, and performance experiments. Look at pinned repos or ask for a guided tour.
-
----
-
-## Dynamic stats & languages
 <p align="center">
-  <img alt="GitHub Stats" src="https://github-readme-stats-fast.vercel.app/api?username=vadim-khristenko&theme=midnight-purple&show_icons=true&hide_border=false&count_private=true" />
-  <img alt="Github streak" src="https://github-readme-stats-fast.vercel.app/api/streak?username=vadim-khristenko&theme=midnight-purple" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
 </p>
+
+## 🏗️ Flagship Builds
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+
+### 🧱 The Wall Dev
+**[the-wall.vai-rice.space](https://the-wall.vai-rice.space)**
+
+An extension built **for the [Filian](https://twitch.tv/filian) community** — because if the VTuber world can run *Hole in the Wall*, the dev side deserves its own Wall too. Community tooling, done properly.
+
+`community` · `extension` · `filian`
+
+    </td>
+    <td width="50%" valign="top">
+
+### 🛡️ AmneziaWG Architect
+**[architect.vai-rice.space](https://architect.vai-rice.space)** · ⭐ 218
+
+A fully client-side generator of advanced obfuscation profiles for **[AmneziaWG](https://docs.amnezia.org)** — traffic that mimics QUIC / TLS / SIP to slip past DPI in harsh internet climates. No server, no leaks.
+
+`vpn` · `wireguard` · `anti-censorship`
+
+    </td>
+  </tr>
+</table>
+
+<sub>🎀 Bonus side-quest: the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC"><b>Hatsune Miku VS Code theme</b></a> — because the editor should match the playlist.</sub>
+
 <p align="center">
-  <img alt="Top Languages" src="https://github-readme-stats-fast.vercel.app/api/top-langs/?username=vadim-khristenko&layout=compact&theme=midnight-purple" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
 </p>
 
----
+## 🔬 Active Research
 
-## Connect with me
+<!-- ENGINE:RESEARCH:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=202624" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
+</p>
+<!-- ENGINE:RESEARCH:END -->
+
+I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture for a **low-bit agentic reasoning model** with **verifiable training**, **hierarchical reinforcement learning**, and **domain specialization for software engineering**. Weights live in ternary space `{-1, 0, +1}` (≈1.58 bits) — the texture flickering across the cards above is that idea made visible.
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+</p>
+
+## 🏆 Trophy Case
+
+| | Achievement | Details |
+|:--:|----|----|
+| 🥈 | **PROD — International Industrial-Development Olympiad** | **2nd-degree prize-winner.** Ran the **Backend technologies track** inside the team and held a lot of the moving parts in my own hands. |
+| 🎓 | **Algorithms & Data Structures @ T-Bank** | Graduate, **parallel B, 2025–2026.** The good kind of pain that rewires how you think about complexity. |
+| 🏅 | **«Высшая проба» (HSE Olympiad)** | **Finalist across several profiles** — breadth on purpose, not by accident. |
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+</p>
+
+## 🛠️ Tech Arsenal
+
+<details open>
+<summary><b>Languages</b> — Rust first these days 🦀</summary>
 <p>
-  <a href="https://github.com/Vadim-Khristenko"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>
-  <a href="https://x.com/VAI_PROG"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="X" /></a>
-  <a href="https://twitch.tv/VAI_PROG"><img src="https://img.shields.io/badge/Twitch-6441A4?style=for-the-badge&logo=twitch&logoColor=white" alt="Twitch" /></a>
-  <a href="https://t.me/vscreator_life"><img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram" /></a>
-  <a href="mailto:via.by.vai@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
+  <img alt="Rust" src="https://img.shields.io/badge/Rust-1a1b26?style=for-the-badge&logo=rust&logoColor=dea584" />
+  <img alt="Python" src="https://img.shields.io/badge/Python-1a1b26?style=for-the-badge&logo=python&logoColor=7aa2f7" />
+  <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-1a1b26?style=for-the-badge&logo=c%2B%2B&logoColor=f7768e" />
+  <img alt="Cython" src="https://img.shields.io/badge/Cython-1a1b26?style=for-the-badge&logo=cython&logoColor=fedf5b" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-1a1b26?style=for-the-badge&logo=typescript&logoColor=7dcfff" />
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-1a1b26?style=for-the-badge&logo=javascript&logoColor=e0af68" />
+  <img alt="Kotlin" src="https://img.shields.io/badge/Kotlin-1a1b26?style=for-the-badge&logo=kotlin&logoColor=bb9af7" />
 </p>
+</details>
+
+<details open>
+<summary><b>Web & Frontend</b></summary>
+<p>
+  <img alt="Vue" src="https://img.shields.io/badge/Vue-1a1b26?style=for-the-badge&logo=vue.js&logoColor=9ece6a" />
+  <img alt="Nuxt" src="https://img.shields.io/badge/Nuxt-1a1b26?style=for-the-badge&logo=nuxt&logoColor=9ece6a" />
+  <img alt="Next.js" src="https://img.shields.io/badge/Next-1a1b26?style=for-the-badge&logo=next.js&logoColor=c0caf5" />
+  <img alt="React" src="https://img.shields.io/badge/React-1a1b26?style=for-the-badge&logo=react&logoColor=7dcfff" />
+</p>
+</details>
+
+<details open>
+<summary><b>Data, Infra & DevOps</b> — Linux & Windows fleets</summary>
+<p>
+  <img alt="Postgres" src="https://img.shields.io/badge/Postgres-1a1b26?style=for-the-badge&logo=postgresql&logoColor=7aa2f7" />
+  <img alt="Redis" src="https://img.shields.io/badge/Redis-1a1b26?style=for-the-badge&logo=redis&logoColor=f7768e" />
+  <img alt="MongoDB" src="https://img.shields.io/badge/MongoDB-1a1b26?style=for-the-badge&logo=mongodb&logoColor=9ece6a" />
+  <img alt="Cassandra" src="https://img.shields.io/badge/Cassandra-1a1b26?style=for-the-badge&logo=apache-cassandra&logoColor=7dcfff" />
+  <img alt="RabbitMQ" src="https://img.shields.io/badge/RabbitMQ-1a1b26?style=for-the-badge&logo=rabbitmq&logoColor=ff9e64" />
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-1a1b26?style=for-the-badge&logo=docker&logoColor=7dcfff" />
+  <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-1a1b26?style=for-the-badge&logo=githubactions&logoColor=7aa2f7" />
+  <img alt="nginx" src="https://img.shields.io/badge/nginx-1a1b26?style=for-the-badge&logo=nginx&logoColor=9ece6a" />
+  <img alt="Linux" src="https://img.shields.io/badge/Linux-1a1b26?style=for-the-badge&logo=linux&logoColor=e0af68" />
+</p>
+</details>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+</p>
+
+## 🧠 The AI Lab
+
+I don't just *use* models — I've **shipped with the ecosystems behind them**: fine-tuning, prompt engineering, and efficient inference pipelines wired into real services.
 
 <p>
-Prefer faster chats? Use Telegram or X. For collaboration, open a PR or email me with the subject "Collab: <your-topic>".
+  <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-1a1b26?style=for-the-badge&logo=anthropic&logoColor=c0caf5" />
+  <img alt="DeepSeek" src="https://img.shields.io/badge/DeepSeek-1a1b26?style=for-the-badge&logo=deepseek&logoColor=7aa2f7" />
+  <img alt="Kimi (Moonshot)" src="https://img.shields.io/badge/Kimi%20·%20Moonshot-1a1b26?style=for-the-badge&logoColor=c0caf5" />
+  <img alt="Qwen (Alibaba)" src="https://img.shields.io/badge/Qwen%20·%20Alibaba-1a1b26?style=for-the-badge&logo=alibabacloud&logoColor=ff9e64" />
+  <img alt="MiMo (Xiaomi)" src="https://img.shields.io/badge/MiMo%20·%20Xiaomi-1a1b26?style=for-the-badge&logo=xiaomi&logoColor=ff9e64" />
+  <img alt="OpenAI" src="https://img.shields.io/badge/OpenAI-1a1b26?style=for-the-badge&logo=openai&logoColor=c0caf5" />
 </p>
 
----
-$`
-\text{Vadim Kh.}
-`$
----
+**Favourite companions right now** — `Qwen 3.7 Max` · `MiMo V2.5 Pro` · `Claude Fable 5`.
+> ⚠️ Note the word *companions*: I keep these as **light copilots / sparring partners**, not as an active vibe-coding autopilot. The thinking stays mine; they just keep good company.
 
-<!-- Hit Analytics -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+</p>
+
+## 🎮 Off the Clock
+
+<!-- ENGINE:GAMES:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=202624" alt="Now playing" width="100%"/>
+</p>
+<!-- ENGINE:GAMES:END -->
+
+**🎧 On heavy loop:**
+`Hatsune Miku` · `Deco*27` · `Chiru-San` · `DraGonis` · `Kanro` · `Exyl` · `NoAki`
+
+<!-- ENGINE:VIBE:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/vibe.svg?v=202624" alt="This week's vibe" width="100%"/>
+</p>
+<!-- ENGINE:VIBE:END -->
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+</p>
+
+## 📮 Reach Me — the Inbox Router
+
+Primary address: **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** — I read mail *constantly*. To land in the right lane, use the matching alias (`+tag` sub-addressing works too):
+
+| When you're writing about… | Send to |
+|---|---|
+| 🤝 Partnerships, collaboration, any business | **[business@vai-rice.space](mailto:business@vai-rice.space)** |
+| 🛡️ AmneziaWG Architect | **[architect@vai-rice.space](mailto:architect@vai-rice.space)** |
+| 🧱 The Wall Dev / anything from the Filian community | **[the-wall-dev@vai-rice.space](mailto:the-wall-dev@vai-rice.space)** |
+| 📱 A specific social network | **vadim+{social_network}@vai-rice.space** *(e.g. `vadim+twitch@…`)* |
+| ✉️ Everything else | **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** |
+
+<p>
+  <a href="https://github.com/Vadim-Khristenko"><img src="https://img.shields.io/badge/GitHub-1a1b26?style=for-the-badge&logo=github&logoColor=c0caf5" alt="GitHub" /></a>
+  <a href="https://codeberg.org/VAI_PROG"><img src="https://img.shields.io/badge/Codeberg-1a1b26?style=for-the-badge&logo=codeberg&logoColor=2185d0" alt="Codeberg" /></a>
+  <a href="https://twitch.tv/VAI_PROG"><img src="https://img.shields.io/badge/Twitch-1a1b26?style=for-the-badge&logo=twitch&logoColor=bb9af7" alt="Twitch" /></a>
+  <a href="https://x.com/VAI_PROG"><img src="https://img.shields.io/badge/X-1a1b26?style=for-the-badge&logo=x&logoColor=c0caf5" alt="X" /></a>
+  <a href="https://youtube.com/@VAI_PROG"><img src="https://img.shields.io/badge/YouTube-1a1b26?style=for-the-badge&logo=youtube&logoColor=f7768e" alt="YouTube" /></a>
+  <a href="https://t.me/vscreator_life"><img src="https://img.shields.io/badge/Telegram-1a1b26?style=for-the-badge&logo=telegram&logoColor=7dcfff" alt="Telegram" /></a>
+  <a href="https://patreon.com/VAI_PROG"><img src="https://img.shields.io/badge/Patreon-1a1b26?style=for-the-badge&logo=patreon&logoColor=ff9e64" alt="Patreon" /></a>
+  <a href="https://codeforces.com/profile/VAI_Programmer"><img src="https://img.shields.io/badge/Codeforces-1a1b26?style=for-the-badge&logo=codeforces&logoColor=7aa2f7" alt="Codeforces" /></a>
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+</p>
+
+## 📊 Live Telemetry
+
+<!-- ENGINE:STATS:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=202624" alt="Live telemetry: stats, activity, languages" width="100%"/>
+</p>
+<!-- ENGINE:STATS:END -->
+
+<!-- ENGINE:FOOTER:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=202624" alt="Generated by the VAI Profile Engine" width="100%"/>
+</p>
+<!-- ENGINE:FOOTER:END -->
+
 <p align="center">
   <img src="https://hit.yhype.me/github/profile?account_id=124452155" alt="Hit Analytics" />
 </p>
-
----

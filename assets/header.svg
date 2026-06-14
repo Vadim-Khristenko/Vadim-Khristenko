@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="300" viewBox="0 0 1000 300" role="img" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif">
+  
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#1f2335"/>
+      <stop offset="1" stop-color="#15161e"/>
+    </linearGradient>
+    <linearGradient id="border" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dea584">
+        <animate attributeName="stop-color" values="#dea584;#7aa2f7;#bb9af7;#7dcfff;#dea584" dur="12s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="0.5" stop-color="#bb9af7">
+        <animate attributeName="stop-color" values="#bb9af7;#7dcfff;#dea584;#7aa2f7;#bb9af7" dur="12s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="1" stop-color="#7aa2f7">
+        <animate attributeName="stop-color" values="#7aa2f7;#dea584;#7dcfff;#bb9af7;#7aa2f7" dur="12s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="accentbar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#dea584"/>
+      <stop offset="1" stop-color="#dea584" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0 L0 0 0 28" fill="none" stroke="#565f89" stroke-width="0.5" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect x="2" y="2" width="996" height="296" rx="15" fill="url(#panel)"/>
+  <rect x="6" y="6" width="988" height="288" rx="13" fill="url(#grid)"/><text x="24" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="24" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="24" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="216" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text>
+  <rect x="2.5" y="2.5" width="995" height="295" rx="14" fill="none" stroke="url(#border)" stroke-width="2"/>
+  <rect x="3.5" y="3.5" width="993" height="293" rx="13" fill="none" stroke="#292e42" stroke-width="1" opacity="0.6"/>
+  <path d="M2 18 Q2 2 18 2" fill="none" stroke="#dea584" stroke-width="2.4" opacity="0.9"/>
+  <circle cx="24" cy="21" r="5.5" fill="#f7768e" opacity="0.92"/><circle cx="44" cy="21" r="5.5" fill="#e0af68" opacity="0.92"/><circle cx="64" cy="21" r="5.5" fill="#9ece6a" opacity="0.92"/>
+  <text x="96" y="25" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="13" fill="#a9b1d6">vadim@vai-rice:~$ whoami</text>
+  <circle cx="975" cy="21" r="3.5" fill="#dea584"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.2s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#565f89">online</text>
+  <rect x="24" y="42" width="952" height="2" fill="url(#accentbar)"/>
+  <g transform="translate(0,42)">
+    
+    <text x="24" y="78" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="44" font-weight="800" fill="#c0caf5" filter="url(#softglow)">Vadim Khristenko</text>
+    <rect x="26" y="96" width="0" height="3" rx="1.5" fill="#dea584">
+      <animate attributeName="width" values="0;340" dur="1.2s" begin="0.2s" fill="freeze"/>
+    </rect>
+    <text x="24" y="143" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" fill="#565f89">aka&gt;</text>
+    <g transform="translate(64,0)"><text x="24" y="143" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="27" font-weight="700" fill="#ff9e64" opacity="1" filter="url(#glow)">VAI_PROG<animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0.0;0.22;0.25;0.97;1.0" dur="9.6s" repeatCount="indefinite"/></text><text x="24" y="143" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="27" font-weight="700" fill="#ff9e64" opacity="0" filter="url(#glow)">VAI_Programmer<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0;0.22;0.25;0.47;0.5;1.0" dur="9.6s" repeatCount="indefinite"/></text><text x="24" y="143" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="27" font-weight="700" fill="#ff9e64" opacity="0" filter="url(#glow)">VAI<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0;0.47;0.5;0.72;0.75;1.0" dur="9.6s" repeatCount="indefinite"/></text><text x="24" y="143" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="27" font-weight="700" fill="#ff9e64" opacity="0" filter="url(#glow)">VOLT<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0.0;0.72;0.75;0.97;1.0;1.0" dur="9.6s" repeatCount="indefinite"/></text></g>
+    <rect x="328" y="127" width="11" height="20" fill="#ff9e64" opacity="0.9">
+      <animate attributeName="opacity" values="1;0;1" dur="1.05s" repeatCount="indefinite"/>
+    </rect>
+    <text x="24" y="185" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#565f89">// backend architect · systems engineer · chaos engineer by hobby</text>
+    <text x="24" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#bb9af7">let</text>
+    <text x="58" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#c0caf5">primary</text>
+    <text x="136" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#565f89">=</text>
+    <text x="154" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#7dcfff">Language</text>
+    <text x="232" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#565f89">::</text>
+    <text x="250" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#ff9e64">Rust</text>
+    <text x="289" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15" fill="#c0caf5">;</text>
+    <text x="306" y="217" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="15">🦀</text>
+    <text x="724" y="56" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#565f89" letter-spacing="2">// KNOWN FOR</text>
+    <circle cx="724" cy="81" r="4" fill="#f7768e"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/></circle><text x="740" y="86" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="14" fill="#a9b1d6">The Wall Dev</text>
+    <circle cx="724" cy="111" r="4" fill="#ff9e64"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/></circle><text x="740" y="116" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="14" fill="#a9b1d6">AmneziaWG Architect</text>
+    <circle cx="724" cy="141" r="4" fill="#bb9af7"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/></circle><text x="740" y="146" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="14" fill="#a9b1d6">Aethelgard TQ-1.58</text>
+    <circle cx="724" cy="171" r="4" fill="#9ece6a"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.4s" repeatCount="indefinite"/></circle><text x="740" y="176" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="14" fill="#a9b1d6">production bots &amp; fleets</text>
+    <line x1="704" y1="40" x2="704" y2="196" stroke="#292e42" stroke-width="1"/>
+    
+  </g>
+</svg>

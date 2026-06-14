@@ -1,0 +1,59 @@
+name: VAI Profile Engine
+
+# Regenerates the Tokyo-Night SVG cards + live GitHub stats and commits them.
+on:
+  schedule:
+    # Every Monday 06:00 UTC — fresh week, fresh vibe.
+    - cron: "0 6 * * 1"
+  workflow_dispatch: {}      # run on demand from the Actions tab
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - ".github/workflows/profile-engine.yml"
+
+# contents:write lets the bot commit the regenerated assets back to the repo.
+# That's all the engine needs: it only reads PUBLIC GitHub data (repos, stars,
+# languages, the contribution calendar). No extra scopes required.
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-engine
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        # setup-uv ships immutable full-version tags only (no moving @v8).
+        uses: astral-sh/setup-uv@v8.2.0
+        with:
+          enable-cache: true
+
+      - name: Pin Python
+        run: uv python install 3.12
+
+      - name: Run the engine
+        env:
+          # Default GITHUB_TOKEN is enough for public stats. Add an optional
+          # PROFILE_TOKEN secret (a PAT with read:user) to also count PRIVATE
+          # contributions; it transparently takes precedence when present.
+          GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
+        run: uv run --python 3.12 scripts/build.py
+
+      - name: Commit regenerated assets
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets README.md
+          if git diff --cached --quiet; then
+            echo "Nothing changed — profile already fresh."
+          else
+            git commit -m "chore(profile): regenerate cards & weekly vibe [skip ci]"
+            git push
+          fi

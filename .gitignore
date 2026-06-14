@@ -1,0 +1,8 @@
+.*/
+__pycache__/
+tmp_prev/
+
+!.github/
+!.gitlab/
+!.codeberg/
+!.gitea/
