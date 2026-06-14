@@ -46,28 +46,20 @@ I write code that is **practical and a little playful**. Backend services, bots 
 ## 🏗️ Flagship Builds
 
 <table>
-  <tr>
-    <td width="50%" valign="top">
-
-### 🧱 The Wall Dev
-**[the-wall.vai-rice.space](https://the-wall.vai-rice.space)**
-
-An extension built **for the [Filian](https://twitch.tv/filian) community** — because if the VTuber world can run *Hole in the Wall*, the dev side deserves its own Wall too. Community tooling, done properly.
-
-`community` · `extension` · `filian`
-
-    </td>
-    <td width="50%" valign="top">
-
-### 🛡️ AmneziaWG Architect
-**[architect.vai-rice.space](https://architect.vai-rice.space)** · ⭐ 218
-
-A fully client-side generator of advanced obfuscation profiles for **[AmneziaWG](https://docs.amnezia.org)** — traffic that mimics QUIC / TLS / SIP to slip past DPI in harsh internet climates. No server, no leaks.
-
-`vpn` · `wireguard` · `anti-censorship`
-
-    </td>
-  </tr>
+<tr>
+<td width="50%" valign="top">
+<h3>🧱 The Wall Dev</h3>
+<a href="https://the-wall.vai-rice.space"><b>the-wall.vai-rice.space</b></a>
+<p>An extension built <b>for the <a href="https://twitch.tv/filian">Filian</a> community</b> — because if the VTuber world can run <em>Hole in the Wall</em>, the dev side deserves its own Wall too. Community tooling, done properly.</p>
+<sub><code>community</code> · <code>extension</code> · <code>filian</code></sub>
+</td>
+<td width="50%" valign="top">
+<h3>🛡️ AmneziaWG Architect</h3>
+<a href="https://architect.vai-rice.space"><b>architect.vai-rice.space</b></a> · ⭐ 218
+<p>A fully client-side generator of advanced obfuscation profiles for <b><a href="https://docs.amnezia.org">AmneziaWG</a></b> — traffic that mimics QUIC / TLS / SIP to slip past DPI in harsh internet climates. No server, no leaks.</p>
+<sub><code>vpn</code> · <code>wireguard</code> · <code>anti-censorship</code></sub>
+</td>
+</tr>
 </table>
 
 <sub>🎀 Bonus side-quest: the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC"><b>Hatsune Miku VS Code theme</b></a> — because the editor should match the playlist.</sub>

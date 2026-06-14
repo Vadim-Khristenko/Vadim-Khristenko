@@ -10,9 +10,13 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "Comma-separated game keys to refresh (blank = all)"
+        description: "Comma-separated game keys to refresh (blank = all / use GAME_ONLY variable)"
         required: false
         default: ""
+
+# Tip: set a repository Variable named GAME_ONLY (Settings → Secrets and
+# variables → Actions → Variables) to pin a default subset, e.g. "genshin,zzz".
+# The manual input above overrides it when provided.
 
 permissions:
   contents: write
@@ -41,7 +45,9 @@ jobs:
       - name: Fetch covers
         env:
           SGDB_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
-        run: uv run --python 3.12 --with pillow scripts/fetch_game_art.py --only "${{ inputs.only }}"
+          # manual input wins; otherwise fall back to the GAME_ONLY repo variable
+          GAME_ONLY: ${{ inputs.only != '' && inputs.only || vars.GAME_ONLY }}
+        run: uv run --python 3.12 --with pillow scripts/fetch_game_art.py
 
       - name: Re-render the games card
         env:

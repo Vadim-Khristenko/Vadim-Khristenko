@@ -102,7 +102,9 @@ def process(raw_bytes, dest):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--key", default=os.environ.get("SGDB_KEY") or os.environ.get("STEAMGRIDDB_KEY"))
-    ap.add_argument("--only", help="comma list of game keys")
+    # --only > GAME_ONLY env / GitHub repo Variable (vars.GAME_ONLY). Blank = all.
+    ap.add_argument("--only", default=os.environ.get("GAME_ONLY"),
+                    help="comma list of game keys (or set GAME_ONLY env / GH variable)")
     args = ap.parse_args()
     if not args.key:
         print("! No SteamGridDB key. Set SGDB_KEY or pass --key. (steamgriddb.com → Preferences → API)", file=sys.stderr)

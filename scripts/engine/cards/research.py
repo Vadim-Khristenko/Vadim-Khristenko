@@ -36,12 +36,12 @@ def _weight_grid(x, y, cols, rows):
 
 
 def build(ctx):
-    w, h = t.WIDE, 232
+    w, h = t.WIDE, 256
     r = c.RESEARCH
     tags = ["verifiable training", "hierarchical RL", "domain: software-engineering", "ternary {-1,0,+1}"]
     chips = []
     cx = 40
-    cy = 168
+    cy = 196  # own zone, clear of the prose above
     for tag in tags:
         tw = 14 + len(tag) * 7.4
         chips.append(
@@ -59,6 +59,7 @@ def build(ctx):
     <text x="40" y="108" font-family="{t.MONO}" font-size="14" fill="{t.CYAN}">{t.esc(r['subtitle'])}</text>
     <text x="40" y="132" font-family="{t.SANS}" font-size="13" fill="{t.FG_DIM}">{t.esc(line1)}</text>
     <text x="40" y="150" font-family="{t.SANS}" font-size="13" fill="{t.FG_DIM}">{t.esc(line2)}</text>
+    <line x1="40" y1="172" x2="700" y2="172" stroke="{t.BG_HL}" stroke-width="1" opacity="0.7"/>
     {"".join(chips)}
     <text x="{w-245}" y="36" font-family="{t.MONO}" font-size="11" fill="{t.COMMENT}">weights ∈ {{-1, 0, +1}}</text>
     {_weight_grid(w-245, 56, 10, 5)}

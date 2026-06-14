@@ -52,9 +52,6 @@ def build(ctx):
     </rect>
     <text x="{t.MARGIN}" y="143" font-family="{t.MONO}" font-size="18" fill="{t.COMMENT}">aka&gt;</text>
     <g transform="translate(64,0)">{_alias_rotator(t.MARGIN, 143)}</g>
-    <rect x="328" y="127" width="11" height="20" fill="{t.ORANGE}" opacity="0.9">
-      <animate attributeName="opacity" values="1;0;1" dur="1.05s" repeatCount="indefinite"/>
-    </rect>
     <text x="{t.MARGIN}" y="185" font-family="{t.MONO}" font-size="15" fill="{t.COMMENT}">// backend architect · systems engineer · chaos engineer by hobby</text>
     <text x="{t.MARGIN}" y="217" font-family="{t.MONO}" font-size="15" fill="{t.PURPLE}">let</text>
     <text x="{t.MARGIN+34}" y="217" font-family="{t.MONO}" font-size="15" fill="{t.FG}">primary</text>
