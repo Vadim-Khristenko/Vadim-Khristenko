@@ -37,6 +37,9 @@ def _alias_rotator(x, y):
 
 def build(ctx):
     w, h = t.CARD_W, 300
+    name = "Vadim Khristenko"
+    # underline spans the full rendered name (≈ monospace advance × char count)
+    underline_w = round(len(name) * 25.6)
 
     def chip(y, dot, label):
         return (
@@ -46,9 +49,9 @@ def build(ctx):
         )
 
     inner = f"""
-    <text x="{t.MARGIN}" y="78" font-family="{t.MONO}" font-size="44" font-weight="800" fill="{t.FG}" filter="url(#softglow)">Vadim Khristenko</text>
+    <text x="{t.MARGIN}" y="78" font-family="{t.MONO}" font-size="44" font-weight="800" fill="{t.FG}" filter="url(#softglow)">{t.esc(name)}</text>
     <rect x="{t.MARGIN+2}" y="96" width="0" height="3" rx="1.5" fill="{t.RUST}">
-      <animate attributeName="width" values="0;340" dur="1.2s" begin="0.2s" fill="freeze"/>
+      <animate attributeName="width" values="0;{underline_w}" dur="1.2s" begin="0.2s" fill="freeze"/>
     </rect>
     <text x="{t.MARGIN}" y="143" font-family="{t.MONO}" font-size="18" fill="{t.COMMENT}">aka&gt;</text>
     <g transform="translate(64,0)">{_alias_rotator(t.MARGIN, 143)}</g>

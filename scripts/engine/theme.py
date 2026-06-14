@@ -65,6 +65,32 @@ def esc(text) -> str:
     return html.escape(str(text), quote=True)
 
 
+# Embedding raster/animated media as data URIs keeps SVGs self-contained (no
+# cross-origin fetches through GitHub's camo proxy). Animated WEBP/GIF/AVIF are
+# embedded byte-for-byte so they keep animating inside the card.
+import base64 as _b64
+import os as _os
+
+_MIME = {".jpg": "jpeg", ".jpeg": "jpeg", ".png": "png", ".webp": "webp",
+         ".gif": "gif", ".avif": "avif", ".apng": "apng"}
+
+
+def media_data_uri(path) -> str:
+    ext = _os.path.splitext(path)[1].lower()
+    mime = _MIME.get(ext, "png")
+    with open(path, "rb") as f:
+        return f"data:image/{mime};base64," + _b64.b64encode(f.read()).decode("ascii")
+
+
+def find_media(directory, key):
+    """Return the first existing media file for `key` (any supported ext)."""
+    for ext in (".webp", ".gif", ".avif", ".apng", ".png", ".jpg", ".jpeg"):
+        p = _os.path.join(directory, key + ext)
+        if _os.path.exists(p):
+            return p
+    return None
+
+
 # --------------------------------------------------------------------------- #
 # Shared <defs>: gradients, glow, grid                                        #
 # --------------------------------------------------------------------------- #
@@ -150,8 +176,11 @@ def card(
     is placed in a group translated below the title bar.
     """
     dense = (texture == "ternary")
-    tex = (f'<rect x="6" y="6" width="{w - 12}" height="{h - 12}" rx="13" fill="url(#grid)"/>'
-           + _ternary_texture(w, h, dense=dense))
+    if texture == "plain":
+        tex = ""
+    else:
+        tex = (f'<rect x="6" y="6" width="{w - 12}" height="{h - 12}" rx="13" fill="url(#grid)"/>'
+               + _ternary_texture(w, h, dense=dense))
 
     dots = "".join(
         f'<circle cx="{MARGIN + i * 20}" cy="{BAR_H // 2}" r="5.5" fill="{c}" opacity="0.92"/>'

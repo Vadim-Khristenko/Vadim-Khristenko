@@ -3,24 +3,19 @@
 present; otherwise falls back to a neon tile — all tiles share one capsule shape
 so the shelf stays "one type" either way."""
 
-import base64
 import os
 
 from .. import theme as t
 from .. import content as c
 
 ASSET = "games.svg"
-ART_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "..", "assets", "games")
+_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ART_DIR = os.path.join(_ROOT, "assets", "games")
 
 
 def _art_b64(key):
-    for ext in (".jpg", ".jpeg", ".png", ".webp"):
-        p = os.path.join(ART_DIR, key + ext)
-        if os.path.exists(p):
-            mime = "jpeg" if ext in (".jpg", ".jpeg") else ext.strip(".")
-            with open(p, "rb") as f:
-                return f"data:image/{mime};base64," + base64.b64encode(f.read()).decode("ascii")
-    return None
+    p = t.find_media(ART_DIR, key)
+    return t.media_data_uri(p) if p else None
 
 
 def build(ctx):

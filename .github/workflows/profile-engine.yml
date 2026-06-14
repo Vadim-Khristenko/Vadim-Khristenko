@@ -3,8 +3,8 @@ name: VAI Profile Engine
 # Regenerates the Tokyo-Night SVG cards + live GitHub stats and commits them.
 on:
   schedule:
-    # Every Monday 06:00 UTC — fresh week, fresh vibe.
-    - cron: "0 6 * * 1"
+    # Every 2 days at 06:00 UTC — keeps the vibe card on-theme with what's active.
+    - cron: "0 6 */2 * *"
   workflow_dispatch: {}      # run on demand from the Actions tab
   push:
     branches: [main]

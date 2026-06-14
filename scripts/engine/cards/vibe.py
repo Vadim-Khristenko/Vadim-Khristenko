@@ -13,7 +13,7 @@ def _pick(seq, seed, salt):
 
 
 def build(ctx):
-    seed = ctx["seed"]
+    seed = ctx.get("vibe_seed", ctx["seed"])  # rotates every 2 days
     d = ctx["data"]
     w, h = t.CARD_W, 150
     game = _pick(c.GAMES, seed, 1)
@@ -36,5 +36,5 @@ def build(ctx):
     <line x1="{t.MARGIN}" y1="104" x2="{w-t.MARGIN}" y2="104" stroke="{t.BG_HL}" stroke-width="1"/>
     <text x="{t.MARGIN}" y="128" font-family="{t.SANS}" font-size="13" font-style="italic" fill="{t.YELLOW}">“{t.esc(quote)}”</text>
     """
-    badge = f"{ctx['year']}-W{ctx['week']:02d}"
-    return t.card(w, h, "~/this-week.vibe", inner, accent=t.MAGENTA, badge=badge)
+    badge = f"refreshed {ctx['stamp'][:10]}"
+    return t.card(w, h, "~/now.vibe", inner, accent=t.MAGENTA, badge=badge)

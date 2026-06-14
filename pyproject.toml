@@ -1,16 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "vai-profile-engine"
-version = "1.0.0"
-description = "Self-regenerating GitHub profile engine — custom animated SVGs + live stats."
+version = "2.0.0"
+description = "Self-regenerating GitHub profile engine — Tokyo-Night animated SVG cards + live stats."
 readme = "README.md"
 requires-python = ">=3.9"
-# Intentionally zero runtime dependencies: the engine is pure stdlib so it
-# stays fast, reproducible, and immune to supply-chain churn. uv still gives
-# us a pinned interpreter and a clean `uv run` entrypoint.
+# Core (card rendering + live stats) is pure stdlib. Pillow is only needed for
+# fetching/cropping game art — installed via the optional `art` extra.
 dependencies = []
 
-[project.scripts]
-profile-engine = "profile_engine:main"
+[project.optional-dependencies]
+art = ["pillow>=10"]
 
-[tool.uv]
-package = false
+# Friendly commands — run as:  uv run <name> [flags]
+#   uv run build | preview | rebuild         (preview/build need no extras)
+#   uv run --extra art rebuild | art | bestgame   (art fetching needs Pillow)
+[project.scripts]
+build = "engine.cli:build"
+rebuild = "engine.cli:rebuild"
+preview = "engine.cli:preview"
+art = "engine.cli:art_cmd"
+bestgame = "engine.cli:bestgame"
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts/engine"]

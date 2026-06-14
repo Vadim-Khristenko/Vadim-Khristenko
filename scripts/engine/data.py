@@ -108,9 +108,15 @@ class GitHubData:
         self.repo_count = len(owned)
         self.stars = sum(r.get("stargazers_count", 0) for r in self.repos)
         self.forks = sum(r.get("forks_count", 0) for r in self.repos)
-        # owned is already sorted by pushed desc → the freshest is where changes flow
-        if owned:
-            self.most_active_repo = owned[0].get("name")
+        # owned is already sorted by pushed desc → the freshest is where changes flow.
+        # Skip the profile repo itself: its constant engine auto-commits would
+        # otherwise always win and pin it to the top.
+        for r in owned:
+            if r.get("name", "").lower() != self.user.lower():
+                self.most_active_repo = r.get("name")
+                break
+        else:
+            self.most_active_repo = owned[0].get("name") if owned else None
         log.step("repositories", self.repo_count, f"{self.stars}★  {self.forks} forks")
         return owned
 
