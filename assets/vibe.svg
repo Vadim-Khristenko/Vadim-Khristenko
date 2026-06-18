@@ -53,7 +53,7 @@
         <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">the eternal 16-year-old diva</text>
     
         <text x="680" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#7dcfff" letter-spacing="1">🛠 FOCUS</text>
-        <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">TheWall</text>
+        <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">kumir3-core</text>
         <text x="680" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">where most changes land</text>
     <line x1="24" y1="104" x2="976" y2="104" stroke="#292e42" stroke-width="1"/>
     <text x="24" y="128" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="13" font-style="italic" fill="#e0af68">“I generate a billion ideas on the fly — time is the only bottleneck.”</text>
