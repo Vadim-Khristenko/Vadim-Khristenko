@@ -39,24 +39,24 @@
   <path d="M2 18 Q2 2 18 2" fill="none" stroke="#c678dd" stroke-width="2.4" opacity="0.9"/>
   <circle cx="24" cy="21" r="5.5" fill="#f7768e" opacity="0.92"/><circle cx="44" cy="21" r="5.5" fill="#e0af68" opacity="0.92"/><circle cx="64" cy="21" r="5.5" fill="#9ece6a" opacity="0.92"/>
   <text x="96" y="25" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="13" fill="#a9b1d6">~/now.vibe</text>
-  <circle cx="975" cy="21" r="3.5" fill="#c678dd"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.2s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#565f89">refreshed 2026-07-03</text>
+  <circle cx="975" cy="21" r="3.5" fill="#c678dd"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.2s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#565f89">refreshed 2026-07-05</text>
   <rect x="24" y="42" width="952" height="2" fill="url(#accentbar)"/>
   <g transform="translate(0,42)">
     
     
         <text x="24" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#f7768e" letter-spacing="1">🎮 PLAYING</text>
-        <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Blue Archive</text>
-        <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">Sensei, the students need you</text>
+        <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Neverness to Everness</text>
+        <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">unlicensed Anomaly hunting in Hethereau</text>
     
         <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#bb9af7" letter-spacing="1">🎧 ON LOOP</text>
-        <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Deco*27</text>
-        <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">Vocaloid royalty</text>
+        <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Chiru-San</text>
+        <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">on quiet loop</text>
     
         <text x="680" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#7dcfff" letter-spacing="1">🛠 FOCUS</text>
         <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">kumir3-core</text>
         <text x="680" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">where most changes land</text>
     <line x1="24" y1="104" x2="976" y2="104" stroke="#292e42" stroke-width="1"/>
-    <text x="24" y="128" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="13" font-style="italic" fill="#e0af68">“I generate a billion ideas on the fly — time is the only bottleneck.”</text>
+    <text x="24" y="128" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="13" font-style="italic" fill="#e0af68">“Fast prototype, validate, harden — then build something weird for fun.”</text>
     
   </g>
 </svg>
