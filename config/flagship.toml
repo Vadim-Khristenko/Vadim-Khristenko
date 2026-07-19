@@ -1,0 +1,41 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# flagship.toml — the coolest projects, rendered with LIVE stats.
+#
+# repo   → looked up across every configured provider (mirror-aware: stars,
+#          forks and open items are summed across platforms).
+# prefer → which platform's copy headlines the row (falls back to any hit).
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[project]]
+name = "AmneziaWG Architect"
+repo = "AmneziaWG-Architect"
+prefer = "github"
+site = "https://architect.vai-rice.space"
+tags = ["vpn", "wireguard", "anti-censorship"]
+blurb = "Client-side generator of DPI-evasion profiles (QUIC/TLS/SIP mimicry)."
+accent = "#ff9e64"
+
+[[project]]
+name = "The Wall Dev"
+repo = "the-wall"
+prefer = "github"
+site = "https://the-wall.vai-rice.space"
+tags = ["community", "extension", "filian"]
+blurb = "Community tooling for the Filian world — the dev side of the Wall."
+accent = "#f7768e"
+
+[[project]]
+name = "Hatsune Miku VS Code Theme"
+repo = "HatsuneMikuEditorTheme-VSC"
+prefer = "github"
+tags = ["vscode", "theme", "miku"]
+blurb = "The editor should match the playlist — teal it all the way down."
+accent = "#2ac3de"
+
+[[project]]
+name = "Aethelgard"
+repo = "aethelgard"
+prefer = "vai-git"
+tags = ["ml", "ternary", "research"]
+blurb = "TQ-1.58 HVRL — low-bit agentic reasoning, verifiable training."
+accent = "#bb9af7"

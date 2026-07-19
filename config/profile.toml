@@ -1,0 +1,312 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# profile.toml — editorial content for the VAI Profile Engine.
+# Edit words here; the cards stay about layout. Rebuild with `vai-profile build`.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name = "Vadim Khristenko"
+aliases = ["VAI_PROG", "VAI_Programmer", "VAI", "VOLT"]
+
+quotes = [
+  "I generate a billion ideas on the fly — time is the only bottleneck.",
+  "Fast prototype, validate, harden — then build something weird for fun.",
+  "From banal scripts to absolutely unhinged solutions. Both ship.",
+  "Backend by trade, chaos by hobby.",
+  "If it can be automated, it probably already is.",
+  "Servers under any OS bend the same way — with patience and good logs.",
+  "Tiny stories between commits keep the compiler honest.",
+  "Three states are enough: minus one, zero, plus one.",
+]
+
+[research]
+name = "Aethelgard TQ-1.58 HVRL"
+subtitle = "low-bit agentic reasoning architecture"
+blurb = "Architecture for a low-bit agentic reasoning model with verifiable training, hierarchical RL and domain specialization for software engineering."
+phase = "architecture & training-data pipeline"
+progress = 0.34
+tags = ["verifiable training", "hierarchical RL", "domain: software-engineering", "ternary {-1,0,+1}"]
+
+# ── AI Lab ──────────────────────────────────────────────────────────────────
+# "Companions / sparring partners", NOT a vibe-coding autopilot.
+[ai]
+models = ["Fable 5", "GPT 5.6 Sol", "Grok 4.5", "Kimi K3", "Qwen 3.8 Max", "MiMo V2.5 Pro"]
+favourites = ["Fable 5", "Qwen 3.8 Max", "MiMo V2.5 Pro"]
+
+# ── Learning / building rotation (learning card) ────────────────────────────
+[[learning.topics]]
+name = "Rust internals"
+note = "zero-cost everything — allocators, async guts, unsafe hygiene"
+
+[[learning.topics]]
+name = "ternary quantization"
+note = "1.58-bit weights without the accuracy cliff"
+
+[[learning.topics]]
+name = "hierarchical RL"
+note = "verifiable reward pipelines for agentic training"
+
+[[learning.topics]]
+name = "DPI evasion"
+note = "protocol mimicry: QUIC / TLS / SIP on the wire"
+
+[[learning.topics]]
+name = "inference pipelines"
+note = "making models cheap to run on my own fleet"
+
+[[learning.topics]]
+name = "SVG as a UI target"
+note = "camo-proxy-safe animation, SMIL, static-first frames"
+
+# ── Verified social presence (portfolio first) ──────────────────────────────
+[[socials]]
+label = "Portfolio"
+url = "https://vai-rice.space"
+
+[[socials]]
+label = "GitHub"
+url = "https://github.com/Vadim-Khristenko"
+
+[[socials]]
+label = "VAI Git"
+url = "https://git.vai-rice.space/VAI_PROG"
+
+[[socials]]
+label = "Codeberg"
+url = "https://codeberg.org/VAI_PROG"
+
+[[socials]]
+label = "Twitch"
+url = "https://twitch.tv/VAI_PROG"
+
+[[socials]]
+label = "X"
+url = "https://x.com/VAI_PROG"
+
+[[socials]]
+label = "YouTube"
+url = "https://youtube.com/@VAI_PROG"
+
+[[socials]]
+label = "Telegram"
+url = "https://t.me/vscreator_life"
+
+# Reddit was banned due to a misunderstanding — will be back eventually.
+
+[[socials]]
+label = "Patreon"
+url = "https://patreon.com/VAI_PROG"
+
+[[socials]]
+label = "Codeforces"
+url = "https://codeforces.com/profile/VAI_Programmer"
+
+# ── Music on loop ───────────────────────────────────────────────────────────
+[[composers]]
+name = "Hatsune Miku"
+note = "the eternal 16-year-old diva"
+
+[[composers]]
+name = "Deco*27"
+note = "Vocaloid royalty"
+
+[[composers]]
+name = "Chiru-San"
+note = "on quiet loop"
+
+[[composers]]
+name = "DraGonis"
+note = "for the heavy sessions"
+
+[[composers]]
+name = "Kanro"
+note = "late-night coding fuel"
+
+[[composers]]
+name = "Exyl"
+note = "future-bass dopamine"
+
+[[composers]]
+name = "NoAki"
+note = "soft synth therapy"
+
+# ── Rotating "current focus" (vibe card fallback) ───────────────────────────
+[[focus]]
+name = "Aethelgard TQ-1.58"
+note = "low-bit reasoning research"
+
+[[focus]]
+name = "AmneziaWG Architect"
+note = "shipping mimicry profiles"
+
+[[focus]]
+name = "The Wall Dev"
+note = "Filian community tooling"
+
+[[focus]]
+name = "Rust internals"
+note = "zero-cost everything"
+
+[[focus]]
+name = "inference pipelines"
+note = "making models cheap to run"
+
+[[focus]]
+name = "server fleet"
+note = "Linux & Windows, all green"
+
+# ── Games. key = asset name, query = SteamGridDB search, ca/cb = tile colours,
+#    note = vibe-card line. ───────────────────────────────────────────────────
+[[games]]
+key = "nikke"
+title = "NIKKE"
+short = "NIKKE"
+query = "Goddess of Victory Nikke"
+ca = "#e23b5a"
+cb = "#2a1020"
+note = "holding the surface line"
+
+[[games]]
+key = "bluearchive"
+title = "Blue Archive"
+short = "BA"
+query = "Blue Archive"
+ca = "#4a9fe0"
+cb = "#0e2030"
+note = "Sensei, the students need you"
+
+[[games]]
+key = "nte"
+title = "Neverness to Everness"
+short = "NTE"
+query = "Neverness to Everness"
+ca = "#ff4d6d"
+cb = "#1a0f22"
+note = "unlicensed Anomaly hunting in Hethereau"
+
+[[games]]
+key = "endfield"
+title = "Arknights: Endfield"
+short = "ENDFIELD"
+query = "Arknights Endfield"
+ca = "#e0a64a"
+cb = "#1f1a10"
+note = "running the Endfield night shift"
+
+[[games]]
+key = "wuwa"
+title = "Wuthering Waves"
+short = "WUWA"
+query = "Wuthering Waves"
+ca = "#3fd0c9"
+cb = "#0e2222"
+note = "resonating across Solaris-3"
+
+[[games]]
+key = "genshin"
+title = "Genshin Impact"
+short = "GENSHIN"
+query = "Genshin Impact"
+ca = "#7ec8e3"
+cb = "#101a2a"
+note = "still chasing region lore"
+
+[[games]]
+key = "honkai3"
+title = "Honkai Impact 3rd"
+short = "HI3"
+query = "Honkai Impact 3rd"
+ca = "#c98bdb"
+cb = "#1a1024"
+note = "for everyone's smiles"
+
+[[games]]
+key = "starrail"
+title = "Honkai: Star Rail"
+short = "STAR RAIL"
+query = "Honkai Star Rail"
+ca = "#9b8cff"
+cb = "#12102a"
+note = "may this journey lead us starward"
+
+[[games]]
+key = "zzz"
+title = "Zenless Zone Zero"
+short = "ZZZ"
+query = "Zenless Zone Zero"
+ca = "#f3d23b"
+cb = "#22200c"
+note = "running Hollows in New Eridu"
+
+[[games]]
+key = "prsk"
+title = "Project Sekai"
+short = "PRSK"
+query = "Project Sekai Colorful Stage"
+ca = "#39d6b0"
+cb = "#0e221c"
+note = "chasing the perfect full-combo"
+
+[[games]]
+key = "minecraft"
+title = "Minecraft"
+short = "MC"
+query = "Minecraft"
+ca = "#6cc24a"
+cb = "#10220e"
+note = "one more redstone contraption"
+
+[[games]]
+key = "fortnite"
+title = "Fortnite"
+short = "FORTNITE"
+query = "Fortnite"
+ca = "#8a5cf6"
+cb = "#150f26"
+note = "building 1x1s under pressure"
+
+# ── Best game (fully configurable spotlight card) ───────────────────────────
+# art_url: any image URL for the cover; "" auto-resolves via SteamGridDB.
+# cover_mode: "portrait" (left 2:3 panel) | "landscape" (full-width behind text).
+# Character art_url accepts remote URLs or local repo paths; animated WEBP/GIF
+# are embedded as-is. Run `vai-profile bestgame` after editing to fetch art.
+[best_game]
+title = "NIKKE"
+subtitle = "GODDESS OF VICTORY"
+query = "Goddess of Victory Nikke"
+art_url = "https://cdn2.steamgriddb.com/grid/6125432a1d4dfa1f33dbffe6bb0b9a0e.jpg"
+cover_mode = "portrait"
+accent = "#e23b5a"
+nick = "VAI"
+level = "95"
+server = "Global"
+game_id = "12405515"
+blurb = "My main since launch — holding the surface against the Raptures."
+
+[[best_game.characters]]
+name = "Rapi: Red Hood"
+short = "Red Hood"
+accent = "#f7768e"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c016_00_s.png"
+
+[[best_game.characters]]
+name = "Anis: Star"
+short = "Anis"
+accent = "#FFC107"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c017_00_s.png"
+
+[[best_game.characters]]
+name = "Soda: Twinkling Bunny"
+short = "Soda"
+accent = "#98ffd9"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c314_00_s.png"
+
+[[best_game.characters]]
+name = "Frima: Sea Of Sloth"
+short = "Frima"
+accent = "#C08261"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c142_01_00_s.png"
+
+[[best_game.characters]]
+name = "Snow Crane"
+short = "Snow Crane"
+accent = "#EBF1F5"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c620_00_s.png"
