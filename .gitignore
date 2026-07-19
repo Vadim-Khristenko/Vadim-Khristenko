@@ -6,3 +6,4 @@ tmp_prev/
 !.gitlab/
 !.codeberg/
 !.gitea/
+!.forgejo/

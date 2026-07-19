@@ -14,9 +14,8 @@ on:
         required: false
         default: ""
 
-# Tip: set a repository Variable named GAME_ONLY (Settings → Secrets and
-# variables → Actions → Variables) to pin a default subset, e.g. "genshin,zzz".
-# The manual input above overrides it when provided.
+# Tip: set a repository Variable named GAME_ONLY to pin a default subset,
+# e.g. "genshin,zzz". The manual input above overrides it when provided.
 
 permissions:
   contents: write
@@ -28,10 +27,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v8.2.0
+      - name: Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
         with:
-          enable-cache: true
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            engine/target
+          key: cargo-${{ hashFiles('engine/Cargo.lock') }}
+          restore-keys: cargo-
 
       - name: Guard — key present?
         env:
@@ -42,22 +49,25 @@ jobs:
             exit 1
           fi
 
+      - name: Build engine
+        run: cargo build --release --manifest-path engine/Cargo.toml
+
       - name: Fetch covers
         env:
           SGDB_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
           # manual input wins; otherwise fall back to the GAME_ONLY repo variable
           GAME_ONLY: ${{ inputs.only != '' && inputs.only || vars.GAME_ONLY }}
-        run: uv run --python 3.12 --with pillow scripts/fetch_game_art.py
+        run: ./engine/target/release/vai-profile art
 
       - name: Re-render the games card
         env:
           GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
-        run: uv run --python 3.12 scripts/build.py --only games
+        run: ./engine/target/release/vai-profile build --only games
 
       - name: Commit
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name  "VIA GIT"
+          git config user.email "actions@git.vai-rice.space"
           git add assets/games assets/games.svg
           if git diff --cached --quiet; then
             echo "No cover changes."

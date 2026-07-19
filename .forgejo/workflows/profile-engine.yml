@@ -1,0 +1,98 @@
+name: VAI Profile Engine
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PRIMARY pipeline — source of truth is git.vai-rice.space (Forgejo Actions).
+#
+# Regenerates the Tokyo-Night SVG cards + live multi-platform stats, commits
+# them as `VIA GIT`, then mirror-pushes to GitHub and Codeberg with SCOPED
+# push tokens. Token hygiene is strict:
+#   * read-only provider tokens (VAI_GIT_TOKEN / GH_TOKEN / CODEBERG_TOKEN)
+#     are only visible to the engine step;
+#   * each mirror push token is only ever used against its own host, in its
+#     own step — no token crosses hosts.
+#
+# Secrets (documented in engine/README.md):
+#   VAI_GIT_TOKEN, GH_TOKEN, CODEBERG_TOKEN          read-only API tokens
+#   GITHUB_MIRROR_TOKEN, CODEBERG_MIRROR_TOKEN        scoped push tokens
+# ─────────────────────────────────────────────────────────────────────────────
+
+on:
+  schedule:
+    # Every 2 days at 06:00 UTC — matches the vibe-card rotation cadence.
+    - cron: "0 6 */2 * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "engine/**"
+      - "config/**"
+      - ".forgejo/workflows/profile-engine.yml"
+
+concurrency:
+  group: profile-engine
+  cancel-in-progress: true
+
+jobs:
+  regenerate:
+    runs-on: docker
+    container:
+      image: rust:1.96-bookworm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            engine/target
+          key: cargo-${{ hashFiles('engine/Cargo.lock') }}
+          restore-keys: cargo-
+
+      - name: Build engine
+        run: cargo build --release --manifest-path engine/Cargo.toml
+
+      - name: Run the engine (read-only provider tokens)
+        env:
+          VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+        run: ./engine/target/release/vai-profile build
+
+      - name: Commit regenerated assets
+        run: |
+          git config user.name  "VIA GIT"
+          git config user.email "actions@git.vai-rice.space"
+          git add assets README.md
+          if git diff --cached --quiet; then
+            echo "Nothing changed — profile already fresh."
+          else
+            git commit -m "chore(profile): regenerate cards & live stats [skip ci]"
+            git push origin HEAD:main
+          fi
+
+      - name: Mirror-push → GitHub (scoped token, GitHub only)
+        env:
+          TOKEN: ${{ secrets.GITHUB_MIRROR_TOKEN }}
+          MIRROR: ${{ vars.GITHUB_MIRROR_REPO || 'Vadim-Khristenko/Vadim-Khristenko' }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "GITHUB_MIRROR_TOKEN not set — skipping GitHub mirror."
+            exit 0
+          fi
+          git push "https://x-access-token:${TOKEN}@github.com/${MIRROR}.git" HEAD:main
+
+      - name: Mirror-push → Codeberg (scoped token, Codeberg only)
+        env:
+          TOKEN: ${{ secrets.CODEBERG_MIRROR_TOKEN }}
+          MIRROR: ${{ vars.CODEBERG_MIRROR_REPO || 'VAI_PROG/Vadim-Khristenko' }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "CODEBERG_MIRROR_TOKEN not set — skipping Codeberg mirror."
+            exit 0
+          fi
+          git push "https://${TOKEN}@codeberg.org/${MIRROR}.git" HEAD:main

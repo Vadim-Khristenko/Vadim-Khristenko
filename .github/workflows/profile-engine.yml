@@ -1,20 +1,17 @@
-name: VAI Profile Engine
+name: VAI Profile Engine (receiver)
 
-# Regenerates the Tokyo-Night SVG cards + live GitHub stats and commits them.
+# ─────────────────────────────────────────────────────────────────────────────
+# FALLBACK pipeline. The PRIMARY regeneration runs on git.vai-rice.space
+# (.forgejo/workflows/profile-engine.yml) and mirror-pushes here.
+#
+# This workflow exists so the profile can still be regenerated from GitHub if
+# the Forgejo runner is down: manual dispatch only, same binary, commits as
+# `VIA GIT`, and pushes ONLY to this repository — never to other hosts.
+# ─────────────────────────────────────────────────────────────────────────────
+
 on:
-  schedule:
-    # Every 2 days at 06:00 UTC — keeps the vibe card on-theme with what's active.
-    - cron: "0 6 */2 * *"
-  workflow_dispatch: {}      # run on demand from the Actions tab
-  push:
-    branches: [main]
-    paths:
-      - "scripts/**"
-      - ".github/workflows/profile-engine.yml"
+  workflow_dispatch: {}
 
-# contents:write lets the bot commit the regenerated assets back to the repo.
-# That's all the engine needs: it only reads PUBLIC GitHub data (repos, stars,
-# languages, the contribution calendar). No extra scopes required.
 permissions:
   contents: write
 
@@ -29,31 +26,39 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install uv
-        # setup-uv ships immutable full-version tags only (no moving @v8).
-        uses: astral-sh/setup-uv@v8.2.0
+      - name: Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: actions/cache@v4
         with:
-          enable-cache: true
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            engine/target
+          key: cargo-${{ hashFiles('engine/Cargo.lock') }}
+          restore-keys: cargo-
 
-      - name: Pin Python
-        run: uv python install 3.12
+      - name: Build engine
+        run: cargo build --release --manifest-path engine/Cargo.toml
 
-      - name: Run the engine
+      - name: Run the engine (read-only provider tokens)
         env:
-          # Default GITHUB_TOKEN is enough for public stats. Add an optional
-          # PROFILE_TOKEN secret (a PAT with read:user) to also count PRIVATE
-          # contributions; it transparently takes precedence when present.
+          # Default GITHUB_TOKEN covers public GitHub stats. PROFILE_TOKEN
+          # (a PAT with read:user) additionally counts private contributions.
           GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
-        run: uv run --python 3.12 scripts/build.py
+          VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+        run: ./engine/target/release/vai-profile build
 
       - name: Commit regenerated assets
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name  "VIA GIT"
+          git config user.email "actions@git.vai-rice.space"
           git add assets README.md
           if git diff --cached --quiet; then
             echo "Nothing changed — profile already fresh."
           else
-            git commit -m "chore(profile): regenerate cards & weekly vibe [skip ci]"
+            git commit -m "chore(profile): regenerate cards & live stats [skip ci]"
             git push
           fi
