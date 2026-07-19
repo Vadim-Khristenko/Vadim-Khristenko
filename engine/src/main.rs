@@ -3,6 +3,9 @@ mod log;
 mod model;
 mod paths;
 mod providers;
+mod readme;
+mod svg;
+mod theme;
 
 fn main() -> anyhow::Result<()> {
     log::init();
