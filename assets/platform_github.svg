@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="176" viewBox="0 0 1000 176" role="img" aria-label="Platform stats for GitHub" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif">
+  <title>Platform stats for GitHub</title>
+  
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#1f2335"/>
+      <stop offset="1" stop-color="#15161e"/>
+    </linearGradient>
+    <linearGradient id="border" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7aa2f7">
+        <animate attributeName="stop-color" values="#7aa2f7;#7aa2f7;#bb9af7;#7dcfff;#7aa2f7" keyTimes="0;0.28;0.55;0.8;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" dur="18s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="0.5" stop-color="#bb9af7">
+        <animate attributeName="stop-color" values="#bb9af7;#7dcfff;#7aa2f7;#7aa2f7;#bb9af7" keyTimes="0;0.28;0.55;0.8;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" dur="18s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="1" stop-color="#7aa2f7">
+        <animate attributeName="stop-color" values="#7aa2f7;#7aa2f7;#7dcfff;#bb9af7;#7aa2f7" keyTimes="0;0.28;0.55;0.8;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" dur="18s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="accentbar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7aa2f7"/>
+      <stop offset="1" stop-color="#7aa2f7" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tophl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="1.7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0 L0 0 0 28" fill="none" stroke="#565f89" stroke-width="0.5" opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect x="2" y="2" width="996" height="172" rx="15" fill="url(#panel)"/>
+  <rect x="6" y="6" width="988" height="164" rx="13" fill="url(#grid)"/><text x="24" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="24" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text>
+  <rect x="2" y="2" width="996" height="24" rx="15" fill="url(#tophl)"/>
+  <rect x="2.5" y="2.5" width="995" height="171" rx="14" fill="none" stroke="url(#border)" stroke-width="2"/>
+  <rect x="3.5" y="3.5" width="993" height="169" rx="13" fill="none" stroke="#292e42" stroke-width="1" opacity="0.6"/>
+  <path d="M2 18 Q2 2 18 2" fill="none" stroke="#7aa2f7" stroke-width="2.4" opacity="0.9"/>
+  <circle cx="24" cy="21" r="5.5" fill="#f7768e" opacity="0.92"/><circle cx="44" cy="21" r="5.5" fill="#e0af68" opacity="0.92"/><circle cx="64" cy="21" r="5.5" fill="#9ece6a" opacity="0.92"/>
+  <text x="96" y="25" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="13" fill="#a9b1d6">~/platforms/github.host</text>
+  <circle cx="975" cy="21" r="3.5" fill="#7aa2f7"><animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#9aa5ce">GitHub</text>
+  <rect x="24" y="42" width="952" height="2" fill="url(#accentbar)"/>
+  <g transform="translate(0,42)">
+    <text x="143" y="66" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="34" font-weight="800" fill="#7aa2f7" filter="url(#glow)">6</text><text x="143" y="88" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#9aa5ce" letter-spacing="1">REPOSITORIES</text><text x="381" y="66" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="34" font-weight="800" fill="#e0af68" filter="url(#glow)">307</text><text x="381" y="88" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#9aa5ce" letter-spacing="1">STARS</text><text x="619" y="66" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="34" font-weight="800" fill="#bb9af7" filter="url(#glow)">61</text><text x="619" y="88" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#9aa5ce" letter-spacing="1">FOLLOWERS</text><text x="857" y="66" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="34" font-weight="800" fill="#ff9e64" filter="url(#glow)">1.5k</text><text x="857" y="88" text-anchor="middle" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#9aa5ce" letter-spacing="1">COMMITS·1Y</text><line x1="24" y1="102" x2="976" y2="102" stroke="#292e42" stroke-width="1"/><circle cx="28" cy="122" r="4" fill="#7dcfff"/><text x="38" y="126" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#a9b1d6">TypeScript 58%</text><circle cx="165" cy="122" r="4" fill="#7aa2f7"/><text x="175" y="126" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#a9b1d6">Python 13%</text><circle cx="273" cy="122" r="4" fill="#dea584"/><text x="283" y="126" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#a9b1d6">Rust 12%</text><circle cx="366" cy="122" r="4" fill="#9ece6a"/><text x="376" y="126" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#a9b1d6">Vue 11%</text><circle cx="453" cy="122" r="4" fill="#7dcfff"/><text x="463" y="126" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11.5" fill="#a9b1d6">CSS 3%</text><text x="976" y="126" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#9aa5ce">@Vadim-Khristenko · the public stage</text>
+  </g>
+</svg>

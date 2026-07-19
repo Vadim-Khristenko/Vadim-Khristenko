@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="150" viewBox="0 0 1000 150" role="img" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="150" viewBox="0 0 1000 150" role="img" aria-label="Current vibe: what I&#x27;m playing, listening to and focused on" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif">
+  <title>Current vibe: what I&#x27;m playing, listening to and focused on</title>
   
   <defs>
     <linearGradient id="panel" x1="0" y1="0" x2="0.5" y2="1">
@@ -7,18 +8,22 @@
     </linearGradient>
     <linearGradient id="border" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#c678dd">
-        <animate attributeName="stop-color" values="#c678dd;#7aa2f7;#bb9af7;#7dcfff;#c678dd" dur="12s" repeatCount="indefinite"/>
+        <animate attributeName="stop-color" values="#c678dd;#7aa2f7;#bb9af7;#7dcfff;#c678dd" keyTimes="0;0.28;0.55;0.8;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" dur="18s" repeatCount="indefinite"/>
       </stop>
       <stop offset="0.5" stop-color="#bb9af7">
-        <animate attributeName="stop-color" values="#bb9af7;#7dcfff;#c678dd;#7aa2f7;#bb9af7" dur="12s" repeatCount="indefinite"/>
+        <animate attributeName="stop-color" values="#bb9af7;#7dcfff;#c678dd;#7aa2f7;#bb9af7" keyTimes="0;0.28;0.55;0.8;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" dur="18s" repeatCount="indefinite"/>
       </stop>
       <stop offset="1" stop-color="#7aa2f7">
-        <animate attributeName="stop-color" values="#7aa2f7;#c678dd;#7dcfff;#bb9af7;#7aa2f7" dur="12s" repeatCount="indefinite"/>
+        <animate attributeName="stop-color" values="#7aa2f7;#c678dd;#7dcfff;#bb9af7;#7aa2f7" keyTimes="0;0.28;0.55;0.8;1" calcMode="spline" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" dur="18s" repeatCount="indefinite"/>
       </stop>
     </linearGradient>
     <linearGradient id="accentbar" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#c678dd"/>
       <stop offset="1" stop-color="#c678dd" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="tophl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="1.7" result="b"/>
@@ -34,29 +39,30 @@
   </defs>
   <rect x="2" y="2" width="996" height="146" rx="15" fill="url(#panel)"/>
   <rect x="6" y="6" width="988" height="138" rx="13" fill="url(#grid)"/><text x="24" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="64" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="24" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="154" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="284" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="414" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">−1</text><text x="544" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text><text x="674" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">+1</text><text x="804" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">1</text><text x="934" y="140" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#bb9af7" opacity="0.045">0</text>
+  <rect x="2" y="2" width="996" height="24" rx="15" fill="url(#tophl)"/>
   <rect x="2.5" y="2.5" width="995" height="145" rx="14" fill="none" stroke="url(#border)" stroke-width="2"/>
   <rect x="3.5" y="3.5" width="993" height="143" rx="13" fill="none" stroke="#292e42" stroke-width="1" opacity="0.6"/>
   <path d="M2 18 Q2 2 18 2" fill="none" stroke="#c678dd" stroke-width="2.4" opacity="0.9"/>
   <circle cx="24" cy="21" r="5.5" fill="#f7768e" opacity="0.92"/><circle cx="44" cy="21" r="5.5" fill="#e0af68" opacity="0.92"/><circle cx="64" cy="21" r="5.5" fill="#9ece6a" opacity="0.92"/>
   <text x="96" y="25" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="13" fill="#a9b1d6">~/now.vibe</text>
-  <circle cx="975" cy="21" r="3.5" fill="#c678dd"><animate attributeName="opacity" values="0.4;1;0.4" dur="2.2s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#565f89">refreshed 2026-06-14</text>
+  <circle cx="975" cy="21" r="3.5" fill="#c678dd"><animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#9aa5ce">refreshed 2026-07-19</text>
   <rect x="24" y="42" width="952" height="2" fill="url(#accentbar)"/>
   <g transform="translate(0,42)">
     
     
-        <text x="24" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#f7768e" letter-spacing="1">🎮 PLAYING</text>
-        <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Arknights: Endfield</text>
-        <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">running the Endfield night shift</text>
+    <text x="24" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#f7768e" letter-spacing="1">🎮 PLAYING</text>
+    <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Project Sekai</text>
+    <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">chasing the perfect full-combo</text>
     
-        <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#bb9af7" letter-spacing="1">🎧 ON LOOP</text>
-        <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Exyl</text>
-        <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">future-bass dopamine</text>
+    <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#bb9af7" letter-spacing="1">🎧 ON LOOP</text>
+    <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Chiru-San</text>
+    <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">on quiet loop</text>
     
-        <text x="680" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#7dcfff" letter-spacing="1">🛠 FOCUS</text>
-        <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">AmneziaWG-Architect</text>
-        <text x="680" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#565f89">where most changes land</text>
+    <text x="680" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#7dcfff" letter-spacing="1">🛠 FOCUS</text>
+    <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">aethelgard</text>
+    <text x="680" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">where most changes land</text>
     <line x1="24" y1="104" x2="976" y2="104" stroke="#292e42" stroke-width="1"/>
-    <text x="24" y="128" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="13" font-style="italic" fill="#e0af68">“Tiny stories between commits keep the compiler honest.”</text>
+    <text x="24" y="128" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="13" font-style="italic" fill="#e0af68">“I generate a billion ideas on the fly — time is the only bottleneck.”</text>
     
   </g>
 </svg>

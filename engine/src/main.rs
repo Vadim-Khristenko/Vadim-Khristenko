@@ -1,19 +1,20 @@
+mod art;
+mod cards;
+mod cli;
 mod config;
 mod log;
 mod model;
 mod paths;
 mod providers;
 mod readme;
+mod run;
 mod svg;
 mod theme;
 
-fn main() -> anyhow::Result<()> {
+fn main() {
     log::init();
-    let root = paths::repo_root()?;
-    let cfg = config::Config::load(&root.join("config"))?;
-    log::banner(
-        "VAI Profile Engine v3",
-        &format!("{} providers configured", cfg.providers.provider.len()),
-    );
-    Ok(())
+    if let Err(e) = cli::main() {
+        log::fail("engine", &format!("{e:#}"));
+        std::process::exit(1);
+    }
 }

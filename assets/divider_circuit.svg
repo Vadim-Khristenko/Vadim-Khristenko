@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="58" viewBox="0 0 1000 58" role="img" aria-label="Section divider">
+  <title>Section divider</title>
+  <defs>
+    <linearGradient id="trace_cc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1a1b26" stop-opacity="0"/>
+      <stop offset="0.2" stop-color="#dea584"/>
+      <stop offset="0.5" stop-color="#bb9af7"/>
+      <stop offset="0.8" stop-color="#7aa2f7"/>
+      <stop offset="1" stop-color="#1a1b26" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="dg_cc" x="-30%" y="-300%" width="160%" height="700%">
+      <feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    
+  </defs>
+  
+  <path d="M70,36 H260 V22 H430 V36 H620 V22 H790 V36 H930" fill="none" stroke="url(#trace_cc)" stroke-width="1.5" filter="url(#dg_cc)"/>
+  <path d="M70,36 H260 V22 H430 V36 H620 V22 H790 V36 H930" fill="none" stroke="#292e42" stroke-width="0.6" opacity="0.8"/>
+  <rect x="257.5" y="33.5" width="5" height="5" rx="1" fill="#15161e" stroke="#dea584" stroke-width="1.1"/><rect x="257.5" y="19.5" width="5" height="5" rx="1" fill="#15161e" stroke="#dea584" stroke-width="1.1"/><rect x="427.5" y="19.5" width="5" height="5" rx="1" fill="#15161e" stroke="#bb9af7" stroke-width="1.1"/><rect x="427.5" y="33.5" width="5" height="5" rx="1" fill="#15161e" stroke="#bb9af7" stroke-width="1.1"/><rect x="617.5" y="33.5" width="5" height="5" rx="1" fill="#15161e" stroke="#7dcfff" stroke-width="1.1"/><rect x="617.5" y="19.5" width="5" height="5" rx="1" fill="#15161e" stroke="#7dcfff" stroke-width="1.1"/><rect x="787.5" y="19.5" width="5" height="5" rx="1" fill="#15161e" stroke="#7aa2f7" stroke-width="1.1"/><rect x="787.5" y="33.5" width="5" height="5" rx="1" fill="#15161e" stroke="#7aa2f7" stroke-width="1.1"/>
+  <circle cx="70" cy="36" r="3.2" fill="#dea584" filter="url(#dg_cc)"/>
+  <circle cx="930" cy="36" r="3.2" fill="#7aa2f7" filter="url(#dg_cc)"/>
+  <circle r="2.6" fill="#9ece6a" filter="url(#dg_cc)">
+    <animateMotion dur="7s" repeatCount="indefinite" path="M70,36 H260 V22 H430 V36 H620 V22 H790 V36 H930"/>
+    <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;0.06;0.5;0.94;1" dur="7s" repeatCount="indefinite"/>
+  </circle>
+</svg>
