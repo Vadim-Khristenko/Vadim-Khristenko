@@ -2,6 +2,7 @@ mod config;
 mod log;
 mod model;
 mod paths;
+mod providers;
 
 fn main() -> anyhow::Result<()> {
     log::init();
