@@ -1,18 +1,21 @@
 <!-- ════════════════════════════════════════════════════════════════════════        -->
-<!--  This profile is ALIVE. The header, research card, stats, language chart,       -->
-<!--  game shelf, weekly vibe and footer below are rendered as Tokyo-Night SVG       -->
-<!--  "windows" by a custom, modular engine (scripts/build.py + scripts/engine).     -->
-<!--  Edit the prose freely. NEVER touch the <!-- ENGINE:* --> <!-- markers — the    -->
-<!--  engine owns whatever lives between each START/END pair.                        -->
+<!--  This profile is ALIVE. The header, research card, flagship builds, stats,       -->
+<!--  platform rollups, game shelf, weekly vibe and footer below are rendered as      -->
+<!--  Tokyo-Night SVG "windows" by a custom Rust engine (engine/ → vai-profile).      -->
+<!--  It aggregates GitHub + Codeberg + git.vai-rice.space, dedups mirrors, and       -->
+<!--  injects everything between the markers. Edit the prose freely. NEVER touch      -->
+<!--  the <!-- ENGINE:* --> <!-- markers — the engine owns whatever lives between     -->
+<!--  each START/END pair.                                                            -->
 <!-- ════════════════════════════════════════════════════════════════════════        -->
 
 <!-- ENGINE:HEADER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=697b568a63-69890" alt="Vadim Khristenko" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=bff8412a4b-69908" alt="Vadim Khristenko" width="100%"/>
 </p>
 <!-- ENGINE:HEADER:END -->
 
 <p align="center">
+  <a href="https://vai-rice.space"><img src="https://img.shields.io/badge/portfolio-vai--rice.space-dea584?style=for-the-badge&labelColor=1a1b26" alt="portfolio: vai-rice.space" /></a>
   <img src="https://komarev.com/ghpvc/?username=vadim-khristenko&label=PROFILE+VIEWS&color=dea584&style=for-the-badge" alt="profile views" />
   <img src="https://img.shields.io/badge/aliases-VAI__PROG%20·%20VAI%20·%20VOLT-bb9af7?style=for-the-badge&labelColor=1a1b26" alt="aliases" />
   <img src="https://img.shields.io/badge/primary-Rust-dea584?style=for-the-badge&logo=rust&logoColor=dea584&labelColor=1a1b26" alt="primary language: Rust" />
@@ -20,7 +23,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=3" width="100%" alt="" />
 </p>
 
 ## `whoami`
@@ -37,49 +40,50 @@ impl Developer for Vadim {
 
 I write code that is **practical and a little playful**. Backend services, bots that genuinely help people, and performance-sensitive systems are my day-to-day. These days **Rust** is my primary — I pair its zero-cost control with high-level velocity (**Python / TypeScript**) and drop into **C++ / Cython** when the profiler demands it, gluing everything together through clean APIs and lightweight ML. When the clock frees up I write short books, novellas and fanfics — tiny stories squeezed into the gaps between commits.
 
+**Why Rust first?** Because the borrow checker is the cheapest code reviewer I've ever hired: it charges nothing and never sleeps. Rust gives me C-grade performance with compiler-enforced memory safety, fearless concurrency, and binaries I can drop on any box in the fleet with zero runtime baggage — this very profile is rendered by a single Rust binary. **Where do C++ and Cython still win?** C++ when I need an existing ecosystem (game tooling, CUDA-adjacent code, decades of numeric libraries); Cython when a Python hot loop needs to become native *yesterday* without rewriting the world around it. Pick the tool by the constraint, not by the fashion.
+
 > I've seen and done a surprising amount for how little life I've spent so far — from the **banal** to the **completely insane**. I run servers under just about any OS, and the ideas arrive faster than any single timeframe can hold them.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 🏗️ Flagship Builds
 
-<table>
-<tr>
-<td width="50%" valign="top">
-<h3>🧱 The Wall Dev</h3>
-<a href="https://the-wall.vai-rice.space"><b>the-wall.vai-rice.space</b></a>
-<p>An extension built <b>for the <a href="https://twitch.tv/filian">Filian</a> community</b> — because if the VTuber world can run <em>Hole in the Wall</em>, the dev side deserves its own Wall too. Community tooling, done properly.</p>
-<sub><code>community</code> · <code>extension</code> · <code>filian</code></sub>
-</td>
-<td width="50%" valign="top">
-<h3>🛡️ AmneziaWG Architect</h3>
-<a href="https://architect.vai-rice.space"><b>architect.vai-rice.space</b></a> · ⭐ 218
-<p>A fully client-side generator of advanced obfuscation profiles for <b><a href="https://docs.amnezia.org">AmneziaWG</a></b> — traffic that mimics QUIC / TLS / SIP to slip past DPI in harsh internet climates. No server, no leaks.</p>
-<sub><code>vpn</code> · <code>wireguard</code> · <code>anti-censorship</code></sub>
-</td>
-</tr>
-</table>
+The engine looks these up **live** across every forge I publish on — stars and forks are summed over all mirrors, commits and language mix come from the canonical copy, and each row carries a 30-day health sparkline. Config, not screenshots: edit `config/flagship.toml` and the card follows.
 
-<sub>🎀 Bonus side-quest: the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC"><b>Hatsune Miku VS Code theme</b></a> — because the editor should match the playlist.</sub>
+<!-- ENGINE:FLAGSHIP:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/flagship.svg?v=659e02436d-69908" alt="Flagship projects with live stats" width="100%"/>
+</p>
+<!-- ENGINE:FLAGSHIP:END -->
+
+<sub>🧱 <a href="https://the-wall.vai-rice.space">The Wall Dev</a> is built <b>for the <a href="https://twitch.tv/filian">Filian</a> community</b> — if the VTuber world can run <em>Hole in the Wall</em>, the dev side deserves its own Wall. 🛡️ <a href="https://architect.vai-rice.space">AmneziaWG Architect</a> generates DPI-evasion profiles for <a href="https://docs.amnezia.org">AmneziaWG</a> fully client-side: no server, no leaks. 🎀 And yes, the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC">Hatsune Miku VS Code theme</a> exists because the editor should match the playlist.</sub>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 🔬 Active Research
 
 <!-- ENGINE:RESEARCH:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=2fba948c90-69890" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=e1ea455a46-69908" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
 </p>
 <!-- ENGINE:RESEARCH:END -->
 
-I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture for a **low-bit agentic reasoning model** with **verifiable training**, **hierarchical reinforcement learning**, and **domain specialization for software engineering**. Weights live in ternary space `{-1, 0, +1}` (≈1.58 bits) — the texture flickering across the cards above is that idea made visible.
+I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture for a **low-bit agentic reasoning model** with **verifiable training**, **hierarchical reinforcement learning**, and **domain specialization for software engineering**. Weights live in ternary space `{-1, 0, +1}` (≈1.58 bits per weight — hence the name) — the texture flickering across the cards above is that idea made visible.
+
+**Why ternary?** A weight that can only be −1, 0 or +1 turns most multiplications into additions, and a zero into *nothing at all*. That means dramatically cheaper inference — the kind you can run on your own fleet instead of renting a datacenter — *if* you can train it without falling off the accuracy cliff. That "if" is the research. The learning card below tracks where the programme actually stands, phase by phase, straight from config — measured in shipped experiments, not vibes:
+
+<!-- ENGINE:LEARNING:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/learning.svg?v=5c24fab4ed-69908" alt="Now learning and building" width="100%"/>
+</p>
+<!-- ENGINE:LEARNING:END -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_pulse.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 🏆 Trophy Case
@@ -91,7 +95,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 | 🏅 | **«Высшая проба» (HSE Olympiad)** | **Finalist across several profiles** — breadth on purpose, not by accident. |
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 🛠️ Tech Arsenal
@@ -120,7 +124,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 </details>
 
 <details open>
-<summary><b>Data, Infra & DevOps</b> — Linux & Windows fleets</summary>
+<summary><b>Data, Infra & DevOps</b> — Linux & Windows fleets, plus a self-hosted Forgejo</summary>
 <p>
   <img alt="Postgres" src="https://img.shields.io/badge/Postgres-1a1b26?style=for-the-badge&logo=postgresql&logoColor=7aa2f7" />
   <img alt="Redis" src="https://img.shields.io/badge/Redis-1a1b26?style=for-the-badge&logo=redis&logoColor=f7768e" />
@@ -128,6 +132,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
   <img alt="Cassandra" src="https://img.shields.io/badge/Cassandra-1a1b26?style=for-the-badge&logo=apache-cassandra&logoColor=7dcfff" />
   <img alt="RabbitMQ" src="https://img.shields.io/badge/RabbitMQ-1a1b26?style=for-the-badge&logo=rabbitmq&logoColor=ff9e64" />
   <img alt="Docker" src="https://img.shields.io/badge/Docker-1a1b26?style=for-the-badge&logo=docker&logoColor=7dcfff" />
+  <img alt="Forgejo" src="https://img.shields.io/badge/Forgejo-1a1b26?style=for-the-badge&logo=forgejo&logoColor=ff9e64" />
   <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-1a1b26?style=for-the-badge&logo=githubactions&logoColor=7aa2f7" />
   <img alt="nginx" src="https://img.shields.io/badge/nginx-1a1b26?style=for-the-badge&logo=nginx&logoColor=9ece6a" />
   <img alt="Linux" src="https://img.shields.io/badge/Linux-1a1b26?style=for-the-badge&logo=linux&logoColor=e0af68" />
@@ -135,40 +140,40 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 </details>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 🧠 The AI Lab
 
-I don't just *use* models — I've **shipped with the ecosystems behind them**: fine-tuning, prompt engineering, and efficient inference pipelines wired into real services.
+I don't just *use* models — I've **shipped with the ecosystems behind them**: fine-tuning, prompt engineering, and efficient inference pipelines wired into real services. The current bench:
 
 <p>
-  <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-1a1b26?style=for-the-badge&logo=anthropic&logoColor=c0caf5" />
-  <img alt="DeepSeek" src="https://img.shields.io/badge/DeepSeek-1a1b26?style=for-the-badge&logo=deepseek&logoColor=7aa2f7" />
-  <img alt="Kimi (Moonshot)" src="https://img.shields.io/badge/Kimi%20·%20Moonshot-1a1b26?style=for-the-badge&logoColor=c0caf5" />
-  <img alt="Qwen (Alibaba)" src="https://img.shields.io/badge/Qwen%20·%20Alibaba-1a1b26?style=for-the-badge&logo=alibabacloud&logoColor=ff9e64" />
-  <img alt="MiMo (Xiaomi)" src="https://img.shields.io/badge/MiMo%20·%20Xiaomi-1a1b26?style=for-the-badge&logo=xiaomi&logoColor=ff9e64" />
-  <img alt="OpenAI" src="https://img.shields.io/badge/OpenAI-1a1b26?style=for-the-badge&logo=openai&logoColor=c0caf5" />
+  <img alt="Fable 5" src="https://img.shields.io/badge/Fable%205-1a1b26?style=for-the-badge&logo=anthropic&logoColor=dea584" />
+  <img alt="GPT 5.6 Sol" src="https://img.shields.io/badge/GPT%205.6%20Sol-1a1b26?style=for-the-badge&logo=openai&logoColor=c0caf5" />
+  <img alt="Grok 4.5" src="https://img.shields.io/badge/Grok%204.5-1a1b26?style=for-the-badge&logo=x&logoColor=c0caf5" />
+  <img alt="Kimi K3" src="https://img.shields.io/badge/Kimi%20K3-1a1b26?style=for-the-badge&logoColor=7aa2f7" />
+  <img alt="Qwen 3.8 Max" src="https://img.shields.io/badge/Qwen%203.8%20Max-1a1b26?style=for-the-badge&logo=alibabacloud&logoColor=ff9e64" />
+  <img alt="MiMo V2.5 Pro" src="https://img.shields.io/badge/MiMo%20V2.5%20Pro-1a1b26?style=for-the-badge&logo=xiaomi&logoColor=ff9e64" />
 </p>
 
-**Favourite companions right now** — `Qwen 3.7 Max` · `MiMo V2.5 Pro` · `Claude Fable 5`.
+**Favourite companions right now** — `Fable 5` · `Qwen 3.8 Max` · `MiMo V2.5 Pro`.
 > ⚠️ Note the word *companions*: I keep these as **light copilots / sparring partners**, not as an active vibe-coding autopilot. The thinking stays mine; they just keep good company.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 🎮 Off the Clock
 
 <!-- ENGINE:BESTGAME:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=418e12d90d-69890" alt="Best game" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=983d624a83-69908" alt="Best game" width="100%"/>
 </p>
 <!-- ENGINE:BESTGAME:END -->
 
 <!-- ENGINE:GAMES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=ff8c492c48-69890" alt="Now playing" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=a162f605aa-69908" alt="Now playing" width="100%"/>
 </p>
 <!-- ENGINE:GAMES:END -->
 
@@ -177,12 +182,12 @@ I don't just *use* models — I've **shipped with the ecosystems behind them**: 
 
 <!-- ENGINE:VIBE:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/vibe.svg?v=0d52a30b40-69890" alt="Current vibe" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/vibe.svg?v=655ece8e0a-69908" alt="Current vibe" width="100%"/>
 </p>
 <!-- ENGINE:VIBE:END -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_pulse.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 📮 Reach Me — the Inbox Router
@@ -198,7 +203,9 @@ Primary address: **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** — I r
 | ✉️ Everything else | **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** |
 
 <p>
+  <a href="https://vai-rice.space"><img src="https://img.shields.io/badge/Portfolio-1a1b26?style=for-the-badge&logo=firefoxbrowser&logoColor=dea584" alt="Portfolio" /></a>
   <a href="https://github.com/Vadim-Khristenko"><img src="https://img.shields.io/badge/GitHub-1a1b26?style=for-the-badge&logo=github&logoColor=c0caf5" alt="GitHub" /></a>
+  <a href="https://git.vai-rice.space/VAI_PROG"><img src="https://img.shields.io/badge/VAI%20Git-1a1b26?style=for-the-badge&logo=forgejo&logoColor=dea584" alt="VAI Git (Forgejo)" /></a>
   <a href="https://codeberg.org/VAI_PROG"><img src="https://img.shields.io/badge/Codeberg-1a1b26?style=for-the-badge&logo=codeberg&logoColor=2185d0" alt="Codeberg" /></a>
   <a href="https://twitch.tv/VAI_PROG"><img src="https://img.shields.io/badge/Twitch-1a1b26?style=for-the-badge&logo=twitch&logoColor=bb9af7" alt="Twitch" /></a>
   <a href="https://x.com/VAI_PROG"><img src="https://img.shields.io/badge/X-1a1b26?style=for-the-badge&logo=x&logoColor=c0caf5" alt="X" /></a>
@@ -209,20 +216,31 @@ Primary address: **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** — I r
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=202624" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=3" width="100%" alt="" />
 </p>
 
 ## 📊 Live Telemetry
 
+One number can lie; a fleet of them lies less. Everything below is pulled fresh by the engine from **three forges at once** — GitHub, Codeberg and my own `git.vai-rice.space` — with mirrors deduplicated so the code is counted once while every platform's stars still count. That's also why the numbers here can be *bigger and more honest* than any single-site widget.
+
 <!-- ENGINE:STATS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=2e92fcef50-69890" alt="Live telemetry: stats, activity, languages" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=682fc78da2-69908" alt="Live telemetry: stats, activity, languages" width="100%"/>
 </p>
 <!-- ENGINE:STATS:END -->
 
+<!-- ENGINE:PLATFORMS:START -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms_all.svg?v=3dbe6acf6a-69908" alt="All platforms combined" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_vai-git.svg?v=3c2bb1ed9f-69908" alt="Platform stats: vai-git" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_github.svg?v=1339c770ac-69908" alt="Platform stats: github" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_codeberg.svg?v=8de5a2519a-69908" alt="Platform stats: codeberg" width="100%"/>
+</p>
+<!-- ENGINE:PLATFORMS:END -->
+
 <!-- ENGINE:FOOTER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=b6d865b62e-69890" alt="Generated by the VAI Profile Engine" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=b4e134421a-69908" alt="Generated by the VAI Profile Engine" width="100%"/>
 </p>
 <!-- ENGINE:FOOTER:END -->
 
