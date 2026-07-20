@@ -54,13 +54,13 @@
     <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Honkai: Star Rail</text>
     <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">may this journey lead us starward</text>
     
-    <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#bb9af7" letter-spacing="1">🎧 NOW PLAYING</text>
-    <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Rabbit Hole</text>
-    <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">Deco*27 · via Last.fm</text>
-    <rect x="616" y="42" width="3.4" height="4" rx="1.5" fill="#bb9af7"><animate attributeName="height" values="4;13;4" dur="0.95s" begin="0.00s" repeatCount="indefinite"/><animate attributeName="y" values="42;33;42" dur="0.95s" begin="0.00s" repeatCount="indefinite"/></rect><rect x="623" y="42" width="3.4" height="4" rx="1.5" fill="#bb9af7"><animate attributeName="height" values="4;13;4" dur="0.95s" begin="0.24s" repeatCount="indefinite"/><animate attributeName="y" values="42;33;42" dur="0.95s" begin="0.24s" repeatCount="indefinite"/></rect><rect x="630" y="42" width="3.4" height="4" rx="1.5" fill="#bb9af7"><animate attributeName="height" values="4;13;4" dur="0.95s" begin="0.48s" repeatCount="indefinite"/><animate attributeName="y" values="42;33;42" dur="0.95s" begin="0.48s" repeatCount="indefinite"/></rect>
+    <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#bb9af7" letter-spacing="1">🎧 LAST PLAYED</text>
+    <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">CALL ME</text>
+    <text x="360" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">likitty · via Last.fm</text>
+    
     
     <text x="680" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#7dcfff" letter-spacing="1">🛠 FOCUS</text>
-    <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">aethelgard</text>
+    <text x="680" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Vadim-Khristenko.github.io</text>
     <text x="680" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">where most changes land</text>
     <line x1="24" y1="104" x2="976" y2="104" stroke="#292e42" stroke-width="1"/>
     <text x="24" y="128" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="13" font-style="italic" fill="#e0af68">“I generate a billion ideas on the fly — time is the only bottleneck.”</text>
