@@ -23,7 +23,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=4" width="100%" alt="" />
 </p>
 
 ## `whoami`
@@ -45,7 +45,7 @@ I write code that is **practical and a little playful**. Backend services, bots 
 > I've seen and done a surprising amount for how little life I've spent so far — from the **banal** to the **completely insane**. I run servers under just about any OS, and the ideas arrive faster than any single timeframe can hold them.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_editor.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 🏗️ Flagship Builds
@@ -61,7 +61,7 @@ The engine looks these up **live** across every forge I publish on — stars and
 <sub>🧱 <a href="https://the-wall.vai-rice.space">The Wall Dev</a> is built <b>for the <a href="https://twitch.tv/filian">Filian</a> community</b> — if the VTuber world can run <em>Hole in the Wall</em>, the dev side deserves its own Wall. 🛡️ <a href="https://architect.vai-rice.space">AmneziaWG Architect</a> generates DPI-evasion profiles for <a href="https://docs.amnezia.org">AmneziaWG</a> fully client-side: no server, no leaks. 🎀 And yes, the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC">Hatsune Miku VS Code theme</a> exists because the editor should match the playlist.</sub>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 🔬 Active Research
@@ -83,7 +83,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 <!-- ENGINE:LEARNING:END -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_pulse.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_pulse.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 🏆 Trophy Case
@@ -95,7 +95,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 | 🏅 | **«Высшая проба» (HSE Olympiad)** | **Finalist across several profiles** — breadth on purpose, not by accident. |
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_editor.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 🛠️ Tech Arsenal
@@ -140,7 +140,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 </details>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 🧠 The AI Lab
@@ -160,7 +160,7 @@ I don't just *use* models — I've **shipped with the ecosystems behind them**: 
 > ⚠️ Note the word *companions*: I keep these as **light copilots / sparring partners**, not as an active vibe-coding autopilot. The thinking stays mine; they just keep good company.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 🎮 Off the Clock
@@ -187,7 +187,7 @@ I don't just *use* models — I've **shipped with the ecosystems behind them**: 
 <!-- ENGINE:VIBE:END -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_pulse.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_pulse.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 📮 Reach Me — the Inbox Router
@@ -216,7 +216,7 @@ Primary address: **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** — I r
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=3" width="100%" alt="" />
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider.svg?v=4" width="100%" alt="" />
 </p>
 
 ## 📊 Live Telemetry

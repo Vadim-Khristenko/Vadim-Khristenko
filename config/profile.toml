@@ -281,6 +281,22 @@ server = "Global"
 game_id = "12405515"
 blurb = "My main since launch — holding the surface against the Raptures."
 
+# Free-form labelled stats for the spotlight card. `value` is any string;
+# add numeric `current` + `max` instead to get a micro progress bar
+# (value defaults to "current/max" when omitted).
+[[best_game.extra]]
+label = "Friends"
+current = 30
+max = 30
+
+[[best_game.extra]]
+label = "Playing since"
+value = "launch day"
+
+[[best_game.extra]]
+label = "Outpost"
+value = "always defended"
+
 [[best_game.characters]]
 name = "Rapi: Red Hood"
 short = "Red Hood"

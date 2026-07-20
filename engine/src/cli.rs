@@ -195,9 +195,15 @@ fn preview(ctx: &run::Ctx, only: Option<&BTreeSet<String>>, no_open: bool) -> Re
         }
         match *card {
             "divider" => names.extend(
-                ["divider", "divider_wave", "divider_circuit", "divider_pulse"]
-                    .iter()
-                    .map(|s| s.to_string()),
+                [
+                    "divider",
+                    "divider_wave",
+                    "divider_circuit",
+                    "divider_pulse",
+                    "divider_editor",
+                ]
+                .iter()
+                .map(|s| s.to_string()),
             ),
             "platforms" => names.extend(run::platform_assets(ctx).iter().map(|n| n.trim_end_matches(".svg").to_string())),
             other => names.push(other.to_string()),

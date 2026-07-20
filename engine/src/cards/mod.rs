@@ -2,6 +2,9 @@
 //! returning one or more `(file_name, svg)` pairs, every one `CARD_W` wide so
 //! the README stacks pixel-uniform on mobile.
 
+#[cfg(test)]
+mod overflow_tests;
+
 pub mod bestgame;
 pub mod dashboard;
 pub mod divider;
