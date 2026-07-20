@@ -2,7 +2,7 @@
 //! tagline, "known for" chips fed by the flagship config.
 
 use crate::run::Ctx;
-use crate::svg::esc;
+use crate::svg::{esc, fit_text};
 use crate::theme as t;
 use crate::theme::{CardSpec, Texture};
 use anyhow::Result;
@@ -15,6 +15,9 @@ fn alias_rotator(aliases: &[String], x: u32, y: u32) -> String {
     let cf = 0.03;
     let mut nodes = String::new();
     for (i, alias) in aliases.iter().enumerate() {
+        // The rotator sits left of the vertical divider at x=704 (abs); its
+        // group is translated by 64, so the budget is 704 − 64 − x.
+        let alias = fit_text(alias, 704.0 - 64.0 - x as f64, 27.0, true);
         let s = i as f64 / n as f64;
         let e = (i + 1) as f64 / n as f64;
         let (kt, kv): (Vec<f64>, Vec<u8>) = if i == 0 {
@@ -36,7 +39,7 @@ fn alias_rotator(aliases: &[String], x: u32, y: u32) -> String {
             mono = t::MONO,
             col = t::ORANGE,
             op = kv[0],
-            alias = esc(alias),
+            alias = esc(&alias),
             values = kv_s.join(";"),
             keytimes = kt.join(";"),
         ));
@@ -47,7 +50,7 @@ fn alias_rotator(aliases: &[String], x: u32, y: u32) -> String {
 pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     let w = t::CARD_W;
     let h = 300;
-    let name = &ctx.cfg.profile.name;
+    let name = fit_text(&ctx.cfg.profile.name, 704.0 - t::MARGIN as f64, 44.0, true);
     // Underline spans the full rendered name (≈ monospace advance × chars).
     // Static-first: full width at rest, with a soft shimmer instead of a grow.
     let underline_w = (name.chars().count() as f64 * 25.6).round() as u32;
@@ -58,7 +61,7 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
             cy = y - 5,
             mono = t::MONO,
             fgd = t::FG_DIM,
-            label = esc(label),
+            label = esc(&fit_text(label, (w - t::MARGIN) as f64 - 740.0, 14.0, true)),
         )
     };
 
@@ -111,7 +114,7 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
         orange = t::ORANGE,
         rust = t::RUST,
         bghl = t::BG_HL,
-        name = esc(name),
+        name = esc(&name),
         m2 = m + 2,
         mx34 = m + 34,
         mx112 = m + 112,

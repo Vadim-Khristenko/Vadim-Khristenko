@@ -30,6 +30,27 @@ pub struct Ctx {
     pub raw_base: String,
 }
 
+impl Ctx {
+    /// Is this card enabled? (`[cards.<name>] enabled = false` disables it.)
+    pub fn card_enabled(&self, name: &str) -> bool {
+        self.cfg
+            .profile
+            .cards
+            .get(name)
+            .map_or(true, |tw| tw.enabled)
+    }
+
+    /// The card's accent colour: config override, else the given default.
+    pub fn accent(&self, name: &str, default: &str) -> String {
+        self.cfg
+            .profile
+            .cards
+            .get(name)
+            .and_then(|tw| tw.accent.clone())
+            .unwrap_or_else(|| default.to_string())
+    }
+}
+
 /// A card module: name (for `--only`) + builder returning ≥1 (file, svg) pair.
 type CardFn = fn(&Ctx) -> Result<Vec<(String, String)>>;
 
@@ -48,7 +69,12 @@ pub const CARDS: &[(&str, CardFn)] = &[
 ];
 
 pub fn build_context(fixtures: bool) -> Result<Ctx> {
-    let root = crate::paths::repo_root()?;
+    build_context_at(crate::paths::repo_root()?, fixtures)
+}
+
+/// Build the full render context rooted at an explicit repo directory —
+/// `build_context` for normal runs, direct calls from tests.
+pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
     let cfg = Config::load(&root.join("config"))?;
 
     let now = Utc::now();
@@ -111,6 +137,10 @@ pub fn render(ctx: &Ctx, only: Option<&BTreeSet<String>>) -> Vec<String> {
             if !only.contains(*name) {
                 continue;
             }
+        }
+        if !ctx.card_enabled(name) {
+            log::warn(&format!("{name}: disabled via [cards.{name}] — skipped"));
+            continue;
         }
         match builder(ctx) {
             Ok(outputs) => {

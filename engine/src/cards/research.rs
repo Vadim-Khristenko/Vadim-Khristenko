@@ -2,7 +2,7 @@
 //! cells. Every state is legible at rest; the flicker only recolours.
 
 use crate::run::Ctx;
-use crate::svg::esc;
+use crate::svg::{esc, fit_text};
 use crate::theme as t;
 use crate::theme::{CardSpec, Texture};
 use anyhow::Result;
@@ -71,11 +71,23 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     let h = 256;
     let r = &ctx.cfg.profile.research;
 
+    // Tag chips flow left→right and STOP before the weight lattice; a "+N"
+    // marker owns whatever doesn't fit instead of running under the grid.
+    let chips_end = (w - 245 - 16) as f64;
     let mut chips = String::new();
     let mut cx = 40f64;
     let cy = 196;
-    for tag in &r.tags {
-        let tw = 14.0 + tag.chars().count() as f64 * 7.4;
+    for (i, tag) in r.tags.iter().enumerate() {
+        let tw = 20.0 + crate::svg::text_width_px(tag, 12.0, true);
+        if cx + tw > chips_end {
+            let left = r.tags.len() - i;
+            chips.push_str(&format!(
+                r#"<text x="{cx:.0}" y="{cy}" font-family="{mono}" font-size="12" fill="{muted}">+{left} more</text>"#,
+                mono = t::MONO,
+                muted = t::MUTED,
+            ));
+            break;
+        }
         chips.push_str(&format!(
             r#"<rect x="{cx:.0}" y="{ry}" width="{tw:.0}" height="24" rx="12" fill="{bghl}" stroke="{purple}" stroke-width="0.8" opacity="0.9"/><text x="{tx:.0}" y="{cy}" text-anchor="middle" font-family="{mono}" font-size="12" fill="{fgd}">{tag}</text>"#,
             ry = cy - 16,
@@ -110,10 +122,10 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
         fgd = t::FG_DIM,
         muted = t::MUTED,
         bghl = t::BG_HL,
-        name = esc(&r.name),
-        subtitle = esc(&r.subtitle),
-        line1 = esc(&line1),
-        line2 = esc(&line2),
+        name = esc(&fit_text(&r.name, (w - 245 - 56) as f64, 29.0, true)),
+        subtitle = esc(&fit_text(&r.subtitle, (w - 245 - 56) as f64, 14.0, true)),
+        line1 = esc(&fit_text(&line1, (w - 245 - 56) as f64, 13.0, false)),
+        line2 = esc(&fit_text(&line2, (w - 245 - 56) as f64, 13.0, false)),
         wx = w - 245,
         grid = weight_grid(w - 245, 56, 10, 5),
     );

@@ -107,8 +107,10 @@ mod tests {
         assert_eq!(cfg.providers.provider.len(), 3);
         assert!(cfg.providers.provider.iter().any(|p| p.id == "vai-git" && p.primary));
         assert!(cfg.flagship.project.len() >= 4);
-        assert_eq!(cfg.profile.ai.models.len(), 6);
-        assert_eq!(cfg.profile.ai.favourites.len(), 3);
+        // The editorial lists are user-tuned — assert shape, not exact counts.
+        assert!(!cfg.profile.ai.models.is_empty());
+        assert!(!cfg.profile.ai.favourites.is_empty());
+        assert!(cfg.profile.ai.favourites.len() <= cfg.profile.ai.models.len());
     }
 
     #[test]

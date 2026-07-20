@@ -5,7 +5,7 @@
 
 use crate::model::{format_count, FlagshipLive};
 use crate::run::Ctx;
-use crate::svg::esc;
+use crate::svg::{esc, fit_text, text_width_px};
 use crate::theme as t;
 use crate::theme::{CardSpec, Texture};
 use anyhow::Result;
@@ -84,52 +84,54 @@ fn row(p: &FlagshipLive, y: u32, w: u32) -> String {
     let accent = p.accent.as_deref().unwrap_or(t::RUST);
     let mut out = String::new();
 
-    // Identity column.
+    // Identity column: x ∈ [m+26, ID_END]. Everything is width-capped.
+    const ID_END: f64 = 584.0;
+    let nx = m + 26.0;
+    let name = fit_text(&p.name, ID_END - nx - 90.0, 18.0, true);
     write!(
         out,
         r#"<path d="M{dx},{dy} l6,6 l-6,6 l-6,-6 z" fill="{accent}"/><text x="{nx:.0}" y="{ny}" font-family="{mono}" font-size="18" font-weight="800" fill="{fg}">{name}</text>"#,
         dx = t::MARGIN + 6,
         dy = y + 22,
-        nx = m + 26.0,
         ny = y + 34,
         mono = t::MONO,
         fg = t::FG,
-        name = esc(&p.name),
+        name = esc(&name),
     )
     .unwrap();
     if let Some(source) = &p.source {
+        let x = nx + text_width_px(&name, 18.0, true) + 10.0;
+        let via = fit_text(&format!("· via {source}"), ID_END - x, 11.0, true);
         write!(
             out,
-            r#"<text x="{x:.0}" y="{ny}" font-family="{mono}" font-size="11" fill="{muted}">· via {source}</text>"#,
+            r#"<text x="{x:.0}" y="{ny}" font-family="{mono}" font-size="11" fill="{muted}">{via}</text>"#,
             mono = t::MONO,
-            x = m + 30.0 + p.name.chars().count() as f64 * 11.3,
             ny = y + 33,
             muted = t::MUTED,
-            source = esc(source),
+            via = esc(&via),
         )
         .unwrap();
     }
     if let Some(site) = &p.site {
         let display = site.trim_start_matches("https://").trim_start_matches("http://");
+        let display = fit_text(&format!("↗ {display}"), ID_END - nx, 12.0, true);
         write!(
             out,
-            r#"<text x="{nx:.0}" y="{sy}" font-family="{mono}" font-size="12" fill="{cyan}">↗ {display}</text>"#,
+            r#"<text x="{nx:.0}" y="{sy}" font-family="{mono}" font-size="12" fill="{cyan}">{display}</text>"#,
             mono = t::MONO,
-            nx = m + 26.0,
             sy = y + 56,
             cyan = t::CYAN,
-            display = esc(display),
+            display = esc(&display),
         )
         .unwrap();
     }
     write!(
         out,
         r#"<text x="{nx:.0}" y="{by}" font-family="{sans}" font-size="12.5" fill="{fgd}">{blurb}</text>"#,
-        nx = m + 26.0,
         by = y + 78,
         sans = t::SANS,
         fgd = t::FG_DIM,
-        blurb = esc(&p.blurb),
+        blurb = esc(&fit_text(&p.blurb, ID_END - nx, 12.5, false)),
     )
     .unwrap();
     let tags: String = p.tags.iter().map(|tag| format!("#{tag}")).collect::<Vec<_>>().join("  ");
@@ -137,36 +139,39 @@ fn row(p: &FlagshipLive, y: u32, w: u32) -> String {
         out,
         r#"<text x="{nx:.0}" y="{ty}" font-family="{mono}" font-size="11" fill="{muted}">{tags}</text>"#,
         mono = t::MONO,
-        nx = m + 26.0,
         ty = y + 100,
         muted = t::MUTED,
-        tags = esc(&tags),
+        tags = esc(&fit_text(&tags, ID_END - nx, 11.0, true)),
     )
     .unwrap();
 
-    // Live-stats column.
+    // Live-stats column: four FIXED slots so huge numbers can't push their
+    // neighbours (or the card edge) — each value is width-capped to its slot.
     let sx = 596.0;
     let sw = w as f64 - sx - m;
     if p.repo.is_some() {
         let stats = [
-            ("★", format_count(Some(p.stars)), t::YELLOW),
-            ("⑂", format_count(Some(p.forks)), t::BLUE),
-            ("⧗", format!("{} commits", format_count(p.pulse.total_commits)), t::GREEN),
-            ("◌", format!("{} open", p.open_items), t::RED),
+            ("★", format_count(Some(p.stars)), "stars", t::YELLOW),
+            ("⑂", format_count(Some(p.forks)), "forks", t::BLUE),
+            ("⧗", format_count(p.pulse.total_commits), "commits", t::GREEN),
+            ("◌", format_count(Some(p.open_items)), "open", t::RED),
         ];
-        let mut cx = sx;
-        for (icon, value, col) in stats {
+        let slot = sw / stats.len() as f64;
+        for (i, (icon, value, label, col)) in stats.iter().enumerate() {
+            let cx = sx + i as f64 * slot;
+            let value = fit_text(value, slot - 26.0, 14.0, true);
             write!(
                 out,
-                r#"<text x="{cx:.0}" y="{sy}" font-family="{mono}" font-size="13" fill="{col}">{icon}</text><text x="{vx:.0}" y="{sy}" font-family="{mono}" font-size="13.5" font-weight="700" fill="{fg}">{value}</text>"#,
-                sy = y + 36,
+                r#"<text x="{cx:.0}" y="{sy}" font-family="{mono}" font-size="13" fill="{col}">{icon}</text><text x="{vx:.0}" y="{sy}" font-family="{mono}" font-size="14" font-weight="700" fill="{fg}">{value}</text><text x="{vx:.0}" y="{ly}" font-family="{mono}" font-size="10" fill="{muted}">{label}</text>"#,
+                sy = y + 30,
+                ly = y + 44,
                 vx = cx + 18.0,
                 fg = t::FG,
+                muted = t::MUTED,
                 mono = t::MONO,
                 value = esc(&value),
             )
             .unwrap();
-            cx += 22.0 + value.chars().count() as f64 * 8.6 + 14.0;
         }
         let langs: Vec<(String, u64)> = {
             let mut v: Vec<(String, u64)> = p.langs.iter().map(|(k, b)| (k.clone(), *b)).collect();

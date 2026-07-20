@@ -4,7 +4,7 @@
 
 use crate::model::format_count;
 use crate::run::Ctx;
-use crate::svg::esc;
+use crate::svg::{esc, fit_text};
 use crate::theme as t;
 use crate::theme::{CardSpec, Texture};
 use anyhow::Result;
@@ -92,7 +92,51 @@ fn weekday_rhythm(totals: &[u64; 7], x0: f64, x1: f64, label_y: u32, base_y: f64
     out
 }
 
-fn lang_radar(items: &[(String, u64)], label_x: f64, label_y: u32, cx: f64, cy: f64, r: f64) -> String {
+/// How many top languages the bar/legend/radar show before the rest collapse
+/// into a single aggregated "Others" bucket.
+const TOP_LANGS: usize = 8;
+
+/// Top `TOP_LANGS` languages (Rust pinned first) + an aggregated "Others"
+/// bucket summing everything else. Shared by the stacked bar AND the radar so
+/// the two views always tell the same story.
+pub fn top_langs_plus_others(lang_bytes: &std::collections::BTreeMap<String, u64>) -> Vec<(String, u64)> {
+    let mut all: Vec<(String, u64)> = lang_bytes.iter().map(|(k, v)| (k.clone(), *v)).collect();
+    all.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
+    if let Some(pos) = all.iter().position(|kv| kv.0 == "Rust") {
+        let rust = all.remove(pos);
+        all.insert(0, rust);
+    }
+    let others: u64 = all.iter().skip(TOP_LANGS).map(|kv| kv.1).sum();
+    let mut items: Vec<(String, u64)> = all.into_iter().take(TOP_LANGS).collect();
+    if others > 0 {
+        items.push(("Others".into(), others));
+    }
+    items
+}
+
+fn radar_color(lang: &str) -> &'static str {
+    if lang == "Others" {
+        t::COMMENT
+    } else {
+        t::lang_color(lang)
+    }
+}
+
+/// Language radar with overlap-proof labels: each label sits on a radial
+/// offset OUTSIDE the polygon, is anchored by quadrant (left half anchors end,
+/// right half anchors start, poles center) so it always grows AWAY from the
+/// chart, gets a vertical nudge above/below at the poles, and is width-capped
+/// against the zone bounds so neighbours can never collide.
+fn lang_radar(
+    items: &[(String, u64)],
+    label_x: f64,
+    label_y: u32,
+    cx: f64,
+    cy: f64,
+    r: f64,
+    zone_left: f64,
+    zone_right: f64,
+) -> String {
     let mut out = format!(
         r#"<text x="{label_x:.0}" y="{label_y}" font-family="{mono}" font-size="12" fill="{muted}" letter-spacing="1">LANGUAGE RADAR · share of bytes</text>"#,
         mono = t::MONO,
@@ -101,7 +145,7 @@ fn lang_radar(items: &[(String, u64)], label_x: f64, label_y: u32, cx: f64, cy: 
     if items.is_empty() {
         return out;
     }
-    let n = items.len().min(6);
+    let n = items.len().min(9);
     let total: u64 = items.iter().map(|kv| kv.1).sum::<u64>().max(1);
     let max = items.iter().take(n).map(|kv| kv.1).max().unwrap_or(1).max(1);
     let angle = |i: usize| -std::f64::consts::FRAC_PI_2 + i as f64 * std::f64::consts::TAU / n as f64;
@@ -119,28 +163,49 @@ fn lang_radar(items: &[(String, u64)], label_x: f64, label_y: u32, cx: f64, cy: 
             t::BG_HL,
         ));
     }
-    // Axes + labels
+    // Axes + quadrant-anchored labels.
+    const FS: f64 = 11.0;
     for (i, (lang, bytes)) in items.iter().take(n).enumerate() {
         let a = angle(i);
-        let (ex, ey) = (cx + r * a.cos(), cy + r * a.sin());
+        let (dx, dy) = (a.cos(), a.sin());
+        let (ex, ey) = (cx + r * dx, cy + r * dy);
         out.push_str(&format!(
             r#"<line x1="{cx:.1}" y1="{cy:.1}" x2="{ex:.1}" y2="{ey:.1}" stroke="{bghl}" stroke-width="0.8" opacity="0.6"/>"#,
             bghl = t::BG_HL,
         ));
-        let (lx, ly) = (cx + (r + 22.0) * a.cos(), cy + (r + 22.0) * a.sin() + 4.0);
-        let anchor = if lx < cx - 5.0 {
-            "end"
-        } else if lx > cx + 5.0 {
+        let lx = cx + (r + 16.0) * dx;
+        let mut ly = cy + (r + 16.0) * dy;
+        // Baseline nudge: above the chart near the top pole, below near the
+        // bottom pole, vertically centred on the sides.
+        ly += if dy < -0.35 {
+            -4.0
+        } else if dy > 0.35 {
+            10.0
+        } else {
+            4.0
+        };
+        let anchor = if dx > 0.30 {
             "start"
+        } else if dx < -0.30 {
+            "end"
         } else {
             "middle"
         };
+        // Cap the label so it stays inside the zone on its growth side —
+        // labels on opposite sides grow away from each other and can't meet.
+        let max_w = match anchor {
+            "start" => zone_right - lx,
+            "end" => lx - zone_left,
+            _ => 2.0 * (zone_right - lx).min(lx - zone_left),
+        }
+        .max(20.0);
         let pct = *bytes as f64 / total as f64 * 100.0;
+        let label = fit_text(&format!("{lang} {pct:.0}%"), max_w, FS, true);
         out.push_str(&format!(
-            r#"<text x="{lx:.1}" y="{ly:.1}" text-anchor="{anchor}" font-family="{mono}" font-size="11" fill="{fgd}">{lang} {pct:.0}%</text>"#,
+            r#"<text x="{lx:.1}" y="{ly:.1}" text-anchor="{anchor}" font-family="{mono}" font-size="{FS}" fill="{fgd}">{label}</text>"#,
             mono = t::MONO,
             fgd = t::FG_DIM,
-            lang = esc(lang),
+            label = esc(&label),
         ));
     }
     // Value polygon (sqrt for perceptual area)
@@ -153,7 +218,7 @@ fn lang_radar(items: &[(String, u64)], label_x: f64, label_y: u32, cx: f64, cy: 
         pts.push(format!("{px:.1},{py:.1}"));
         dots.push_str(&format!(
             r#"<circle cx="{px:.1}" cy="{py:.1}" r="3" fill="{col}"/>"#,
-            col = t::lang_color(lang),
+            col = radar_color(lang),
         ));
     }
     out.push_str(&format!(
@@ -168,7 +233,7 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     let agg = &ctx.agg;
     let c = &agg.combined;
     let w = t::CARD_W;
-    let h = 600;
+    let h = 640;
     let m = t::MARGIN as f64;
     let usable = w as f64 - 2.0 * m;
 
@@ -250,64 +315,50 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     };
     zone_b.push_str(&sparkline(&daily_30, m + 470.0, 142.0, usable - 470.0, 96.0));
 
-    // ── Zone C: stacked language bar (top 6 + "other", Rust first) ──────────
-    let mut all: Vec<(String, u64)> = c.lang_bytes.iter().map(|(k, v)| (k.clone(), *v)).collect();
-    all.sort_by(|a, b| b.1.cmp(&a.1));
-    if let Some(pos) = all.iter().position(|kv| kv.0 == "Rust") {
-        let rust = all.remove(pos);
-        all.insert(0, rust);
-    }
-    let grand: u64 = all.iter().map(|kv| kv.1).sum::<u64>().max(1);
-    let other: u64 = all.iter().skip(6).map(|kv| kv.1).sum();
-    let mut items: Vec<(String, u64)> = all.iter().take(6).cloned().collect();
-    if other > 0 {
-        items.push(("other".into(), other));
-    }
+    // ── Zone C: stacked language bar (top 8 + "Others", Rust first) ─────────
+    let items = top_langs_plus_others(&c.lang_bytes);
+    let grand: u64 = items.iter().map(|kv| kv.1).sum::<u64>().max(1);
     let mut zone_c = format!(
-        r#"<text x="{m:.0}" y="280" font-family="{mono}" font-size="12" fill="{muted}" letter-spacing="1">LANGUAGES · by bytes · mirrors counted once</text>"#,
+        r#"<text x="{m:.0}" y="280" font-family="{mono}" font-size="12" fill="{muted}" letter-spacing="1">LANGUAGES · top 8 + others · by bytes · mirrors counted once</text>"#,
         mono = t::MONO,
         muted = t::MUTED,
     );
     let mut lx = m;
     for (lang, val) in &items {
         let seg_w = *val as f64 / grand as f64 * usable;
-        let col = if lang == "other" { t::COMMENT } else { t::lang_color(lang) };
         zone_c.push_str(&format!(
             r#"<rect x="{lx:.1}" y="292" width="{sw:.1}" height="16" fill="{col}" rx="2"/>"#,
             sw = (seg_w - 1.5).max(0.0),
+            col = radar_color(lang),
         ));
         lx += seg_w;
     }
-    let per_row = 4;
+    let per_row = 5;
     let col_w = usable / per_row as f64;
     for (i, (lang, val)) in items.iter().enumerate() {
         let pct = *val as f64 / grand as f64 * 100.0;
         let (row, col_i) = (i / per_row, i % per_row);
         let lx0 = m + col_i as f64 * col_w;
         let ly = 332 + row as u32 * 22;
-        let cc = if lang == "other" { t::COMMENT } else { t::lang_color(lang) };
         let star = if lang == "Rust" { " 🦀" } else { "" };
+        let label = fit_text(&format!("{lang} {pct:.0}%{star}"), col_w - 24.0, 11.5, true);
         zone_c.push_str(&format!(
-            r#"<circle cx="{cx:.0}" cy="{cy}" r="4.5" fill="{cc}"/><text x="{tx:.0}" y="{ly}" font-family="{mono}" font-size="11.5" fill="{fgd}">{lang} {pct:.0}%{star}</text>"#,
+            r#"<circle cx="{cx:.0}" cy="{cy}" r="4.5" fill="{cc}"/><text x="{tx:.0}" y="{ly}" font-family="{mono}" font-size="11.5" fill="{fgd}">{label}</text>"#,
             cx = lx0 + 5.0,
             cy = ly - 4,
             tx = lx0 + 16.0,
+            cc = radar_color(lang),
             mono = t::MONO,
             fgd = t::FG_DIM,
-            lang = esc(lang),
+            label = esc(&label),
         ));
     }
 
-    // ── Zone D: weekday rhythm + language radar ─────────────────────────────
-    let mut zone_d = weekday_rhythm(&agg.heatmap.weekday_totals(), m, 440.0, 404, 524.0);
-    let radar_items: Vec<(String, u64)> = items
-        .iter()
-        .filter(|kv| kv.0 != "other")
-        .cloned()
-        .collect();
-    zone_d.push_str(&lang_radar(&radar_items, 530.0, 404, 742.0, 476.0, 60.0));
+    // ── Zone D: weekday rhythm + language radar (Others is a real slice) ────
+    let mut zone_d = weekday_rhythm(&agg.heatmap.weekday_totals(), m, 440.0, 404, 560.0);
+    zone_d.push_str(&lang_radar(&items, 530.0, 404, 748.0, 504.0, 56.0, 500.0, w as f64 - m));
     zone_d.push_str(&format!(
-        r#"<line x1="486" y1="396" x2="486" y2="540" stroke="{bghl}" stroke-width="1"/>"#,
+        r#"<line x1="486" y1="396" x2="486" y2="580" stroke="{bghl}" stroke-width="1"/>"#,
         bghl = t::BG_HL,
     ));
 

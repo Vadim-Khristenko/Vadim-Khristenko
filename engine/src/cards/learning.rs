@@ -4,21 +4,12 @@
 
 use super::pick;
 use crate::run::Ctx;
-use crate::svg::esc;
+use crate::svg::{esc, fit_text};
 use crate::theme as t;
 use crate::theme::{CardSpec, Texture};
 use anyhow::Result;
 
-fn truncate(s: &str, max: usize) -> String {
-    if s.chars().count() <= max {
-        s.to_string()
-    } else {
-        let cut: String = s.chars().take(max.saturating_sub(1)).collect();
-        format!("{}…", cut.trim_end())
-    }
-}
-
-fn field(x: u32, icon: &str, col: &str, label: &str, value: &str, note: &str) -> String {
+fn field(x: u32, max_w: f64, icon: &str, col: &str, label: &str, value: &str, note: &str) -> String {
     format!(
         r#"
     <text x="{x}" y="40" font-family="{mono}" font-size="12" fill="{col}" letter-spacing="1">{icon} {label}</text>
@@ -28,9 +19,9 @@ fn field(x: u32, icon: &str, col: &str, label: &str, value: &str, note: &str) ->
         sans = t::SANS,
         fg = t::FG,
         muted = t::MUTED,
-        label = esc(label),
-        value = esc(value),
-        note = esc(note),
+        label = esc(&fit_text(label, max_w, 12.0, true)),
+        value = esc(&fit_text(value, max_w, 17.0, true)),
+        note = esc(&fit_text(note, max_w, 11.5, false)),
     )
 }
 
@@ -64,7 +55,6 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
                 == crate::model::normalize_repo_name(&building)
         })
         .and_then(|repo| repo.description.clone())
-        .map(|d| truncate(&d, 44))
         .unwrap_or_else(|| "freshest push across all platforms".into());
 
     let pct = (r.progress.clamp(0.0, 1.0) * 100.0).round();
@@ -77,7 +67,7 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     {f3}
     <line x1="{m}" y1="106" x2="{x2}" y2="106" stroke="{bghl}" stroke-width="1"/>
     <text x="{m}" y="132" font-family="{mono}" font-size="12" fill="{purple}" letter-spacing="1">◆ RESEARCH PROGRESS · {rname}</text>
-    <text x="{x2}" y="132" text-anchor="end" font-family="{mono}" font-size="12" fill="{fgd}">phase: {phase}</text>
+    <text x="{x2}" y="132" text-anchor="end" font-family="{mono}" font-size="12" fill="{fgd}">{phase}</text>
     <rect x="{m}" y="142" width="{usable:.0}" height="8" rx="4" fill="{bghl}"/>
     <rect x="{m}" y="142" width="{fill_w:.0}" height="8" rx="4" fill="{purple}"/>
     <circle cx="{tip:.0}" cy="146" r="5" fill="{purple}" filter="url(#glow)">
@@ -85,17 +75,17 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     </circle>
     <text x="{m}" y="168" font-family="{mono}" font-size="11" fill="{muted}">{pct:.0}% — measured in shipped experiments, not vibes</text>
     "#,
-        f1 = field(m, "📚", t::GREEN, "NOW LEARNING", &topic.name, &topic.note),
-        f2 = field(360, "🔨", t::ORANGE, "BUILDING", &building, &building_note),
-        f3 = field(680, "🧪", t::PURPLE, "RESEARCH", &r.name, &truncate(&r.subtitle, 40)),
+        f1 = field(m, 312.0, "📚", t::GREEN, "NOW LEARNING", &topic.name, &topic.note),
+        f2 = field(360, 296.0, "🔨", t::ORANGE, "BUILDING", &building, &building_note),
+        f3 = field(680, w as f64 - 680.0 - m as f64, "🧪", t::PURPLE, "RESEARCH", &r.name, &r.subtitle),
         x2 = w - m,
         bghl = t::BG_HL,
         mono = t::MONO,
         purple = t::PURPLE,
         fgd = t::FG_DIM,
         muted = t::MUTED,
-        rname = esc(&r.name),
-        phase = esc(&r.phase),
+        rname = esc(&fit_text(&r.name, 380.0, 12.0, true)),
+        phase = esc(&fit_text(&format!("phase: {}", r.phase), 340.0, 12.0, true)),
         tip = m as f64 + fill_w,
     );
 

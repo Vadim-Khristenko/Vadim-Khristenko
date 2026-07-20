@@ -5,7 +5,7 @@
 
 use crate::model::{format_count, PlatformData};
 use crate::run::Ctx;
-use crate::svg::esc;
+use crate::svg::{esc, fit_text, text_width_px};
 use crate::theme as t;
 use crate::theme::{CardSpec, Texture};
 use anyhow::Result;
@@ -26,7 +26,7 @@ fn all_card(ctx: &Ctx) -> (String, String) {
     let agg = &ctx.agg;
     let c = &agg.combined;
     let w = t::CARD_W;
-    let h = 258;
+    let h = 276;
     let m = t::MARGIN as f64;
     let usable = w as f64 - 2.0 * m;
 
@@ -90,9 +90,18 @@ fn all_card(ctx: &Ctx) -> (String, String) {
         lx += seg;
     }
     let mut legx = m;
+    let leg_end = w as f64 - m;
     for (name, val, col) in &shares {
         let pct = *val as f64 / total as f64 * 100.0;
-        let text = format!("{name} {pct:.0}% · {}", format_count(Some(*val)));
+        let text = fit_text(
+            &format!("{name} {pct:.0}% · {}", format_count(Some(*val))),
+            (leg_end - legx - 16.0).max(20.0),
+            11.5,
+            true,
+        );
+        if legx + 16.0 >= leg_end {
+            break;
+        }
         write!(
             inner,
             r#"<circle cx="{cx:.0}" cy="174" r="4.5" fill="{col}"/><text x="{tx:.0}" y="178" font-family="{mono}" font-size="11.5" fill="{fgd}">{text}</text>"#,
@@ -103,11 +112,12 @@ fn all_card(ctx: &Ctx) -> (String, String) {
             text = esc(&text),
         )
         .unwrap();
-        legx += 16.0 + text.chars().count() as f64 * 7.2 + 26.0;
+        legx += 16.0 + text_width_px(&text, 11.5, true) + 26.0;
     }
+    // Static prose, wrapped by hand so it stays inside the margins.
     write!(
         inner,
-        r#"<text x="{m:.0}" y="204" font-family="{sans}" font-size="12" fill="{muted}">Aggregation rule: mirrored repos count ONCE for code metrics (bytes → LOC, repo count) — but every platform's stars, forks and open items are summed. A mirror earns its own applause.</text>"#,
+        r#"<text x="{m:.0}" y="202" font-family="{sans}" font-size="12" fill="{muted}">Aggregation rule: mirrored repos count ONCE for code metrics (bytes → LOC, repo count) —</text><text x="{m:.0}" y="220" font-family="{sans}" font-size="12" fill="{muted}">but every platform's stars, forks and open items are summed. A mirror earns its own applause.</text>"#,
         sans = t::SANS,
         muted = t::MUTED,
     )
@@ -151,9 +161,9 @@ fn primary_card(p: &PlatformData) -> String {
         fgd = t::FG_DIM,
         bghl = t::BG_HL,
         green = t::GREEN,
-        name = esc(&p.display),
+        name = esc(&fit_text(&p.display, 420.0, 26.0, true)),
         cx = m + 63.0,
-        user = esc(&p.user),
+        user = esc(&fit_text(&p.user, 300.0, 12.0, true)),
     );
     // Middle stats.
     let stats = [
@@ -172,8 +182,8 @@ fn primary_card(p: &PlatformData) -> String {
             r#"<text x="{x:.0}" y="72" font-family="{mono}" font-size="26" font-weight="800" fill="{col}">{v}</text><text x="{x:.0}" y="92" font-family="{mono}" font-size="11" fill="{muted}">{l}</text>"#,
             mono = t::MONO,
             muted = t::MUTED,
-            v = esc(value),
-            l = esc(label),
+            v = esc(&fit_text(value, 108.0, 26.0, true)),
+            l = esc(&fit_text(label, 108.0, 11.0, true)),
         )
         .unwrap();
     }
@@ -267,9 +277,14 @@ fn github_card(p: &PlatformData) -> String {
         bghl = t::BG_HL,
     )
     .unwrap();
+    // Language chips stop before the right-anchored "@user" caption (~250px).
+    let lang_end = w as f64 - m - 250.0;
     for (lang, bytes) in langs.iter().take(5) {
         let pct = **bytes as f64 / total as f64 * 100.0;
         let text = format!("{lang} {pct:.0}%");
+        if lx + 14.0 + text_width_px(&text, 11.5, true) > lang_end {
+            break;
+        }
         write!(
             inner,
             r#"<circle cx="{cx:.0}" cy="122" r="4" fill="{col}"/><text x="{tx:.0}" y="126" font-family="{mono}" font-size="11.5" fill="{fgd}">{text}</text>"#,
@@ -281,7 +296,7 @@ fn github_card(p: &PlatformData) -> String {
             text = esc(&text),
         )
         .unwrap();
-        lx += 14.0 + text.chars().count() as f64 * 7.2 + 22.0;
+        lx += 14.0 + text_width_px(&text, 11.5, true) + 22.0;
     }
     write!(
         inner,
@@ -289,7 +304,7 @@ fn github_card(p: &PlatformData) -> String {
         x = w as f64 - m,
         mono = t::MONO,
         muted = t::MUTED,
-        user = esc(&p.user),
+        user = esc(&fit_text(&p.user, 170.0, 11.0, true)),
     )
     .unwrap();
     t::card(
@@ -325,28 +340,30 @@ fn mirror_card(p: &PlatformData) -> String {
         sans = t::SANS,
         bghl = t::BG_HL,
         fgd = t::FG_DIM,
-        name = esc(&p.display),
-        bx = m + p.display.chars().count() as f64 * 13.6 + 16.0,
-        btx = m + p.display.chars().count() as f64 * 13.6 + 67.0,
+        name = esc(&fit_text(&p.display, 380.0, 22.0, true)),
+        bx = m + text_width_px(&p.display, 22.0, true).min(380.0) + 16.0,
+        btx = m + text_width_px(&p.display, 22.0, true).min(380.0) + 67.0,
     );
+    // Four FIXED slots so a big number can't push its neighbours off the card.
     let stats = [
         ("repos", format_count(Some(r.repo_count)), accent),
         ("stars", format_count(Some(r.stars)), t::YELLOW),
         ("forks", format_count(Some(r.forks)), t::BLUE),
         ("open items", format_count(Some(r.open_issues + r.open_prs)), t::RED),
     ];
-    let mut sx = 560.0;
-    for (label, value, col) in stats {
+    let sx0 = 560.0;
+    let slot = (w as f64 - m - sx0) / stats.len() as f64;
+    for (i, (label, value, col)) in stats.iter().enumerate() {
+        let sx = sx0 + i as f64 * slot;
         write!(
             inner,
             r#"<text x="{sx:.0}" y="52" font-family="{mono}" font-size="24" font-weight="800" fill="{col}">{v}</text><text x="{sx:.0}" y="72" font-family="{mono}" font-size="10.5" fill="{muted}">{l}</text>"#,
             mono = t::MONO,
             muted = t::MUTED,
-            v = esc(&value),
-            l = esc(label),
+            v = esc(&fit_text(value, slot - 12.0, 24.0, true)),
+            l = esc(&fit_text(label, slot - 12.0, 10.5, true)),
         )
         .unwrap();
-        sx += (value.chars().count() as f64 * 15.0).max(66.0) + 40.0;
     }
     let badge = format!("@{}", p.user);
     t::card(

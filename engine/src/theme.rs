@@ -22,7 +22,7 @@
 
 #![allow(dead_code)]
 
-use crate::svg::esc;
+use crate::svg::{esc, fit_text};
 
 // ── Palette — Tokyo Night (night variant) + Rust signature ──────────────────
 
@@ -200,12 +200,16 @@ pub fn card(spec: &CardSpec, inner: &str) -> String {
         .collect();
 
     let title_x = MARGIN + 3 * 20 + 12;
+    // Title and badge share the bar: the title is capped so it can never run
+    // under the badge, and the badge is capped against the title's end.
+    let title = fit_text(title, (w as f64 - 2.0 * MARGIN as f64) * 0.55, 13.0, true);
     let badge_node = if badge.is_empty() {
         String::new()
     } else {
+        let badge = fit_text(badge, (w as f64 - 2.0 * MARGIN as f64) * 0.34, 12.0, true);
         format!(
             r#"<circle cx="{cx}" cy="{cy}" r="3.5" fill="{accent}"><animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/></circle><text x="{tx}" y="{ty}" text-anchor="end" font-family="{MONO}" font-size="12" fill="{MUTED}">{}</text>"#,
-            esc(badge),
+            esc(&badge),
             cx = w - MARGIN - 1,
             cy = BAR_H / 2,
             tx = w - MARGIN - 12,
@@ -240,7 +244,7 @@ pub fn card(spec: &CardSpec, inner: &str) -> String {
         wi = w - 7,
         hi = h - 7,
         title_y = BAR_H / 2 + 4,
-        title_esc = esc(title),
+        title_esc = esc(&title),
         m = MARGIN,
         bar = BAR_H,
         aw = w - 2 * MARGIN,

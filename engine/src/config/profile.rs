@@ -21,6 +21,44 @@ pub struct ProfileConfig {
     #[serde(default)]
     pub learning: Learning,
     pub best_game: BestGame,
+    /// Optional per-card tweaks keyed by card name (`[cards.<name>]`):
+    /// toggle a card off entirely or override its accent colour.
+    #[serde(default)]
+    pub cards: std::collections::BTreeMap<String, CardTweak>,
+    /// Optional Last.fm hookup (`[lastfm]`) — live now-playing / top artists.
+    #[serde(default)]
+    pub lastfm: Option<Lastfm>,
+}
+
+/// Per-card overrides. Every field is optional so existing configs keep
+/// working untouched.
+#[derive(Debug, Clone, Deserialize)]
+pub struct CardTweak {
+    /// `false` removes the card from the render set (its README marker block
+    /// simply stops being refreshed).
+    #[serde(default = "default_true")]
+    pub enabled: bool,
+    /// Accent colour override for the card chrome (e.g. "#bb9af7").
+    #[serde(default)]
+    pub accent: Option<String>,
+}
+
+fn default_true() -> bool {
+    true
+}
+
+/// Last.fm integration: the username is public config; the API key is only
+/// ever read from the environment (never stored in the repo).
+#[derive(Debug, Clone, Deserialize)]
+pub struct Lastfm {
+    pub username: String,
+    /// Environment variable holding the API key (default: LASTFM_API_KEY).
+    #[serde(default = "default_lastfm_env")]
+    pub api_key_env: String,
+}
+
+fn default_lastfm_env() -> String {
+    "LASTFM_API_KEY".into()
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -104,8 +142,57 @@ pub struct BestGame {
     pub game_id: String,
     #[serde(default)]
     pub blurb: String,
+    /// Free-form labelled stats (`[[best_game.extra]]`): anything you want on
+    /// the card — friends, union, playtime… Add `current` + `max` to get a
+    /// small progress bar under the value.
+    #[serde(default)]
+    pub extra: Vec<ExtraStat>,
     #[serde(default)]
     pub characters: Vec<Character>,
+}
+
+/// One user-defined stat on the best-game card.
+#[derive(Debug, Clone, Deserialize)]
+pub struct ExtraStat {
+    pub label: String,
+    /// Display string ("" + current/max set → rendered as "current/max").
+    #[serde(default)]
+    pub value: String,
+    /// Optional progress pair — renders a micro progress bar.
+    #[serde(default)]
+    pub current: Option<f64>,
+    #[serde(default)]
+    pub max: Option<f64>,
+}
+
+impl ExtraStat {
+    /// The string shown as the value (explicit value wins; else current/max).
+    pub fn display(&self) -> String {
+        if !self.value.is_empty() {
+            return self.value.clone();
+        }
+        match (self.current, self.max) {
+            (Some(c), Some(m)) => format!("{}/{}", trim_f(c), trim_f(m)),
+            (Some(c), None) => trim_f(c),
+            _ => "—".into(),
+        }
+    }
+
+    /// Fill fraction for the micro bar, when both numbers are present.
+    pub fn fraction(&self) -> Option<f64> {
+        match (self.current, self.max) {
+            (Some(c), Some(m)) if m > 0.0 => Some((c / m).clamp(0.0, 1.0)),
+            _ => None,
+        }
+    }
+}
+
+fn trim_f(v: f64) -> String {
+    if (v - v.round()).abs() < 1e-9 {
+        format!("{}", v.round() as i64)
+    } else {
+        format!("{v}")
+    }
 }
 
 fn default_cover_mode() -> String {
