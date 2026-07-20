@@ -10,7 +10,7 @@ pub mod forgejo;
 pub mod github;
 pub mod retry;
 
-use crate::config::{ProviderEntry, ProviderKind, ProvidersConfig, StatsConfig};
+use crate::config::{ProviderKind, ProvidersConfig, StatsConfig};
 use crate::log;
 use crate::model::*;
 use anyhow::Result;
@@ -412,6 +412,7 @@ pub fn resolve_flagship(
 mod tests {
     use super::*;
     use crate::config::flagship::FlagshipProject;
+    use crate::config::ProviderEntry;
 
     fn fixtures_dir() -> std::path::PathBuf {
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("fixtures")

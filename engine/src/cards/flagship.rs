@@ -183,8 +183,9 @@ fn row(p: &FlagshipLive, y: u32, w: u32) -> String {
     } else {
         write!(
             out,
-            r#"<text x="{sx:.0}" y="{sy}" font-family="{mono}" font-size="12" fill="{muted}">live stats unavailable — repo private or platform offline</text>"#,
-            sy = y + 40,
+            r#"<text x="{sx:.0}" y="{sy}" font-family="{mono}" font-size="12" fill="{muted}">live stats unavailable</text><text x="{sx:.0}" y="{sy2}" font-family="{mono}" font-size="11" fill="{muted}">repo private or platform offline</text>"#,
+            sy = y + 30,
+            sy2 = y + 48,
             mono = t::MONO,
             muted = t::MUTED,
         )

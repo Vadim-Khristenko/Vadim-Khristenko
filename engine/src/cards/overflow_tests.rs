@@ -126,6 +126,27 @@ fn no_text_escapes_any_card() {
     }
 }
 
+/// Opt-in scan of whatever is currently rendered on disk (`assets/*.svg`) —
+/// lets a LIVE render be overflow-audited with the same assertions:
+/// `cargo test -- --ignored scan_rendered`.
+#[test]
+#[ignore = "audits on-disk assets; run explicitly after a live render"]
+fn scan_rendered_assets_on_disk() {
+    let assets = Path::new(env!("CARGO_MANIFEST_DIR")).parent().unwrap().join("assets");
+    let mut scanned = 0usize;
+    for entry in std::fs::read_dir(&assets).expect("assets/ exists") {
+        let path = entry.expect("dir entry").path();
+        if path.extension().and_then(|e| e.to_str()) != Some("svg") {
+            continue;
+        }
+        let svg = std::fs::read_to_string(&path).expect("readable svg");
+        assert_no_overflow(&path.file_name().unwrap().to_string_lossy(), &svg);
+        scanned += 1;
+    }
+    assert!(scanned > 0, "no SVGs found under assets/");
+    println!("scanned {scanned} rendered assets — no overflow");
+}
+
 /// The fitting model must also hold under adversarially long config strings:
 /// stretch the editorial fields and re-render the text-heavy cards.
 #[test]
