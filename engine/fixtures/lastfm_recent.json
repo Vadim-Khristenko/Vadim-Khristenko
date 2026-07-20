@@ -1,0 +1,33 @@
+{
+  "recenttracks": {
+    "track": [
+      {
+        "artist": { "mbid": "", "#text": "Deco*27" },
+        "streamable": "0",
+        "image": [],
+        "mbid": "",
+        "album": { "mbid": "", "#text": "MANNEQUIN" },
+        "name": "Rabbit Hole",
+        "@attr": { "nowplaying": "true" },
+        "url": "https://www.last.fm/music/Deco*27/_/Rabbit+Hole"
+      },
+      {
+        "artist": { "mbid": "", "#text": "Hatsune Miku" },
+        "streamable": "0",
+        "image": [],
+        "mbid": "",
+        "album": { "mbid": "", "#text": "Tell Your World" },
+        "name": "Tell Your World",
+        "url": "https://www.last.fm/music/Hatsune+Miku/_/Tell+Your+World",
+        "date": { "uts": "1784800000", "#text": "19 Jul 2026, 06:00" }
+      }
+    ],
+    "@attr": {
+      "user": "vai_prog",
+      "totalPages": "2411",
+      "page": "1",
+      "perPage": "1",
+      "total": "48211"
+    }
+  }
+}

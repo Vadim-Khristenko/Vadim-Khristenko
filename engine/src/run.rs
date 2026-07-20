@@ -18,6 +18,8 @@ pub struct Ctx {
     pub cfg: Config,
     pub agg: Aggregate,
     pub flagship: Vec<FlagshipLive>,
+    /// Last.fm music data (live fetch or fixtures) — None = graceful skip.
+    pub music: Option<crate::lastfm::Music>,
     /// ISO year*100 + ISO week (weekly rotations).
     pub seed: u64,
     /// Day-ordinal / 2 — rotates the vibe card every 2 days.
@@ -108,6 +110,14 @@ pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
         .map(|proj| providers::resolve_flagship(proj, &agg, &provider_set, &cfg.stats))
         .collect();
 
+    // Music: fixtures in offline mode, live Last.fm otherwise (graceful skip
+    // when the username or key is absent).
+    let music = if fixtures {
+        crate::lastfm::from_fixtures(&fixtures_dir)
+    } else {
+        cfg.profile.lastfm.as_ref().and_then(crate::lastfm::fetch)
+    };
+
     let gh_user = cfg
         .providers
         .provider
@@ -121,6 +131,7 @@ pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
         assets: root.join("assets"),
         agg,
         flagship,
+        music,
         seed,
         vibe_seed,
         week: iso.week(),

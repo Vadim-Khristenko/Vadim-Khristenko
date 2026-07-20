@@ -99,7 +99,24 @@ url = "https://patreon.com/VAI_PROG"
 label = "Codeforces"
 url = "https://codeforces.com/profile/VAI_Programmer"
 
-# ── Music on loop ───────────────────────────────────────────────────────────
+# ── Last.fm (live music in the vibe card) ───────────────────────────────────
+# The engine shows the now-playing track (with a tiny equalizer), the last
+# scrobble, or the month's top artist — in that order of preference. The API
+# key is ONLY read from the environment variable below (never stored here);
+# without it the composers list is used as the fallback.
+[lastfm]
+username = "vai_prog"
+# api_key_env = "LASTFM_API_KEY"   # default — override to read another var
+
+# ── Per-card tweaks (all optional) ──────────────────────────────────────────
+# Any card can be switched off or re-accented without touching the code:
+#   [cards.vibe]
+#   enabled = true            # false → the card is skipped entirely
+#   accent  = "#c678dd"       # overrides the card's chrome accent colour
+# Card names: header, divider, research, flagship, dashboard, platforms,
+# learning, vibe, bestgame, games, footer.
+
+# ── Music on loop (static fallback when Last.fm is unavailable) ─────────────
 [[composers]]
 name = "Hatsune Miku"
 note = "the eternal 19-year-old diva"

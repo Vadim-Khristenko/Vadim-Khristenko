@@ -2,6 +2,7 @@ mod art;
 mod cards;
 mod cli;
 mod config;
+mod lastfm;
 mod log;
 mod model;
 mod paths;
