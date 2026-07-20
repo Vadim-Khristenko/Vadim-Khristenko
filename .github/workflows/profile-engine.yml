@@ -2,15 +2,31 @@ name: VAI Profile Engine (receiver)
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FALLBACK pipeline. The PRIMARY regeneration runs on git.vai-rice.space
-# (.forgejo/workflows/profile-engine.yml) and mirror-pushes here.
+# (.forgejo/workflows/profile-engine.yml) on the user's own runner and
+# mirror-pushes here — so this workflow has NO schedule on purpose.
 #
-# This workflow exists so the profile can still be regenerated from GitHub if
-# the Forgejo runner is down: manual dispatch only, same binary, commits as
+# It exists so the profile can still be regenerated from GitHub if the
+# Forgejo runner is down: manual dispatch only, same binary, commits as
 # `VIA GIT`, and pushes ONLY to this repository — never to other hosts.
+# Secrets & variables are documented in engine/README.md.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma list of cards to regenerate (e.g. vibe,games). Empty = everything + README refresh."
+        required: false
+        default: ""
+      pin_game:
+        description: "Game key to force into the rotation slot (e.g. miside). Empty = automatic rotation."
+        required: false
+        default: ""
+      refetch_art:
+        description: "Re-fetch game art from SteamGridDB before rendering (needs STEAMGRIDDB_API_KEY)."
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -26,10 +42,44 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      # Names + set/not-set only. Values are NEVER printed.
+      - name: Preflight — secret & variable inventory
+        env:
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
+          VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          STEAMGRIDDB_API_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+        run: |
+          state() { [ -n "$(printenv "$1" 2>/dev/null)" ] && echo "set" || echo "not set"; }
+          {
+            echo "### Preflight — configuration inventory"
+            echo ""
+            echo "| Name | Kind | State |"
+            echo "|---|---|---|"
+            for s in PROFILE_TOKEN VAI_GIT_TOKEN CODEBERG_TOKEN LASTFM_API_KEY \
+                     STEAMGRIDDB_API_KEY TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID NOTIFY_WEBHOOK_URL; do
+              echo "| $s | secret | $(state "$s") |"
+            done
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "only='${{ github.event.inputs.only }}'  ·  pin_game='${{ github.event.inputs.pin_game }}'  ·  refetch_art='${{ github.event.inputs.refetch_art }}'"
+
       - name: Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
+      # Build once, reuse while the engine sources are unchanged.
+      - name: Cache release binary
+        id: bin-cache
+        uses: actions/cache@v6
+        with:
+          path: engine/target/release/vai-profile
+          key: vai-profile-bin-${{ runner.os }}-${{ hashFiles('engine/**/*.rs', 'engine/Cargo.toml', 'engine/Cargo.lock') }}
+
       - name: Cache cargo
+        if: steps.bin-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v6
         with:
           path: |
@@ -40,9 +90,22 @@ jobs:
           restore-keys: cargo-
 
       - name: Build engine
+        id: build
+        if: steps.bin-cache.outputs.cache-hit != 'true'
         run: cargo build --release --manifest-path engine/Cargo.toml
 
+      # Opt-in via the refetch_art dispatch input; key logged set/not-set only.
+      - name: Refetch game art (SteamGridDB)
+        id: art
+        if: github.event.inputs.refetch_art == 'true'
+        continue-on-error: true
+        env:
+          STEAMGRIDDB_API_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
+        run: ./engine/target/release/vai-profile art --bestgame
+
       - name: Run the engine (read-only provider tokens)
+        id: engine
+        continue-on-error: true
         env:
           # Default GITHUB_TOKEN covers public GitHub stats. PROFILE_TOKEN
           # (a PAT with read:user) additionally counts private contributions.
@@ -50,16 +113,112 @@ jobs:
           VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
           LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
-        run: ./engine/target/release/vai-profile build
+          ONLY: ${{ github.event.inputs.only }}
+          PIN_GAME: ${{ github.event.inputs.pin_game }}
+        run: |
+          set -o pipefail
+          args=""
+          [ -n "$ONLY" ] && args="--only $ONLY"
+          # PIN_GAME is read from the environment by the engine itself.
+          ./engine/target/release/vai-profile build $args 2>&1 | tee /tmp/engine.log
 
       - name: Commit regenerated assets
+        id: commit
+        if: steps.engine.outcome == 'success'
         run: |
           git config user.name  "VIA GIT"
           git config user.email "actions@git.vai-rice.space"
           git add assets README.md
           if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Nothing changed — profile already fresh."
           else
             git commit -m "chore(profile): regenerate cards & live stats [skip ci]"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── Optional notifications (each skipped cleanly when unset) ──────────
+      - name: Notify — Telegram (optional)
+        id: notify-telegram
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set — skipping Telegram notification."
+            exit 0
+          fi
+          providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
+          cards=$(grep -c '✓ .*\.svg' /tmp/engine.log || true)
+          text="Profile regenerated (GitHub fallback) ✅
+          providers: ${providers:-n/a}
+          cards rendered: ${cards:-0}
+          commit: ${SHA}"
+          curl -fsS -o /dev/null --data-urlencode "text=${text}" \
+            -d "chat_id=${TG_CHAT}" \
+            "https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
+          echo "Telegram notification sent."
+
+      - name: Notify — webhook (optional)
+        id: notify-webhook
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then
+            echo "NOTIFY_WEBHOOK_URL not set — skipping webhook notification."
+            exit 0
+          fi
+          providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
+          cards=$(grep -c '✓ .*\.svg' /tmp/engine.log || true)
+          payload=$(printf '{"event":"profile-regenerated","source":"github-fallback","commit":"%s","providers":"%s","cards_rendered":%s,"timestamp":"%s"}' \
+            "$SHA" "${providers:-}" "${cards:-0}" "$(date -u +%FT%TZ)")
+          curl -fsS -o /dev/null -H "Content-Type: application/json" -d "$payload" "$WEBHOOK"
+          echo "Webhook notification sent."
+
+      - name: Run summary
+        if: always()
+        env:
+          O_BUILD: ${{ steps.build.outcome }}
+          O_ART: ${{ steps.art.outcome }}
+          O_ENGINE: ${{ steps.engine.outcome }}
+          O_COMMIT: ${{ steps.commit.outcome }}
+          O_NTG: ${{ steps.notify-telegram.outcome }}
+          O_NWH: ${{ steps.notify-webhook.outcome }}
+          CHANGED: ${{ steps.commit.outputs.changed }}
+          SHA: ${{ steps.commit.outputs.sha }}
+          CACHE_HIT: ${{ steps.bin-cache.outputs.cache-hit }}
+        run: |
+          providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log 2>/dev/null | paste -sd ',' -)
+          cards=$(grep -c '✓ .*\.svg' /tmp/engine.log 2>/dev/null || true)
+          {
+            echo ""
+            echo "### Run summary"
+            echo ""
+            echo "| Stage | Result |"
+            echo "|---|---|"
+            echo "| binary cache | $([ "$CACHE_HIT" = "true" ] && echo 'hit — build skipped' || echo 'miss — compiled') |"
+            echo "| cargo build | ${O_BUILD:-skipped} |"
+            echo "| art refetch | ${O_ART:-skipped} |"
+            echo "| engine run | ${O_ENGINE:-skipped} |"
+            echo "| providers fetched | ${providers:-n/a} |"
+            echo "| cards rendered | ${cards:-0} |"
+            echo "| commit+push | ${O_COMMIT:-skipped} (changed=${CHANGED:-false}${SHA:+, $SHA}) |"
+            echo "| notify Telegram | ${O_NTG:-skipped} |"
+            echo "| notify webhook | ${O_NWH:-skipped} |"
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "${O_ENGINE}" != "success" ]; then
+            echo "::error::engine run did not succeed (${O_ENGINE})"
+            exit 1
+          fi
+          if [ -n "${O_COMMIT}" ] && [ "${O_COMMIT}" != "success" ] && [ "${O_COMMIT}" != "skipped" ]; then
+            echo "::error::commit/push did not succeed (${O_COMMIT})"
+            exit 1
           fi

@@ -2,26 +2,41 @@ name: VAI Profile Engine
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PRIMARY pipeline — source of truth is git.vai-rice.space (Forgejo Actions).
+# Automatic regeneration happens ONLY here, on the self-hosted runner
+# (the GitHub twin is a dispatch-only fallback).
 #
-# Regenerates the Tokyo-Night SVG cards + live multi-platform stats, commits
-# them as `VIA GIT`, then mirror-pushes to GitHub and Codeberg with SCOPED
-# push tokens. Token hygiene is strict:
+# Regenerates the Tokyo-Night SVG cards + live multi-platform stats DAILY,
+# commits them as `VIA GIT`, then mirror-pushes to GitHub and Codeberg with
+# SCOPED push tokens. Token hygiene is strict:
 #   * read-only provider tokens (VAI_GIT_TOKEN / GH_TOKEN / CODEBERG_TOKEN)
 #     are only visible to the engine step;
 #   * each mirror push token is only ever used against its own host, in its
 #     own step — no token crosses hosts.
 #
-# Secrets (documented in engine/README.md):
-#   VAI_GIT_TOKEN, GH_TOKEN, CODEBERG_TOKEN          read-only API tokens
-#   LASTFM_API_KEY                                    Last.fm API key (music)
-#   GITHUB_MIRROR_TOKEN, CODEBERG_MIRROR_TOKEN        scoped push tokens
+# Secrets & repo variables are documented in engine/README.md. Notifications
+# (Telegram / generic webhook) are fully optional — each is skipped cleanly
+# when its secret is absent. No step ever prints a secret value.
 # ─────────────────────────────────────────────────────────────────────────────
 
 on:
   schedule:
-    # Every 2 days at 06:00 UTC — matches the vibe-card rotation cadence.
-    - cron: "0 6 */2 * *"
-  workflow_dispatch: {}
+    # Stats regenerate DAILY at 06:00 UTC.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma list of cards to regenerate (e.g. vibe,games). Empty = everything + README refresh."
+        required: false
+        default: ""
+      pin_game:
+        description: "Game key to force into the rotation slot (e.g. miside). Empty = automatic rotation."
+        required: false
+        default: ""
+      refetch_art:
+        description: "Re-fetch game art from SteamGridDB before rendering (needs STEAMGRIDDB_API_KEY)."
+        type: boolean
+        required: false
+        default: false
   push:
     branches: [main]
     paths:
@@ -35,7 +50,9 @@ concurrency:
 
 jobs:
   regenerate:
-    runs-on: docker
+    # Runs ONLY on the user's own runner. The label defaults to `docker`;
+    # override with the repo variable RUNNER_LABEL if the runner is renamed.
+    runs-on: ${{ vars.RUNNER_LABEL || 'docker' }}
     container:
       image: rust:1.96-bookworm
     steps:
@@ -44,7 +61,52 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Names + set/not-set only. Values are NEVER printed.
+      - name: Preflight — secret & variable inventory
+        env:
+          VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
+          STEAMGRIDDB_API_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
+          GITHUB_MIRROR_TOKEN: ${{ secrets.GITHUB_MIRROR_TOKEN }}
+          CODEBERG_MIRROR_TOKEN: ${{ secrets.CODEBERG_MIRROR_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+          VAR_RUNNER_LABEL: ${{ vars.RUNNER_LABEL }}
+          VAR_GITHUB_MIRROR_REPO: ${{ vars.GITHUB_MIRROR_REPO }}
+          VAR_CODEBERG_MIRROR_REPO: ${{ vars.CODEBERG_MIRROR_REPO }}
+        run: |
+          state() { [ -n "$(printenv "$1" 2>/dev/null)" ] && echo "set" || echo "not set"; }
+          {
+            echo "### Preflight — configuration inventory"
+            echo ""
+            echo "| Name | Kind | State |"
+            echo "|---|---|---|"
+            for s in VAI_GIT_TOKEN GH_TOKEN CODEBERG_TOKEN LASTFM_API_KEY \
+                     STEAMGRIDDB_API_KEY GITHUB_MIRROR_TOKEN CODEBERG_MIRROR_TOKEN \
+                     TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID NOTIFY_WEBHOOK_URL; do
+              echo "| $s | secret | $(state "$s") |"
+            done
+            for v in RUNNER_LABEL GITHUB_MIRROR_REPO CODEBERG_MIRROR_REPO; do
+              echo "| $v | variable | $(state "VAR_$v") |"
+            done
+          } | tee -a "${GITHUB_STEP_SUMMARY:-/dev/null}"
+          echo "trigger: ${{ github.event_name }}  ·  only='${{ github.event.inputs.only }}'  ·  pin_game='${{ github.event.inputs.pin_game }}'  ·  refetch_art='${{ github.event.inputs.refetch_art }}'"
+
+      # Build once, reuse while the engine sources are unchanged: the release
+      # binary is cached under a hash of every Rust source + manifest, so the
+      # daily stat runs normally skip compilation entirely.
+      - name: Cache release binary
+        id: bin-cache
+        uses: actions/cache@v6
+        with:
+          path: engine/target/release/vai-profile
+          key: vai-profile-bin-${{ runner.os }}-${{ hashFiles('engine/**/*.rs', 'engine/Cargo.toml', 'engine/Cargo.lock') }}
+
       - name: Cache cargo
+        if: steps.bin-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v6
         with:
           path: |
@@ -55,29 +117,59 @@ jobs:
           restore-keys: cargo-
 
       - name: Build engine
+        id: build
+        if: steps.bin-cache.outputs.cache-hit != 'true'
         run: cargo build --release --manifest-path engine/Cargo.toml
 
+      # Opt-in via the refetch_art dispatch input. The SteamGridDB key is only
+      # visible to this step and is logged set/not-set by the engine, never by
+      # value.
+      - name: Refetch game art (SteamGridDB)
+        id: art
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.refetch_art == 'true'
+        continue-on-error: true
+        env:
+          STEAMGRIDDB_API_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
+        run: ./engine/target/release/vai-profile art --bestgame
+
       - name: Run the engine (read-only provider tokens)
+        id: engine
+        continue-on-error: true
         env:
           VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
           LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
-        run: ./engine/target/release/vai-profile build
+          ONLY: ${{ github.event.inputs.only }}
+          PIN_GAME: ${{ github.event.inputs.pin_game }}
+        run: |
+          set -o pipefail
+          args=""
+          [ -n "$ONLY" ] && args="--only $ONLY"
+          # PIN_GAME is read from the environment by the engine itself.
+          ./engine/target/release/vai-profile build $args 2>&1 | tee /tmp/engine.log
 
       - name: Commit regenerated assets
+        id: commit
+        if: steps.engine.outcome == 'success'
         run: |
           git config user.name  "VIA GIT"
           git config user.email "actions@git.vai-rice.space"
           git add assets README.md
           if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Nothing changed — profile already fresh."
           else
             git commit -m "chore(profile): regenerate cards & live stats [skip ci]"
             git push origin HEAD:main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "sha=$(git rev-parse --short HEAD)" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Mirror-push → GitHub (scoped token, GitHub only)
+        id: mirror-github
+        if: steps.commit.outcome == 'success'
+        continue-on-error: true
         env:
           TOKEN: ${{ secrets.GITHUB_MIRROR_TOKEN }}
           MIRROR: ${{ vars.GITHUB_MIRROR_REPO || 'Vadim-Khristenko/Vadim-Khristenko' }}
@@ -89,6 +181,9 @@ jobs:
           git push "https://x-access-token:${TOKEN}@github.com/${MIRROR}.git" HEAD:main
 
       - name: Mirror-push → Codeberg (scoped token, Codeberg only)
+        id: mirror-codeberg
+        if: steps.commit.outcome == 'success'
+        continue-on-error: true
         env:
           TOKEN: ${{ secrets.CODEBERG_MIRROR_TOKEN }}
           MIRROR: ${{ vars.CODEBERG_MIRROR_REPO || 'VAI_PROG/Vadim-Khristenko' }}
@@ -98,3 +193,92 @@ jobs:
             exit 0
           fi
           git push "https://${TOKEN}@codeberg.org/${MIRROR}.git" HEAD:main
+
+      # ── Optional notifications (each skipped cleanly when unset) ──────────
+      - name: Notify — Telegram (optional)
+        id: notify-telegram
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TG_CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
+            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set — skipping Telegram notification."
+            exit 0
+          fi
+          providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
+          cards=$(grep -c '✓ .*\.svg' /tmp/engine.log || true)
+          text="Profile regenerated ✅
+          providers: ${providers:-n/a}
+          cards rendered: ${cards:-0}
+          commit: ${SHA}"
+          curl -fsS -o /dev/null --data-urlencode "text=${text}" \
+            -d "chat_id=${TG_CHAT}" \
+            "https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
+          echo "Telegram notification sent."
+
+      - name: Notify — webhook (optional)
+        id: notify-webhook
+        if: steps.commit.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK_URL }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then
+            echo "NOTIFY_WEBHOOK_URL not set — skipping webhook notification."
+            exit 0
+          fi
+          providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
+          cards=$(grep -c '✓ .*\.svg' /tmp/engine.log || true)
+          payload=$(printf '{"event":"profile-regenerated","commit":"%s","providers":"%s","cards_rendered":%s,"timestamp":"%s"}' \
+            "$SHA" "${providers:-}" "${cards:-0}" "$(date -u +%FT%TZ)")
+          curl -fsS -o /dev/null -H "Content-Type: application/json" -d "$payload" "$WEBHOOK"
+          echo "Webhook notification sent."
+
+      # ── One readable table per run; fails the job if a critical stage broke.
+      - name: Run summary
+        if: always()
+        env:
+          O_BUILD: ${{ steps.build.outcome }}
+          O_ART: ${{ steps.art.outcome }}
+          O_ENGINE: ${{ steps.engine.outcome }}
+          O_COMMIT: ${{ steps.commit.outcome }}
+          O_MIR_GH: ${{ steps.mirror-github.outcome }}
+          O_MIR_CB: ${{ steps.mirror-codeberg.outcome }}
+          O_NTG: ${{ steps.notify-telegram.outcome }}
+          O_NWH: ${{ steps.notify-webhook.outcome }}
+          CHANGED: ${{ steps.commit.outputs.changed }}
+          SHA: ${{ steps.commit.outputs.sha }}
+          CACHE_HIT: ${{ steps.bin-cache.outputs.cache-hit }}
+        run: |
+          providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log 2>/dev/null | paste -sd ',' -)
+          cards=$(grep -c '✓ .*\.svg' /tmp/engine.log 2>/dev/null || true)
+          {
+            echo ""
+            echo "### Run summary"
+            echo ""
+            echo "| Stage | Result |"
+            echo "|---|---|"
+            echo "| binary cache | $([ "$CACHE_HIT" = "true" ] && echo 'hit — build skipped' || echo 'miss — compiled') |"
+            echo "| cargo build | ${O_BUILD:-skipped} |"
+            echo "| art refetch | ${O_ART:-skipped} |"
+            echo "| engine run | ${O_ENGINE:-skipped} |"
+            echo "| providers fetched | ${providers:-n/a} |"
+            echo "| cards rendered | ${cards:-0} |"
+            echo "| commit+push | ${O_COMMIT:-skipped} (changed=${CHANGED:-false}${SHA:+, $SHA}) |"
+            echo "| mirror → GitHub | ${O_MIR_GH:-skipped} |"
+            echo "| mirror → Codeberg | ${O_MIR_CB:-skipped} |"
+            echo "| notify Telegram | ${O_NTG:-skipped} |"
+            echo "| notify webhook | ${O_NWH:-skipped} |"
+          } | tee -a "${GITHUB_STEP_SUMMARY:-/dev/null}"
+          if [ "${O_ENGINE}" != "success" ]; then
+            echo "::error::engine run did not succeed (${O_ENGINE})"
+            exit 1
+          fi
+          if [ -n "${O_COMMIT}" ] && [ "${O_COMMIT}" != "success" ] && [ "${O_COMMIT}" != "skipped" ]; then
+            echo "::error::commit/push did not succeed (${O_COMMIT})"
+            exit 1
+          fi
