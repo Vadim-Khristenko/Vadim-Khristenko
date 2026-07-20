@@ -280,6 +280,15 @@ ca = "#8a5cf6"
 cb = "#150f26"
 note = "building 1x1s under pressure"
 
+[[games]]
+key = "miside"
+title = "MiSide"
+short = "MISIDE"
+query = "MiSide"
+ca = "#ff6fb5"
+cb = "#241019"
+note = "Mita's world is a little too perfect"
+
 # ── Best game (fully configurable spotlight card) ───────────────────────────
 # art_url: any image URL for the cover; "" auto-resolves via SteamGridDB.
 # cover_mode: "portrait" (left 2:3 panel) | "landscape" (full-width behind text).

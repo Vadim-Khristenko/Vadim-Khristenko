@@ -127,6 +127,36 @@ mod tests {
     }
 
     #[test]
+    fn kumir_flagship_and_miside_game_are_configured() {
+        let cfg = Config::load(&repo_config_dir()).expect("config/ must load");
+        let kumir = cfg
+            .flagship
+            .project
+            .iter()
+            .find(|p| p.name == "Kumir 3")
+            .expect("Kumir 3 flagship entry");
+        assert_eq!(kumir.repo, "kumir3-core");
+        assert_eq!(kumir.prefer.as_deref(), Some("github"));
+        assert!(!kumir.tags.is_empty() && !kumir.blurb.is_empty());
+
+        let miside = cfg
+            .profile
+            .games
+            .iter()
+            .find(|g| g.key == "miside")
+            .expect("miside game entry");
+        assert_eq!(miside.title, "MiSide");
+        assert_eq!(miside.short, "MISIDE");
+        assert_eq!(miside.query, "MiSide");
+        for colour in [&miside.ca, &miside.cb] {
+            assert!(
+                colour.starts_with('#') && colour.len() == 7,
+                "tile colour {colour} must be #rrggbb"
+            );
+        }
+    }
+
+    #[test]
     fn forgejo_without_base_url_is_rejected() {
         let providers: ProvidersConfig = toml::from_str(
             r#"

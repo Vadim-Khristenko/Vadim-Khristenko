@@ -476,8 +476,8 @@ mod tests {
         let gh = providers.iter().find(|p| p.id() == "github").unwrap();
         let pd = collect(gh.as_ref(), &no_stats());
         assert!(pd.reachable);
-        assert_eq!(pd.rollup.repo_count, 6); // fork excluded
-        assert_eq!(pd.rollup.stars, 307); // summed incl. the fork
+        assert_eq!(pd.rollup.repo_count, 7); // fork excluded
+        assert_eq!(pd.rollup.stars, 353); // summed incl. the fork
         assert_eq!(pd.rollup.commit_label, "commits"); // GraphQL windows present
         assert_eq!(pd.rollup.commits.d7, Some(26));
         // Profile repo is skipped as "most active" despite freshest push.
@@ -488,8 +488,8 @@ mod tests {
     #[test]
     fn aggregate_sums_social_metrics_across_mirrors() {
         let (agg, _) = fixture_aggregate();
-        // Stars: every platform copy counts (github 307 + codeberg 16 + vai-git 16).
-        assert_eq!(agg.combined.stars, 339);
+        // Stars: every platform copy counts (github 353 + codeberg 16 + vai-git 16).
+        assert_eq!(agg.combined.stars, 385);
         // Followers are people: summed across platforms.
         assert_eq!(agg.followers_total, 61 + 7 + 4);
     }
@@ -497,8 +497,8 @@ mod tests {
     #[test]
     fn aggregate_counts_code_metrics_once_per_mirror_group() {
         let (agg, _) = fixture_aggregate();
-        // 9 distinct owned repo names across the three platforms.
-        assert_eq!(agg.combined.repo_count, 9);
+        // 10 distinct owned repo names across the three platforms.
+        assert_eq!(agg.combined.repo_count, 10);
         // aethelgard's canonical copy is vai-git (largest byte total), so its
         // Cython bytes appear exactly once.
         assert_eq!(agg.combined.lang_bytes.get("Cython"), Some(&36000));
@@ -551,6 +551,36 @@ mod tests {
     }
 
     #[test]
+    fn every_configured_flagship_resolves_from_fixtures() {
+        // Guards the config ↔ fixture contract: `--fixtures` runs (and the
+        // offline tests) must resolve live stats for EVERY flagship project.
+        let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../config");
+        let cfg = crate::config::Config::load(&dir).expect("config loads");
+        let (agg, providers) = fixture_aggregate();
+        for project in &cfg.flagship.project {
+            let live = resolve_flagship(project, &agg, &providers, &no_stats());
+            assert!(
+                live.repo.is_some(),
+                "flagship '{}' (repo {}) has no fixture entry — offline runs would render a dead row",
+                project.name,
+                project.repo
+            );
+        }
+        // The Kumir 3 entry specifically headlines from the GitHub fixture.
+        let kumir = cfg
+            .flagship
+            .project
+            .iter()
+            .find(|p| p.name == "Kumir 3")
+            .expect("Kumir 3 configured");
+        let live = resolve_flagship(kumir, &agg, &providers, &no_stats());
+        assert_eq!(live.source.as_deref(), Some("GitHub"));
+        assert_eq!(live.stars, 46);
+        assert_eq!(live.pulse.total_commits, Some(128));
+        assert!(live.langs.contains_key("Rust"));
+    }
+
+    #[test]
     fn flagship_missing_repo_degrades_gracefully() {
         let (agg, providers) = fixture_aggregate();
         let project = FlagshipProject {
@@ -584,7 +614,7 @@ mod tests {
             .map(|p| collect(p.as_ref(), &seeded_stats()))
             .collect();
         let agg = aggregate(platforms);
-        assert_eq!(agg.combined.repo_count, 8); // 9 distinct − the profile repo
+        assert_eq!(agg.combined.repo_count, 9); // 10 distinct − the profile repo
     }
 
     #[test]

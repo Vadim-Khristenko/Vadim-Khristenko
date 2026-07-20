@@ -33,6 +33,14 @@ blurb = "The editor should match the playlist — teal it all the way down."
 accent = "#2ac3de"
 
 [[project]]
+name = "Kumir 3"
+repo = "kumir3-core"
+prefer = "github"
+tags = ["language", "education", "compiler"]
+blurb = "My take on the classroom language — a modern Kumir compiler core."
+accent = "#7aa2f7"
+
+[[project]]
 name = "Aethelgard"
 repo = "aethelgard"
 prefer = "vai-git"

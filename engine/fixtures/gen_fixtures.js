@@ -50,6 +50,7 @@ const github = {
     repo("TheWall", { stars: 37, forks: 6, open_issues: 5, language: "TypeScript", pushed_at: "2026-07-17T19:40:00Z", html_url: "https://github.com/Vadim-Khristenko/TheWall", description: "Community tooling for the Filian world" }),
     repo("HatsuneMikuEditorTheme-VSC", { stars: 24, forks: 4, open_issues: 2, language: "JSON", pushed_at: "2026-06-28T15:00:00Z", html_url: "https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC", description: "Teal all the way down" }),
     repo("aethelgard", { stars: 12, forks: 1, open_issues: 3, language: "Python", pushed_at: "2026-07-15T09:30:00Z", html_url: "https://github.com/Vadim-Khristenko/aethelgard", description: "TQ-1.58 HVRL mirror" }),
+    repo("kumir3-core", { stars: 46, forks: 7, open_issues: 6, language: "Rust", pushed_at: "2026-07-16T14:20:00Z", html_url: "https://github.com/Vadim-Khristenko/kumir3-core", description: "Kumir 3 — modern compiler core for the classroom language" }),
     repo("fleet-scripts", { stars: 5, forks: 0, open_issues: 0, language: "Shell", pushed_at: "2026-05-02T08:00:00Z" }),
     repo("upstream-fork", { fork: true, stars: 2, forks: 0, open_issues: 0, language: "C++", pushed_at: "2026-04-01T08:00:00Z" }),
   ],
@@ -59,6 +60,7 @@ const github = {
     "TheWall": { TypeScript: 150000, HTML: 12000 },
     "HatsuneMikuEditorTheme-VSC": { JavaScript: 8000 },
     "aethelgard": { Python: 60000 },
+    "kumir3-core": { Rust: 265000, Kumir: 12000 },
     "fleet-scripts": { Shell: 15000 },
   },
   heatmap: heatmap(140, 0.72, 14),
@@ -67,6 +69,8 @@ const github = {
     "AmneziaWG-Architect": { total_commits: 347, daily_30: daily30(0.55, 5) },
     "TheWall": { total_commits: 152, daily_30: daily30(0.4, 4) },
     "HatsuneMikuEditorTheme-VSC": { total_commits: 41, daily_30: daily30(0.12, 2) },
+    // Literal series (no rnd() draws) so every other fixture stays byte-identical.
+    "kumir3-core": { total_commits: 128, daily_30: [2, 0, 1, 3, 0, 0, 4, 1, 0, 2, 5, 0, 1, 0, 3, 2, 0, 0, 1, 4, 0, 2, 0, 1, 3, 0, 2, 1, 0, 2] },
   },
   // Raw commit list (wins over pulses.TheWall) — exercises the
   // exclude_commit_authors filter: 2 human commits + 2 CI-bot commits.
