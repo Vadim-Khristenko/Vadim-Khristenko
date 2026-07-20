@@ -46,7 +46,7 @@ impl ForgejoProvider {
         if let Some(tok) = &self.token {
             req = req.header("Authorization", format!("token {tok}"));
         }
-        let resp = req.send().with_context(|| format!("GET {path}"))?;
+        let resp = super::retry::send_retrying(req).with_context(|| format!("GET {path}"))?;
         if !resp.status().is_success() {
             return Err(anyhow!("GET {path}: HTTP {}", resp.status()));
         }

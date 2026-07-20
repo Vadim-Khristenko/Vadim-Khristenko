@@ -8,6 +8,7 @@
 pub mod fixture;
 pub mod forgejo;
 pub mod github;
+pub mod retry;
 
 use crate::config::{ProviderEntry, ProviderKind, ProvidersConfig};
 use crate::log;

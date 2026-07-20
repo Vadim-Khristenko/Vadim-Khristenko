@@ -49,7 +49,7 @@ impl GitHubProvider {
         if let Some(tok) = &self.token {
             req = req.header("Authorization", format!("Bearer {tok}"));
         }
-        let resp = req.send().with_context(|| format!("GET {path}"))?;
+        let resp = super::retry::send_retrying(req).with_context(|| format!("GET {path}"))?;
         let status = resp.status();
         if !status.is_success() {
             return Err(anyhow!("GET {path}: HTTP {status}"));
@@ -60,13 +60,15 @@ impl GitHubProvider {
     fn graphql(&self, query: &str, variables: serde_json::Value) -> Option<serde_json::Value> {
         let tok = self.token.as_ref()?;
         let body = serde_json::json!({ "query": query, "variables": variables });
-        let res = self
+        let req = self
             .client
             .post(format!("{API}/graphql"))
             .header("Authorization", format!("Bearer {tok}"))
-            .json(&body)
-            .send();
-        match res.and_then(|r| r.error_for_status()).and_then(|r| r.json()) {
+            .json(&body);
+        match super::retry::send_retrying(req)
+            .and_then(|r| r.error_for_status().map_err(Into::into))
+            .and_then(|r| r.json().map_err(Into::into))
+        {
             Ok(v) => Some(v),
             Err(e) => {
                 log::warn(&format!("graphql: {e}"));
@@ -225,7 +227,7 @@ impl Provider for GitHubProvider {
         if let Some(tok) = &self.token {
             req = req.header("Authorization", format!("Bearer {tok}"));
         }
-        if let Ok(resp) = req.send() {
+        if let Ok(resp) = super::retry::send_retrying(req) {
             if resp.status().is_success() {
                 let link = resp
                     .headers()
