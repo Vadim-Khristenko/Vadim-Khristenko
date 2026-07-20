@@ -13,6 +13,7 @@ name: VAI Profile Engine
 #
 # Secrets (documented in engine/README.md):
 #   VAI_GIT_TOKEN, GH_TOKEN, CODEBERG_TOKEN          read-only API tokens
+#   LASTFM_API_KEY                                    Last.fm API key (music)
 #   GITHUB_MIRROR_TOKEN, CODEBERG_MIRROR_TOKEN        scoped push tokens
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -61,6 +62,7 @@ jobs:
           VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
         run: ./engine/target/release/vai-profile build
 
       - name: Commit regenerated assets

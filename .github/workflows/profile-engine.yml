@@ -49,6 +49,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
           VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
         run: ./engine/target/release/vai-profile build
 
       - name: Commit regenerated assets
