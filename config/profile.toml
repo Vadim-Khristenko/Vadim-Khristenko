@@ -29,7 +29,7 @@ tags = ["verifiable training", "hierarchical RL", "domain: software-engineering"
 # "Companions / sparring partners", NOT a vibe-coding autopilot.
 [ai]
 models = ["Fable 5", "GPT 5.6 Sol", "Grok 4.5", "Kimi K3", "Qwen 3.8 Max", "MiMo V2.5 Pro"]
-favourites = ["Fable 5", "Qwen 3.8 Max", "MiMo V2.5 Pro"]
+favourites = ["Fable 5", "Grok 4.5", "Qwen 3.8 Max", "MiMo V2.5 Pro"]
 
 # ── Learning / building rotation (learning card) ────────────────────────────
 [[learning.topics]]
@@ -102,7 +102,7 @@ url = "https://codeforces.com/profile/VAI_Programmer"
 # ── Music on loop ───────────────────────────────────────────────────────────
 [[composers]]
 name = "Hatsune Miku"
-note = "the eternal 16-year-old diva"
+note = "the eternal 19-year-old diva"
 
 [[composers]]
 name = "Deco*27"
@@ -276,7 +276,7 @@ art_url = "https://cdn2.steamgriddb.com/grid/6125432a1d4dfa1f33dbffe6bb0b9a0e.jp
 cover_mode = "portrait"
 accent = "#e23b5a"
 nick = "VAI"
-level = "95"
+level = "115"
 server = "Global"
 game_id = "12405515"
 blurb = "My main since launch — holding the surface against the Raptures."
