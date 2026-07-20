@@ -51,8 +51,8 @@
     
     
     <text x="24" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#f7768e" letter-spacing="1">🎮 PLAYING</text>
-    <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Project Sekai</text>
-    <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">chasing the perfect full-combo</text>
+    <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Honkai: Star Rail</text>
+    <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="12" fill="#9aa5ce">may this journey lead us starward</text>
     
     <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#bb9af7" letter-spacing="1">🎧 NOW PLAYING</text>
     <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="18" font-weight="700" fill="#c0caf5">Rabbit Hole</text>
