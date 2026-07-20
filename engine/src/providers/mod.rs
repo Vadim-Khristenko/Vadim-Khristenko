@@ -10,7 +10,7 @@ pub mod forgejo;
 pub mod github;
 pub mod retry;
 
-use crate::config::{ProviderEntry, ProviderKind, ProvidersConfig};
+use crate::config::{ProviderEntry, ProviderKind, ProvidersConfig, StatsConfig};
 use crate::log;
 use crate::model::*;
 use anyhow::Result;
@@ -38,8 +38,10 @@ pub trait Provider {
         None
     }
 
-    /// Per-repo pulse for the flagship card (total commits + 30-day activity).
-    fn pulse(&self, _repo: &Repo) -> RepoPulse {
+    /// Per-repo pulse for the flagship card (total commits + 30-day
+    /// activity). `stats` filters excluded commit authors (CI bots) out of
+    /// the 30-day series.
+    fn pulse(&self, _repo: &Repo, _stats: &StatsConfig) -> RepoPulse {
         RepoPulse::default()
     }
 }
@@ -70,8 +72,10 @@ pub fn make_providers(
 }
 
 /// Collect everything one platform offers and derive its rollup.
-/// Ported from the previous engine's data-collection flow.
-pub fn collect(provider: &dyn Provider) -> PlatformData {
+/// Ported from the previous engine's data-collection flow. Repositories in
+/// `stats.exclude_repos` are dropped up front, so they never reach ANY
+/// rollup metric (languages, LOC, stars, forks, activity, most-active).
+pub fn collect(provider: &dyn Provider, stats: &StatsConfig) -> PlatformData {
     log::section(&format!("Fetching {} data", provider.display()));
     let mut pd = PlatformData {
         id: provider.id().to_string(),
@@ -95,7 +99,19 @@ pub fn collect(provider: &dyn Provider) -> PlatformData {
             if !repos.is_empty() {
                 pd.reachable = true;
             }
-            pd.repos = repos;
+            let before = repos.len();
+            pd.repos = repos
+                .into_iter()
+                .filter(|r| !stats.repo_excluded(&r.name))
+                .collect();
+            let dropped = before - pd.repos.len();
+            if dropped > 0 {
+                log::step(
+                    "excluded",
+                    &dropped.to_string(),
+                    "repos removed from rollups (stats.toml)",
+                );
+            }
         }
         Err(e) => log::warn(&format!("repos: {e}")),
     }
@@ -333,6 +349,7 @@ pub fn resolve_flagship(
     project: &crate::config::flagship::FlagshipProject,
     agg: &Aggregate,
     providers: &[Box<dyn Provider>],
+    stats: &StatsConfig,
 ) -> FlagshipLive {
     let key = normalize_repo_name(&project.repo);
     let mut live = FlagshipLive {
@@ -386,7 +403,7 @@ pub fn resolve_flagship(
         .cloned()
         .unwrap_or_default();
     if let Some(provider) = providers.iter().find(|pr| pr.id() == headline.0.id) {
-        live.pulse = provider.pulse(headline.1);
+        live.pulse = provider.pulse(headline.1, stats);
     }
     live
 }
@@ -427,9 +444,28 @@ mod tests {
             .collect()
     }
 
+    fn no_stats() -> StatsConfig {
+        StatsConfig::default()
+    }
+
+    /// The real seeded exclusions: profile repo + CI bot identities.
+    fn seeded_stats() -> StatsConfig {
+        StatsConfig {
+            exclude_repos: vec!["Vadim-Khristenko".into()],
+            exclude_commit_authors: vec![
+                "actions@git.vai-rice.space".into(),
+                "VIA GIT".into(),
+                "github-actions[bot]".into(),
+            ],
+        }
+    }
+
     fn fixture_aggregate() -> (Aggregate, Vec<Box<dyn Provider>>) {
         let providers = fixture_providers();
-        let platforms: Vec<PlatformData> = providers.iter().map(|p| collect(p.as_ref())).collect();
+        let platforms: Vec<PlatformData> = providers
+            .iter()
+            .map(|p| collect(p.as_ref(), &no_stats()))
+            .collect();
         (aggregate(platforms), providers)
     }
 
@@ -437,7 +473,7 @@ mod tests {
     fn collect_derives_platform_rollup() {
         let providers = fixture_providers();
         let gh = providers.iter().find(|p| p.id() == "github").unwrap();
-        let pd = collect(gh.as_ref());
+        let pd = collect(gh.as_ref(), &no_stats());
         assert!(pd.reachable);
         assert_eq!(pd.rollup.repo_count, 6); // fork excluded
         assert_eq!(pd.rollup.stars, 307); // summed incl. the fork
@@ -503,7 +539,7 @@ mod tests {
             blurb: String::new(),
             accent: None,
         };
-        let live = resolve_flagship(&project, &agg, &providers);
+        let live = resolve_flagship(&project, &agg, &providers, &no_stats());
         assert_eq!(live.stars, 218 + 11 + 4);
         assert_eq!(live.forks, 31 + 2 + 1);
         // github open_issues includes PRs (14); forgejo copies add issues+PRs.
@@ -525,8 +561,49 @@ mod tests {
             blurb: String::new(),
             accent: None,
         };
-        let live = resolve_flagship(&project, &agg, &providers);
+        let live = resolve_flagship(&project, &agg, &providers, &no_stats());
         assert!(live.repo.is_none());
         assert_eq!(live.stars, 0);
+    }
+
+    #[test]
+    fn excluded_repo_never_reaches_any_rollup_metric() {
+        let providers = fixture_providers();
+        let gh = providers.iter().find(|p| p.id() == "github").unwrap();
+        let base = collect(gh.as_ref(), &no_stats());
+        let pd = collect(gh.as_ref(), &seeded_stats());
+        // The profile repo (6 repos → 5) disappears from every rollup:
+        assert_eq!(pd.rollup.repo_count, base.rollup.repo_count - 1);
+        assert_eq!(pd.rollup.stars, base.rollup.stars - 9); // its 9 stars gone
+        assert!(pd.rollup.total_bytes < base.rollup.total_bytes); // langs gone
+        assert!(pd.repos.iter().all(|r| r.name != "Vadim-Khristenko"));
+        // And the aggregate view can't resurrect it.
+        let platforms: Vec<PlatformData> = providers
+            .iter()
+            .map(|p| collect(p.as_ref(), &seeded_stats()))
+            .collect();
+        let agg = aggregate(platforms);
+        assert_eq!(agg.combined.repo_count, 8); // 9 distinct − the profile repo
+    }
+
+    #[test]
+    fn excluded_bot_authors_are_dropped_from_commit_series() {
+        let (agg, providers) = fixture_aggregate();
+        let project = FlagshipProject {
+            name: "The Wall Dev".into(),
+            repo: "TheWall".into(),
+            prefer: Some("github".into()),
+            site: None,
+            tags: vec![],
+            blurb: String::new(),
+            accent: None,
+        };
+        // Unfiltered: all 4 fixture commits (2 human + VIA GIT + gh-actions).
+        let all = resolve_flagship(&project, &agg, &providers, &no_stats());
+        assert_eq!(all.pulse.daily_30.iter().sum::<u32>(), 4);
+        // Filtered: only the two human commits remain.
+        let human = resolve_flagship(&project, &agg, &providers, &seeded_stats());
+        assert_eq!(human.pulse.daily_30.iter().sum::<u32>(), 2);
+        assert_eq!(human.pulse.total_commits, Some(152)); // repo-wide total intact
     }
 }

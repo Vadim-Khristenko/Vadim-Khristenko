@@ -20,7 +20,7 @@
       "description": "Mirror"
     },
     {
-      "name": "the-wall",
+      "name": "TheWall",
       "fork": false,
       "stars": 3,
       "forks": 0,
@@ -29,7 +29,7 @@
       "open_prs": 0,
       "language": "TypeScript",
       "pushed_at": "2026-07-17T20:00:00Z",
-      "html_url": "https://codeberg.org/VAI_PROG/the-wall",
+      "html_url": "https://codeberg.org/VAI_PROG/TheWall",
       "description": null
     },
     {
@@ -52,7 +52,7 @@
       "Vue": 87000,
       "CSS": 20000
     },
-    "the-wall": {
+    "TheWall": {
       "TypeScript": 149000,
       "HTML": 12000
     },

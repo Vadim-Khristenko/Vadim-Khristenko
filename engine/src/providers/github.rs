@@ -215,10 +215,11 @@ impl Provider for GitHubProvider {
         }
     }
 
-    fn pulse(&self, repo: &Repo) -> RepoPulse {
+    fn pulse(&self, repo: &Repo, stats: &crate::config::StatsConfig) -> RepoPulse {
         let mut pulse = RepoPulse::default();
         // Total commits: per_page=1 + the rel="last" page number of the Link
-        // header — the cheapest exact count GitHub offers.
+        // header — the cheapest exact count GitHub offers. (Repo-wide; the
+        // author filter applies to the 30-day series below.)
         let url = format!(
             "{API}/repos/{}/{}/commits?per_page=1",
             self.entry.user, repo.name
@@ -240,7 +241,8 @@ impl Provider for GitHubProvider {
                     .or(Some(1));
             }
         }
-        // 30-day activity: list commits since 30 days ago, bucket per day.
+        // 30-day activity: list commits since 30 days ago, drop excluded
+        // authors (CI bots), bucket the rest per day.
         let since = (Utc::now() - chrono::Duration::days(30))
             .format("%Y-%m-%dT%H:%M:%SZ")
             .to_string();
@@ -248,20 +250,30 @@ impl Provider for GitHubProvider {
             "/repos/{}/{}/commits?since={since}&per_page=100",
             self.entry.user, repo.name
         )) {
-            pulse.daily_30 = bucket_commit_days(
-                v.as_array().map(|arr| {
-                    arr.iter()
-                        .filter_map(|c| {
-                            c.pointer("/commit/author/date")
-                                .and_then(|d| d.as_str())
-                                .map(|d| d.to_string())
-                        })
-                        .collect()
-                })
-                .unwrap_or_default(),
-            );
+            let commits: Vec<CommitMeta> = v
+                .as_array()
+                .map(|arr| arr.iter().map(commit_meta_from_github).collect())
+                .unwrap_or_default();
+            pulse.daily_30 = bucket_commit_days(stats.filter_commit_dates(&commits));
         }
         pulse
+    }
+}
+
+/// Authorship metadata from one GitHub commit-list item.
+pub fn commit_meta_from_github(c: &serde_json::Value) -> CommitMeta {
+    let s = |ptr: &str| {
+        c.pointer(ptr)
+            .and_then(|v| v.as_str())
+            .unwrap_or_default()
+            .to_string()
+    };
+    CommitMeta {
+        date: s("/commit/author/date"),
+        author_email: s("/commit/author/email"),
+        author_name: s("/commit/author/name"),
+        author_login: s("/author/login"),
+        days_ago: None,
     }
 }
 

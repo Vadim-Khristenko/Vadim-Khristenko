@@ -47,7 +47,7 @@ const github = {
   repos: [
     repo("Vadim-Khristenko", { stars: 9, forks: 2, open_issues: 1, language: "Rust", pushed_at: "2026-07-19T06:04:00Z", html_url: "https://github.com/Vadim-Khristenko/Vadim-Khristenko", description: "Self-regenerating profile" }),
     repo("AmneziaWG-Architect", { stars: 218, forks: 31, open_issues: 14, language: "TypeScript", pushed_at: "2026-07-18T21:12:00Z", html_url: "https://github.com/Vadim-Khristenko/AmneziaWG-Architect", description: "Client-side DPI-evasion profile generator" }),
-    repo("the-wall", { stars: 37, forks: 6, open_issues: 5, language: "TypeScript", pushed_at: "2026-07-17T19:40:00Z", html_url: "https://github.com/Vadim-Khristenko/the-wall", description: "Community tooling for the Filian world" }),
+    repo("TheWall", { stars: 37, forks: 6, open_issues: 5, language: "TypeScript", pushed_at: "2026-07-17T19:40:00Z", html_url: "https://github.com/Vadim-Khristenko/TheWall", description: "Community tooling for the Filian world" }),
     repo("HatsuneMikuEditorTheme-VSC", { stars: 24, forks: 4, open_issues: 2, language: "JSON", pushed_at: "2026-06-28T15:00:00Z", html_url: "https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC", description: "Teal all the way down" }),
     repo("aethelgard", { stars: 12, forks: 1, open_issues: 3, language: "Python", pushed_at: "2026-07-15T09:30:00Z", html_url: "https://github.com/Vadim-Khristenko/aethelgard", description: "TQ-1.58 HVRL mirror" }),
     repo("fleet-scripts", { stars: 5, forks: 0, open_issues: 0, language: "Shell", pushed_at: "2026-05-02T08:00:00Z" }),
@@ -56,7 +56,7 @@ const github = {
   languages: {
     "Vadim-Khristenko": { Rust: 92000, Python: 41000 },
     "AmneziaWG-Architect": { TypeScript: 310000, Vue: 88000, CSS: 21000 },
-    "the-wall": { TypeScript: 150000, HTML: 12000 },
+    "TheWall": { TypeScript: 150000, HTML: 12000 },
     "HatsuneMikuEditorTheme-VSC": { JavaScript: 8000 },
     "aethelgard": { Python: 60000 },
     "fleet-scripts": { Shell: 15000 },
@@ -65,8 +65,18 @@ const github = {
   commit_windows: { d7: 26, d30: 104, y1: 1483 },
   pulses: {
     "AmneziaWG-Architect": { total_commits: 347, daily_30: daily30(0.55, 5) },
-    "the-wall": { total_commits: 152, daily_30: daily30(0.4, 4) },
+    "TheWall": { total_commits: 152, daily_30: daily30(0.4, 4) },
     "HatsuneMikuEditorTheme-VSC": { total_commits: 41, daily_30: daily30(0.12, 2) },
+  },
+  // Raw commit list (wins over pulses.TheWall) — exercises the
+  // exclude_commit_authors filter: 2 human commits + 2 CI-bot commits.
+  commits_30d: {
+    TheWall: [
+      { days_ago: 1, author_email: 'vadim@vai-rice.space', author_name: 'Vadim Khristenko', author_login: 'Vadim-Khristenko' },
+      { days_ago: 2, author_email: 'actions@git.vai-rice.space', author_name: 'VIA GIT', author_login: '' },
+      { days_ago: 2, author_email: '41898282+github-actions[bot]@users.noreply.github.com', author_name: 'github-actions[bot]', author_login: 'github-actions[bot]' },
+      { days_ago: 3, author_email: 'vadim@vai-rice.space', author_name: 'Vadim Khristenko', author_login: 'Vadim-Khristenko' },
+    ],
   },
 };
 
@@ -74,12 +84,12 @@ const codeberg = {
   profile: { login: "VAI_PROG", name: "Vadim Khristenko", followers: 7, following: 3 },
   repos: [
     repo("AmneziaWG-Architect", { stars: 11, forks: 2, open_issues: 1, open_prs: 1, language: "TypeScript", pushed_at: "2026-07-18T22:00:00Z", html_url: "https://codeberg.org/VAI_PROG/AmneziaWG-Architect", description: "Mirror" }),
-    repo("the-wall", { stars: 3, forks: 0, open_issues: 0, open_prs: 0, language: "TypeScript", pushed_at: "2026-07-17T20:00:00Z", html_url: "https://codeberg.org/VAI_PROG/the-wall" }),
+    repo("TheWall", { stars: 3, forks: 0, open_issues: 0, open_prs: 0, language: "TypeScript", pushed_at: "2026-07-17T20:00:00Z", html_url: "https://codeberg.org/VAI_PROG/TheWall" }),
     repo("vai-scripts", { stars: 2, forks: 0, open_issues: 1, open_prs: 0, language: "Shell", pushed_at: "2026-06-10T12:00:00Z", html_url: "https://codeberg.org/VAI_PROG/vai-scripts" }),
   ],
   languages: {
     "AmneziaWG-Architect": { TypeScript: 305000, Vue: 87000, CSS: 20000 },
-    "the-wall": { TypeScript: 149000, HTML: 12000 },
+    "TheWall": { TypeScript: 149000, HTML: 12000 },
     "vai-scripts": { Shell: 22000 },
   },
   heatmap: heatmap(140, 0.18, 4),
@@ -94,14 +104,14 @@ const vaiGit = {
   repos: [
     repo("aethelgard", { stars: 6, forks: 0, open_issues: 4, open_prs: 2, language: "Python", pushed_at: "2026-07-19T05:45:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/aethelgard", description: "TQ-1.58 HVRL — source of truth" }),
     repo("AmneziaWG-Architect", { stars: 4, forks: 1, open_issues: 2, open_prs: 1, language: "TypeScript", pushed_at: "2026-07-18T23:10:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/AmneziaWG-Architect" }),
-    repo("the-wall", { stars: 2, forks: 0, open_issues: 1, open_prs: 0, language: "TypeScript", pushed_at: "2026-07-17T21:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/the-wall" }),
+    repo("TheWall", { stars: 2, forks: 0, open_issues: 1, open_prs: 0, language: "TypeScript", pushed_at: "2026-07-17T21:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/TheWall" }),
     repo("vai-rice-space", { stars: 3, forks: 0, open_issues: 2, open_prs: 0, language: "Vue", pushed_at: "2026-07-16T18:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/vai-rice-space", description: "The portfolio" }),
     repo("fleet-tools", { stars: 1, forks: 0, open_issues: 0, open_prs: 0, language: "Rust", pushed_at: "2026-07-12T14:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/fleet-tools" }),
   ],
   languages: {
     "aethelgard": { Python: 512000, Rust: 148000, Cython: 36000 },
     "AmneziaWG-Architect": { TypeScript: 308000, Vue: 88000, CSS: 20500 },
-    "the-wall": { TypeScript: 150500, HTML: 12000 },
+    "TheWall": { TypeScript: 150500, HTML: 12000 },
     "vai-rice-space": { Vue: 96000, TypeScript: 44000, CSS: 18000 },
     "fleet-tools": { Rust: 83000 },
   },
@@ -110,7 +120,7 @@ const vaiGit = {
   pulses: {
     "aethelgard": { total_commits: 611, daily_30: daily30(0.7, 6) },
     "AmneziaWG-Architect": { total_commits: 344, daily_30: daily30(0.35, 3) },
-    "the-wall": { total_commits: 150, daily_30: daily30(0.3, 3) },
+    "TheWall": { total_commits: 150, daily_30: daily30(0.3, 3) },
   },
 };
 

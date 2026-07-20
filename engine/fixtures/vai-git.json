@@ -33,7 +33,7 @@
       "description": null
     },
     {
-      "name": "the-wall",
+      "name": "TheWall",
       "fork": false,
       "stars": 2,
       "forks": 0,
@@ -42,7 +42,7 @@
       "open_prs": 0,
       "language": "TypeScript",
       "pushed_at": "2026-07-17T21:00:00Z",
-      "html_url": "https://git.vai-rice.space/VAI_PROG/the-wall",
+      "html_url": "https://git.vai-rice.space/VAI_PROG/TheWall",
       "description": null
     },
     {
@@ -83,7 +83,7 @@
       "Vue": 88000,
       "CSS": 20500
     },
-    "the-wall": {
+    "TheWall": {
       "TypeScript": 150500,
       "HTML": 12000
     },
@@ -730,7 +730,7 @@
         2
       ]
     },
-    "the-wall": {
+    "TheWall": {
       "total_commits": 150,
       "daily_30": [
         0,

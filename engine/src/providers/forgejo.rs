@@ -178,9 +178,10 @@ impl Provider for ForgejoProvider {
         }
     }
 
-    fn pulse(&self, repo: &Repo) -> RepoPulse {
+    fn pulse(&self, repo: &Repo, stats: &crate::config::StatsConfig) -> RepoPulse {
         let mut pulse = RepoPulse::default();
         // Exact total via the X-Total-Count header on a limit=1 commit list.
+        // (Repo-wide; the author filter applies to the 30-day series below.)
         if let Ok(resp) = self.get(&format!(
             "/repos/{}/{}/commits?limit=1&stat=false",
             self.entry.user, repo.name
@@ -198,21 +199,33 @@ impl Provider for ForgejoProvider {
             "/repos/{}/{}/commits?since={since}&limit=100&stat=false",
             self.entry.user, repo.name
         )) {
-            let dates = v
+            let commits: Vec<CommitMeta> = v
                 .as_array()
-                .map(|arr| {
-                    arr.iter()
-                        .filter_map(|c| {
-                            c.pointer("/commit/author/date")
-                                .or_else(|| c.get("created"))
-                                .and_then(|d| d.as_str())
-                                .map(|d| d.to_string())
-                        })
-                        .collect()
-                })
+                .map(|arr| arr.iter().map(commit_meta_from_forgejo).collect())
                 .unwrap_or_default();
-            pulse.daily_30 = super::github::bucket_commit_days(dates);
+            pulse.daily_30 = super::github::bucket_commit_days(stats.filter_commit_dates(&commits));
         }
         pulse
+    }
+}
+
+/// Authorship metadata from one Forgejo/Gitea commit-list item.
+fn commit_meta_from_forgejo(c: &serde_json::Value) -> CommitMeta {
+    let s = |ptr: &str| {
+        c.pointer(ptr)
+            .and_then(|v| v.as_str())
+            .unwrap_or_default()
+            .to_string()
+    };
+    let date = {
+        let d = s("/commit/author/date");
+        if d.is_empty() { s("/created") } else { d }
+    };
+    CommitMeta {
+        date,
+        author_email: s("/commit/author/email"),
+        author_name: s("/commit/author/name"),
+        author_login: s("/author/login"),
+        days_ago: None,
     }
 }

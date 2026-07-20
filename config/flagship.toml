@@ -17,7 +17,7 @@ accent = "#ff9e64"
 
 [[project]]
 name = "The Wall Dev"
-repo = "the-wall"
+repo = "TheWall"
 prefer = "github"
 site = "https://the-wall.vai-rice.space"
 tags = ["community", "extension", "filian"]

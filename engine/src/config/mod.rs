@@ -10,10 +10,12 @@
 pub mod flagship;
 pub mod profile;
 pub mod providers;
+pub mod stats;
 
 pub use flagship::FlagshipConfig;
 pub use profile::ProfileConfig;
 pub use providers::{ProviderEntry, ProviderKind, ProvidersConfig};
+pub use stats::StatsConfig;
 
 use anyhow::{bail, Context, Result};
 use std::path::Path;
@@ -23,6 +25,8 @@ pub struct Config {
     pub profile: ProfileConfig,
     pub providers: ProvidersConfig,
     pub flagship: FlagshipConfig,
+    /// Optional `stats.toml` — rollup exclusions (defaults to none).
+    pub stats: StatsConfig,
 }
 
 fn load_toml<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
@@ -36,10 +40,19 @@ impl Config {
         let profile: ProfileConfig = load_toml(&config_dir.join("profile.toml"))?;
         let providers: ProvidersConfig = load_toml(&config_dir.join("providers.toml"))?;
         let flagship: FlagshipConfig = load_toml(&config_dir.join("flagship.toml"))?;
+        // stats.toml is optional: a missing file means "no exclusions", but a
+        // present-and-broken file must still fail loudly.
+        let stats_path = config_dir.join("stats.toml");
+        let stats: StatsConfig = if stats_path.is_file() {
+            load_toml(&stats_path)?
+        } else {
+            StatsConfig::default()
+        };
         let cfg = Config {
             profile,
             providers,
             flagship,
+            stats,
         };
         cfg.validate()?;
         Ok(cfg)

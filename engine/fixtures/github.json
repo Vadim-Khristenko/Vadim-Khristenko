@@ -33,7 +33,7 @@
       "description": "Client-side DPI-evasion profile generator"
     },
     {
-      "name": "the-wall",
+      "name": "TheWall",
       "fork": false,
       "stars": 37,
       "forks": 6,
@@ -42,7 +42,7 @@
       "open_prs": null,
       "language": "TypeScript",
       "pushed_at": "2026-07-17T19:40:00Z",
-      "html_url": "https://github.com/Vadim-Khristenko/the-wall",
+      "html_url": "https://github.com/Vadim-Khristenko/TheWall",
       "description": "Community tooling for the Filian world"
     },
     {
@@ -108,7 +108,7 @@
       "Vue": 88000,
       "CSS": 21000
     },
-    "the-wall": {
+    "TheWall": {
       "TypeScript": 150000,
       "HTML": 12000
     },
@@ -725,7 +725,7 @@
         2
       ]
     },
-    "the-wall": {
+    "TheWall": {
       "total_commits": 152,
       "daily_30": [
         2,
@@ -795,5 +795,33 @@
         0
       ]
     }
+  },
+  "commits_30d": {
+    "TheWall": [
+      {
+        "days_ago": 1,
+        "author_email": "vadim@vai-rice.space",
+        "author_name": "Vadim Khristenko",
+        "author_login": "Vadim-Khristenko"
+      },
+      {
+        "days_ago": 2,
+        "author_email": "actions@git.vai-rice.space",
+        "author_name": "VIA GIT",
+        "author_login": ""
+      },
+      {
+        "days_ago": 2,
+        "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
+        "author_name": "github-actions[bot]",
+        "author_login": "github-actions[bot]"
+      },
+      {
+        "days_ago": 3,
+        "author_email": "vadim@vai-rice.space",
+        "author_name": "Vadim Khristenko",
+        "author_login": "Vadim-Khristenko"
+      }
+    ]
   }
 }

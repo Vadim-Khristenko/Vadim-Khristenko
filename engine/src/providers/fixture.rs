@@ -27,6 +27,11 @@ pub struct FixtureData {
     /// Pulses keyed by repo name.
     #[serde(default)]
     pub pulses: BTreeMap<String, RepoPulse>,
+    /// Raw 30-day commit lists keyed by repo name — used instead of `pulses`
+    /// when present, so author-exclusion filtering is exercised end-to-end.
+    /// Fixture commits use `days_ago` so they never age out of the window.
+    #[serde(default)]
+    pub commits_30d: BTreeMap<String, Vec<CommitMeta>>,
 }
 
 pub struct FixtureProvider {
@@ -104,7 +109,35 @@ impl Provider for FixtureProvider {
         self.data.commit_windows.clone()
     }
 
-    fn pulse(&self, repo: &Repo) -> RepoPulse {
+    fn pulse(&self, repo: &Repo, stats: &crate::config::StatsConfig) -> RepoPulse {
+        // Raw commit list (author-filterable) wins over a canned pulse.
+        if let Some(commits) = self.data.commits_30d.get(&repo.name) {
+            let now = chrono::Utc::now();
+            let resolved: Vec<CommitMeta> = commits
+                .iter()
+                .map(|c| {
+                    let mut c = c.clone();
+                    if let Some(days) = c.days_ago {
+                        c.date = (now - chrono::Duration::days(days))
+                            .format("%Y-%m-%dT12:00:00Z")
+                            .to_string();
+                    }
+                    c
+                })
+                .collect();
+            let total = self
+                .data
+                .pulses
+                .get(&repo.name)
+                .and_then(|p| p.total_commits)
+                .or(Some(resolved.len() as u64));
+            return RepoPulse {
+                total_commits: total,
+                daily_30: super::github::bucket_commit_days(
+                    stats.filter_commit_dates(&resolved),
+                ),
+            };
+        }
         self.data.pulses.get(&repo.name).cloned().unwrap_or_default()
     }
 }

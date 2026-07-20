@@ -152,6 +152,22 @@ impl Heatmap {
     }
 }
 
+/// One commit's authorship metadata — enough for the stats-exclusion filter.
+/// `days_ago` is a fixture convenience (relative dates stay fresh in tests).
+#[derive(Debug, Clone, Default, Serialize, Deserialize)]
+pub struct CommitMeta {
+    #[serde(default)]
+    pub date: String,
+    #[serde(default)]
+    pub author_email: String,
+    #[serde(default)]
+    pub author_name: String,
+    #[serde(default)]
+    pub author_login: String,
+    #[serde(default)]
+    pub days_ago: Option<i64>,
+}
+
 /// Per-repo live pulse used by the flagship card.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct RepoPulse {

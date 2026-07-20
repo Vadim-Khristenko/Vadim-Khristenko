@@ -96,13 +96,16 @@ pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
     let fixtures_dir = root.join("engine").join("fixtures");
     let provider_set =
         providers::make_providers(&cfg.providers, fixtures.then_some(fixtures_dir.as_path()));
-    let platforms: Vec<_> = provider_set.iter().map(|p| providers::collect(p.as_ref())).collect();
+    let platforms: Vec<_> = provider_set
+        .iter()
+        .map(|p| providers::collect(p.as_ref(), &cfg.stats))
+        .collect();
     let agg = providers::aggregate(platforms);
     let flagship: Vec<FlagshipLive> = cfg
         .flagship
         .project
         .iter()
-        .map(|proj| providers::resolve_flagship(proj, &agg, &provider_set))
+        .map(|proj| providers::resolve_flagship(proj, &agg, &provider_set, &cfg.stats))
         .collect();
 
     let gh_user = cfg
