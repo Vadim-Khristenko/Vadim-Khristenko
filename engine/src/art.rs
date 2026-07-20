@@ -268,7 +268,7 @@ pub fn fetch_games(cfg: &Config, root: &Path, token: Option<&str>, only: Option<
     std::fs::create_dir_all(&out).ok();
     log::section("Fetching game-shelf covers");
     let Some(token) = token else {
-        log::warn("shelf covers need a SteamGridDB key (SGDB_KEY)");
+        log::warn("shelf covers need a SteamGridDB key (--key / SGDB_KEY / STEAMGRIDDB_KEY / STEAMGRIDDB_API_KEY)");
         return;
     };
     let mut manifest = serde_json::Map::new();

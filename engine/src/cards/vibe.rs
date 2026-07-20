@@ -33,7 +33,8 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     // quote line fully inside the viewBox (it used to clip at 150).
     let h = 192;
     let p = &ctx.cfg.profile;
-    let game = pick(&p.games, seed, 1);
+    // Shared with the games hero shelf (honours --pin-game / PIN_GAME).
+    let game = ctx.featured_game();
     let composer = pick(&p.composers, seed, 2);
     let quote = pick(&p.quotes, seed, 4);
 

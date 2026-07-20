@@ -5,7 +5,6 @@
 //! otherwise; every tile gets a staggered light sweep and an accent frame —
 //! same family, clear hierarchy.
 
-use super::pick;
 use crate::config::profile::Game;
 use crate::run::Ctx;
 use crate::svg::{esc, find_media, fit_text, media_data_uri};
@@ -70,8 +69,9 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     let tile_w = (w - 2 * pad - (COLS - 1) * GAP) as f64 / COLS as f64;
     let tile_h = (tile_w / 2.14).round() as u32; // Steam-capsule aspect
 
-    // Featured tile = the game the vibe card currently calls PLAYING.
-    let featured = pick(games, ctx.vibe_seed, 1);
+    // Featured tile = the game the vibe card currently calls PLAYING
+    // (rotation pick, or the --pin-game / PIN_GAME override).
+    let featured = ctx.featured_game();
     let rest: Vec<&Game> = games.iter().filter(|g| g.key != featured.key).collect();
 
     // Grid cells, skipping the 2×2 block the hero occupies (top-left).
