@@ -19,13 +19,26 @@ cargo build --release          # engine/target/release/vai-profile
 | `vai-profile build --only header,vibe` | Render a subset (skips the README rewrite) |
 | `vai-profile build --no-readme` | Render everything, leave README alone |
 | `vai-profile build --fixtures` | **Offline dry-run** from `engine/fixtures/*.json` — no network, no tokens |
+| `vai-profile build --pin-game miside` | Force a game into the rotation slot (see below) |
 | `vai-profile preview [--no-open]` | Build, then open `tmp_prev/preview.html` with all cards stacked |
 | `vai-profile rebuild [--games]` | Fetch best-game art (and optionally shelf covers), then build |
 | `vai-profile art [--only key,key]` | (Re)download the game-shelf covers from SteamGridDB |
 | `vai-profile bestgame` | (Re)download the best-game cover + character art |
 
-Art commands take a SteamGridDB key via `--key` or `SGDB_KEY` /
-`STEAMGRIDDB_KEY`. `VAI_FIXTURES=1` is equivalent to `--fixtures`.
+Art commands take a SteamGridDB key via `--key` or the environment —
+`SGDB_KEY`, `STEAMGRIDDB_KEY` or `STEAMGRIDDB_API_KEY` (the historical CI
+secret name), first non-empty wins; the engine logs which source was used as
+set/not-set, never the value. `VAI_FIXTURES=1` is equivalent to `--fixtures`.
+
+### Pinning the game rotation
+
+The vibe card's PLAYING slot and the games shelf's IN ROTATION hero normally
+rotate together on a 2-day seed. `--pin-game <key>` (on `build`, `rebuild`
+and `preview`) — or the `PIN_GAME` environment variable, flag wins — forces a
+configured game key (e.g. `miside`, `nikke`) into that slot; both cards stay
+in agreement. An unknown key logs a warning and falls back to the automatic
+rotation; unset = unchanged behaviour. Combine with `--only vibe,games` to
+regenerate just the two affected cards.
 
 ## Configuration (`config/`, all TOML)
 
@@ -81,32 +94,63 @@ isolation and must parse as valid XML before it is written).
 ## CI / automation
 
 **Primary:** `.forgejo/workflows/profile-engine.yml` on `git.vai-rice.space`
-— every 2 days at 06:00 UTC, on manual dispatch, and on pushes touching
-`engine/**` or `config/**`. It builds with a cached `cargo build --release`,
-runs the engine with read-only tokens, commits as
-`VIA GIT <actions@git.vai-rice.space>` with `[skip ci]`, then mirror-pushes
-to GitHub and Codeberg. **Each push token is only used against its own
-host.**
+— **daily at 06:00 UTC**, on manual dispatch, and on pushes touching
+`engine/**` or `config/**`. It runs **only on the self-hosted runner**
+(label `docker` by default; override with the `RUNNER_LABEL` repo variable),
+so automatic regeneration happens exclusively on the user's own
+infrastructure. The compiled release binary is **cached under a hash of the
+engine sources** (`engine/**/*.rs` + `Cargo.toml` + `Cargo.lock`), so daily
+stat runs skip compilation entirely unless the code changed. The engine runs
+with read-only tokens, commits as `VIA GIT <actions@git.vai-rice.space>`
+with `[skip ci]`, then mirror-pushes to GitHub and Codeberg. **Each push
+token is only used against its own host.**
+
+Manual dispatch inputs:
+
+* `only` — comma card list (→ `vai-profile build --only …`) for single-block
+  regeneration; leaves the README rewrite out, per the CLI contract;
+* `pin_game` — game key (→ `PIN_GAME`) to force the rotation slot;
+* `refetch_art` — re-fetch game art from SteamGridDB before rendering
+  (needs the `STEAMGRIDDB_API_KEY` secret).
+
+Every run starts with a **preflight inventory** that lists each secret /
+variable by name with a set/not-set marker (values are never printed) and
+ends with a **run summary table** (cache hit, providers fetched, cards
+rendered, commit, mirror pushes, notifications) in the step summary.
+
+After a successful regenerate+push the workflow can send an **optional
+notification** — Telegram and/or a generic JSON webhook. Both are entirely
+optional and skipped cleanly when their secrets are absent; messages carry
+only a short summary (providers, card count, commit sha), never secrets.
 
 **Fallback:** `.github/workflows/profile-engine.yml` is
-`workflow_dispatch`-only; it regenerates from GitHub if the Forgejo runner is
-down and pushes only to the GitHub repo.
+`workflow_dispatch`-only **by design — no schedule**; it regenerates from
+GitHub if the Forgejo runner is down and pushes only to the GitHub repo. It
+supports the same dispatch inputs, preflight inventory, binary cache,
+summary and optional notifications.
 
-### Secrets
+### Secrets & repo variables — the complete list
 
-| Secret | Where | Scope | Purpose |
-|---|---|---|---|
-| `VAI_GIT_TOKEN` | Forgejo | read-only API | vai-git provider reads |
-| `GH_TOKEN` | Forgejo | `read:user`, public repo read | GitHub provider reads (GraphQL commit windows, private contribution counts) |
-| `CODEBERG_TOKEN` | Forgejo | read-only API | Codeberg provider reads |
-| `GITHUB_MIRROR_TOKEN` | Forgejo | push to the GitHub profile repo only | mirror push → github.com |
-| `CODEBERG_MIRROR_TOKEN` | Forgejo | push to the Codeberg mirror only | mirror push → codeberg.org |
-| `PROFILE_TOKEN` | GitHub (optional) | `read:user` | receiver-run private contribution counts |
-| `STEAMGRIDDB_API_KEY` | GitHub (optional) | SteamGridDB API | game-art refresh workflow |
-| `LASTFM_API_KEY` | Forgejo + GitHub (optional) | Last.fm API (read) | live now-playing / top artists in the vibe card |
+Set **Forgejo** entries on git.vai-rice.space (repo → Settings → Actions),
+**GitHub** entries on the github.com profile repo. Everything marked
+*optional* degrades gracefully when absent.
 
-Repo variables `GITHUB_MIRROR_REPO` / `CODEBERG_MIRROR_REPO` override the
-default mirror paths.
+| Name | Where | Scope | Required? | Purpose |
+|---|---|---|---|---|
+| `VAI_GIT_TOKEN` | Forgejo secret (+ GitHub for fallback runs) | read-only API | recommended | vai-git provider reads (private counts) |
+| `GH_TOKEN` | Forgejo secret | read-only: `read:user` + public repo | recommended | GitHub provider reads (GraphQL commit windows, private contribution counts) |
+| `CODEBERG_TOKEN` | Forgejo secret (+ GitHub for fallback runs) | read-only API | recommended | Codeberg provider reads |
+| `LASTFM_API_KEY` | Forgejo + GitHub secret | Last.fm API (read) | optional | live now-playing / top artists in the vibe card |
+| `STEAMGRIDDB_API_KEY` | Forgejo + GitHub secret | SteamGridDB API (read) | optional | game-art refetch (`refetch_art` input, `art`/`bestgame`/`rebuild`); also read as `SGDB_KEY` / `STEAMGRIDDB_KEY` |
+| `GITHUB_MIRROR_TOKEN` | Forgejo secret | push to the GitHub profile repo ONLY | required for mirroring | mirror push → github.com (never used against another host) |
+| `CODEBERG_MIRROR_TOKEN` | Forgejo secret | push to the Codeberg mirror ONLY | required for mirroring | mirror push → codeberg.org (never used against another host) |
+| `PROFILE_TOKEN` | GitHub secret | read-only: `read:user` | optional | fallback-run private contribution counts (else `GITHUB_TOKEN`) |
+| `TELEGRAM_BOT_TOKEN` | Forgejo + GitHub secret | Telegram bot sendMessage | optional | regeneration notification via Telegram |
+| `TELEGRAM_CHAT_ID` | Forgejo + GitHub secret | chat/channel id | optional | where the Telegram notification goes |
+| `NOTIFY_WEBHOOK_URL` | Forgejo + GitHub secret | HTTPS endpoint (POST JSON) | optional | generic regeneration webhook |
+| `RUNNER_LABEL` | Forgejo repo **variable** | — | optional (default `docker`) | which self-hosted runner label the job targets |
+| `GITHUB_MIRROR_REPO` | Forgejo repo **variable** | — | optional (default `Vadim-Khristenko/Vadim-Khristenko`) | GitHub mirror path |
+| `CODEBERG_MIRROR_REPO` | Forgejo repo **variable** | — | optional (default `VAI_PROG/Vadim-Khristenko`) | Codeberg mirror path |
 
 ## Development
 
