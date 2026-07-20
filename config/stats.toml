@@ -18,7 +18,8 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 exclude_repos = [
-  "Vadim-Khristenko",            # the profile repo — engine commits ≠ work
+  "Vadim-Khristenko",            # GitHub profile repo — engine commits ≠ work
+  ".profile",                    # Forgejo/Codeberg profile repo (same engine)
 ]
 
 exclude_commit_authors = [

@@ -142,15 +142,15 @@ Set **Forgejo** entries on git.vai-rice.space (repo → Settings → Actions),
 | `CODEBERG_TOKEN` | Forgejo secret (+ GitHub for fallback runs) | read-only API | recommended | Codeberg provider reads |
 | `LASTFM_API_KEY` | Forgejo + GitHub secret | Last.fm API (read) | optional | live now-playing / top artists in the vibe card |
 | `STEAMGRIDDB_API_KEY` | Forgejo + GitHub secret | SteamGridDB API (read) | optional | game-art refetch (`refetch_art` input, `art`/`bestgame`/`rebuild`); also read as `SGDB_KEY` / `STEAMGRIDDB_KEY` |
-| `GITHUB_MIRROR_TOKEN` | Forgejo secret | push to the GitHub profile repo ONLY | required for mirroring | mirror push → github.com (never used against another host) |
+| `GH_MIRROR_TOKEN` | Forgejo secret | push to the GitHub profile repo ONLY | required for mirroring | mirror push → github.com (never used against another host) |
 | `CODEBERG_MIRROR_TOKEN` | Forgejo secret | push to the Codeberg mirror ONLY | required for mirroring | mirror push → codeberg.org (never used against another host) |
 | `PROFILE_TOKEN` | GitHub secret | read-only: `read:user` | optional | fallback-run private contribution counts (else `GITHUB_TOKEN`) |
 | `TELEGRAM_BOT_TOKEN` | Forgejo + GitHub secret | Telegram bot sendMessage | optional | regeneration notification via Telegram |
 | `TELEGRAM_CHAT_ID` | Forgejo + GitHub secret | chat/channel id | optional | where the Telegram notification goes |
 | `NOTIFY_WEBHOOK_URL` | Forgejo + GitHub secret | HTTPS endpoint (POST JSON) | optional | generic regeneration webhook |
 | `RUNNER_LABEL` | Forgejo repo **variable** | — | optional (default `docker`) | which self-hosted runner label the job targets |
-| `GITHUB_MIRROR_REPO` | Forgejo repo **variable** | — | optional (default `Vadim-Khristenko/Vadim-Khristenko`) | GitHub mirror path |
-| `CODEBERG_MIRROR_REPO` | Forgejo repo **variable** | — | optional (default `VAI_PROG/Vadim-Khristenko`) | Codeberg mirror path |
+| `GH_MIRROR_REPO` | Forgejo repo **variable** | — | optional (default `Vadim-Khristenko/Vadim-Khristenko`) | GitHub mirror path |
+| `CODEBERG_MIRROR_REPO` | Forgejo repo **variable** | — | optional (default `VAI_PROG/.profile`) | Codeberg mirror path |
 
 ## Development
 

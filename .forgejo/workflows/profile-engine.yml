@@ -69,13 +69,13 @@ jobs:
           CODEBERG_TOKEN: ${{ secrets.CODEBERG_TOKEN }}
           LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
           STEAMGRIDDB_API_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
-          GITHUB_MIRROR_TOKEN: ${{ secrets.GITHUB_MIRROR_TOKEN }}
+          GH_MIRROR_TOKEN: ${{ secrets.GH_MIRROR_TOKEN }}
           CODEBERG_MIRROR_TOKEN: ${{ secrets.CODEBERG_MIRROR_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           NOTIFY_WEBHOOK_URL: ${{ secrets.NOTIFY_WEBHOOK_URL }}
           VAR_RUNNER_LABEL: ${{ vars.RUNNER_LABEL }}
-          VAR_GITHUB_MIRROR_REPO: ${{ vars.GITHUB_MIRROR_REPO }}
+          VAR_GH_MIRROR_REPO: ${{ vars.GH_MIRROR_REPO }}
           VAR_CODEBERG_MIRROR_REPO: ${{ vars.CODEBERG_MIRROR_REPO }}
         run: |
           state() { [ -n "$(printenv "$1" 2>/dev/null)" ] && echo "set" || echo "not set"; }
@@ -85,11 +85,11 @@ jobs:
             echo "| Name | Kind | State |"
             echo "|---|---|---|"
             for s in VAI_GIT_TOKEN GH_TOKEN CODEBERG_TOKEN LASTFM_API_KEY \
-                     STEAMGRIDDB_API_KEY GITHUB_MIRROR_TOKEN CODEBERG_MIRROR_TOKEN \
+                     STEAMGRIDDB_API_KEY GH_MIRROR_TOKEN CODEBERG_MIRROR_TOKEN \
                      TELEGRAM_BOT_TOKEN TELEGRAM_CHAT_ID NOTIFY_WEBHOOK_URL; do
               echo "| $s | secret | $(state "$s") |"
             done
-            for v in RUNNER_LABEL GITHUB_MIRROR_REPO CODEBERG_MIRROR_REPO; do
+            for v in RUNNER_LABEL GH_MIRROR_REPO CODEBERG_MIRROR_REPO; do
               echo "| $v | variable | $(state "VAR_$v") |"
             done
           } | tee -a "${GITHUB_STEP_SUMMARY:-/dev/null}"
@@ -171,11 +171,11 @@ jobs:
         if: steps.commit.outcome == 'success'
         continue-on-error: true
         env:
-          TOKEN: ${{ secrets.GITHUB_MIRROR_TOKEN }}
-          MIRROR: ${{ vars.GITHUB_MIRROR_REPO || 'Vadim-Khristenko/Vadim-Khristenko' }}
+          TOKEN: ${{ secrets.GH_MIRROR_TOKEN }}
+          MIRROR: ${{ vars.GH_MIRROR_REPO || 'Vadim-Khristenko/Vadim-Khristenko' }}
         run: |
           if [ -z "$TOKEN" ]; then
-            echo "GITHUB_MIRROR_TOKEN not set — skipping GitHub mirror."
+            echo "GH_MIRROR_TOKEN not set — skipping GitHub mirror."
             exit 0
           fi
           git push "https://x-access-token:${TOKEN}@github.com/${MIRROR}.git" HEAD:main
@@ -186,7 +186,7 @@ jobs:
         continue-on-error: true
         env:
           TOKEN: ${{ secrets.CODEBERG_MIRROR_TOKEN }}
-          MIRROR: ${{ vars.CODEBERG_MIRROR_REPO || 'VAI_PROG/Vadim-Khristenko' }}
+          MIRROR: ${{ vars.CODEBERG_MIRROR_REPO || 'VAI_PROG/.profile' }}
         run: |
           if [ -z "$TOKEN" ]; then
             echo "CODEBERG_MIRROR_TOKEN not set — skipping Codeberg mirror."
