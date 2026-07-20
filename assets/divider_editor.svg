@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="64" viewBox="0 0 1000 64" role="img" aria-label="Section divider: code editor">
+  <title>Section divider: code editor</title>
+  <defs>
+    <linearGradient id="panel_ed" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f2335"/>
+      <stop offset="1" stop-color="#15161e"/>
+    </linearGradient>
+    <linearGradient id="trace_ed" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#dea584"/>
+      <stop offset="0.5" stop-color="#bb9af7"/>
+      <stop offset="1" stop-color="#7aa2f7"/>
+    </linearGradient>
+    <filter id="dg_ed" x="-30%" y="-300%" width="160%" height="700%">
+      <feGaussianBlur stdDeviation="1.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    
+  </defs>
+  <rect x="8" y="4" width="984" height="56" rx="10" fill="url(#panel_ed)"/>
+  <rect x="8.5" y="4.5" width="983" height="55" rx="9.5" fill="none" stroke="#292e42" stroke-width="1"/>
+  <path d="M8 16 Q8 4 20 4" fill="none" stroke="#dea584" stroke-width="2" opacity="0.85"/>
+  
+  <rect x="8" y="4" width="58" height="56" fill="#15161e" opacity="0.75"/>
+  <line x1="66" y1="4" x2="66" y2="60" stroke="#292e42" stroke-width="1"/>
+  <text x="52" y="22" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#565f89">157</text>
+  <text x="52" y="38" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#9aa5ce">158</text>
+  <text x="52" y="54" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="11" fill="#565f89">159</text>
+  <text x="74" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#9ece6a" font-weight="700">+</text>
+  <rect x="68" y="26" width="840" height="17" fill="#9ece6a" opacity="0.07"/>
+  <text x="92.0" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#bb9af7" xml:space="preserve">let</text><text x="114.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#c0caf5" xml:space="preserve"> vibe </text><text x="159.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#9aa5ce" xml:space="preserve">=</text><text x="167.0" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#7dcfff" xml:space="preserve"> TokyoNight</text><text x="249.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#9aa5ce" xml:space="preserve">::</text><text x="264.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#7aa2f7" xml:space="preserve">new</text><text x="287.0" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#c0caf5" xml:space="preserve">()</text><text x="302.0" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#9aa5ce" xml:space="preserve">.</text><text x="309.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#7aa2f7" xml:space="preserve">accent</text><text x="354.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#c0caf5" xml:space="preserve">(</text><text x="362.0" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#7dcfff" xml:space="preserve">Palette</text><text x="414.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#9aa5ce" xml:space="preserve">::</text><text x="429.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#ff9e64" xml:space="preserve">Rust</text><text x="459.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#c0caf5" xml:space="preserve">)</text><text x="467.0" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#9aa5ce" xml:space="preserve">;</text><text x="474.5" y="38" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12.5" fill="#565f89" xml:space="preserve">  // 1.58 bits of style</text>
+  <rect x="651" y="27" width="2" height="14" fill="#c0caf5"><animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.5;1" dur="1.1s" repeatCount="indefinite"/></rect>
+  <rect x="914" y="12" width="38" height="2.6" rx="1.3" fill="#bb9af7" opacity="0.55"/><rect x="914" y="18" width="26" height="2.6" rx="1.3" fill="#7aa2f7" opacity="0.55"/><rect x="914" y="24" width="44" height="2.6" rx="1.3" fill="#565f89" opacity="0.55"/><rect x="914" y="30" width="20" height="2.6" rx="1.3" fill="#7dcfff" opacity="0.55"/><rect x="914" y="36" width="34" height="2.6" rx="1.3" fill="#bb9af7" opacity="0.55"/><rect x="914" y="42" width="42" height="2.6" rx="1.3" fill="#7aa2f7" opacity="0.55"/><rect x="914" y="48" width="16" height="2.6" rx="1.3" fill="#565f89" opacity="0.55"/><rect x="914" y="54" width="30" height="2.6" rx="1.3" fill="#7dcfff" opacity="0.55"/>
+  <line x1="908" y1="4" x2="908" y2="60" stroke="#292e42" stroke-width="1"/>
+  <rect x="910" y="24" width="86" height="16" fill="#c0caf5" opacity="0.05"/>
+</svg>
