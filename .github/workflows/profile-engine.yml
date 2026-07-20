@@ -16,10 +16,12 @@ on:
     inputs:
       only:
         description: "Comma list of cards to regenerate (e.g. vibe,games). Empty = everything + README refresh."
+        type: string
         required: false
         default: ""
       pin_game:
         description: "Game key to force into the rotation slot (e.g. miside). Empty = automatic rotation."
+        type: string
         required: false
         default: ""
       refetch_art:
