@@ -18,7 +18,10 @@ jobs:
           cmake --version | head -1
       - name: build hello.exe
         run: |
-          printf '#include <stdio.h>\nint main(void){ printf("built by windows-cross\n"); return 0; }\n' > hello.c
+          cat > hello.c <<'SRC'
+          #include <stdio.h>
+          int main(void){ printf("built by windows-cross\n"); return 0; }
+          SRC
           x86_64-w64-mingw32-gcc hello.c -o hello.exe -static
           file hello.exe
 
@@ -31,6 +34,10 @@ jobs:
         run: wine64 --version
       - name: build then execute
         run: |
-          printf '#include <stdio.h>\nint main(void){ printf("ran under wine on the vaid runner\n"); return 0; }\n' > h.c
+          cat > h.c <<'SRC'
+          #include <stdio.h>
+          int main(void){ printf("ran under wine on the vaid runner\n"); return 0; }
+          SRC
           x86_64-w64-mingw32-gcc h.c -o h.exe -static
+          file h.exe
           wine64 h.exe
