@@ -45,7 +45,7 @@
   <path d="M2 18 Q2 2 18 2" fill="none" stroke="#c678dd" stroke-width="2.4" opacity="0.9"/>
   <circle cx="24" cy="21" r="5.5" fill="#f7768e" opacity="0.92"/><circle cx="44" cy="21" r="5.5" fill="#e0af68" opacity="0.92"/><circle cx="64" cy="21" r="5.5" fill="#9ece6a" opacity="0.92"/>
   <text x="96" y="25" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="13" fill="#a9b1d6">~/now.vibe</text>
-  <circle cx="975" cy="21" r="3.5" fill="#c678dd"><animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#9aa5ce">refreshed 2026-07-23</text>
+  <circle cx="975" cy="21" r="3.5" fill="#c678dd"><animate attributeName="opacity" values="1;0.4;1" dur="2.6s" repeatCount="indefinite"/></circle><text x="964" y="25" text-anchor="end" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#9aa5ce">refreshed 2026-07-24</text>
   <rect x="24" y="42" width="952" height="2" fill="url(#accentbar)"/>
   <g transform="translate(0,42)">
     
