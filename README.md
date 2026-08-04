@@ -33,7 +33,7 @@ impl Developer for Vadim {
     const ALIASES: &[&str] = &["VAI_PROG", "VAI_Programmer", "VAI", "VOLT"]; // + a long tail
 
     fn role(&self)      -> &str { "backend & systems engineer · builder of fast, slightly unhinged things" }
-    fn known_for(&self) -> Vec<&str> { vec!["The Wall Dev", "AmneziaWG Architect", "Aethelgard TQ-1.58"] }
+    fn known_for(&self) -> Vec<&str> { vec!["The Wall Dev", "Any Tech ARCHITECT", "Aethelgard TQ-1.58"] }
     fn current(&self)   -> &str { "turning a billion on-the-fly ideas into running services" }
 }
 ```
@@ -58,7 +58,7 @@ The engine looks these up **live** across every forge I publish on — stars and
 </p>
 <!-- ENGINE:FLAGSHIP:END -->
 
-<sub>🧱 <a href="https://the-wall.vai-rice.space">The Wall Dev</a> is built <b>for the <a href="https://twitch.tv/filian">Filian</a> community</b> — if the VTuber world can run <em>Hole in the Wall</em>, the dev side deserves its own Wall. 🛡️ <a href="https://architect.vai-rice.space">AmneziaWG Architect</a> generates DPI-evasion profiles for <a href="https://docs.amnezia.org">AmneziaWG</a> fully client-side: no server, no leaks. 🎀 And yes, the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC">Hatsune Miku VS Code theme</a> exists because the editor should match the playlist.</sub>
+<sub>🧱 <a href="https://the-wall.vai-rice.space">The Wall Dev</a> is built <b>for the <a href="https://twitch.tv/filian">Filian</a> community</b> — if the VTuber world can run <em>Hole in the Wall</em>, the dev side deserves its own Wall. 🛡️ <a href="https://architect.vai-rice.space">Any Tech ARCHITECT</a> generates DPI-evasion profiles for <a href="https://docs.amnezia.org">AmneziaWG</a> fully client-side: no server, no leaks. 🎀 And yes, the <a href="https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC">Hatsune Miku VS Code theme</a> exists because the editor should match the playlist.</sub>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_circuit.svg?v=4" width="100%" alt="" />
@@ -197,7 +197,7 @@ Primary address: **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** — I r
 | When you're writing about… | Send to |
 |---|---|
 | 🤝 Partnerships, collaboration, any business | **[business@vai-rice.space](mailto:business@vai-rice.space)** |
-| 🛡️ AmneziaWG Architect | **[architect@vai-rice.space](mailto:architect@vai-rice.space)** |
+| 🛡️ Any Tech ARCHITECT | **[architect@vai-rice.space](mailto:architect@vai-rice.space)** |
 | 🧱 The Wall Dev / anything from the Filian community | **[the-wall-dev@vai-rice.space](mailto:the-wall-dev@vai-rice.space)** |
 | 📱 A specific social network | **vadim+{social_network}@vai-rice.space** *(e.g. `vadim+twitch@…`)* |
 | ✉️ Everything else | **[vadim@vai-rice.space](mailto:vadim@vai-rice.space)** |
