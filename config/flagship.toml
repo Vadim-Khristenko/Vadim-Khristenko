@@ -7,8 +7,8 @@
 # ─────────────────────────────────────────────────────────────────────────────
 
 [[project]]
-name = "AmneziaWG Architect"
-repo = "AmneziaWG-Architect"
+name = "Any Tech ARCHITECT"
+repo = "Any-Tech-ARCHITECT"
 prefer = "github"
 site = "https://architect.vai-rice.space"
 tags = ["vpn", "wireguard", "anti-censorship"]
