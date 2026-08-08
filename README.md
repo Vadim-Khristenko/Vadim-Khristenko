@@ -10,7 +10,7 @@
 
 <!-- ENGINE:HEADER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=234f8146fc-69917" alt="Vadim Khristenko" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=234f8146fc-69918" alt="Vadim Khristenko" width="100%"/>
 </p>
 <!-- ENGINE:HEADER:END -->
 
@@ -54,7 +54,7 @@ The engine looks these up **live** across every forge I publish on — stars and
 
 <!-- ENGINE:FLAGSHIP:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/flagship.svg?v=b7afc7af02-69917" alt="Flagship projects with live stats" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/flagship.svg?v=2866091875-69918" alt="Flagship projects with live stats" width="100%"/>
 </p>
 <!-- ENGINE:FLAGSHIP:END -->
 
@@ -68,7 +68,7 @@ The engine looks these up **live** across every forge I publish on — stars and
 
 <!-- ENGINE:RESEARCH:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=4c67ad0508-69917" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=4c67ad0508-69918" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
 </p>
 <!-- ENGINE:RESEARCH:END -->
 
@@ -78,7 +78,7 @@ I'm running a major ML effort — **Aethelgard TQ-1.58 HVRL**: an architecture f
 
 <!-- ENGINE:LEARNING:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/learning.svg?v=d0c3d46905-69917" alt="Now learning and building" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/learning.svg?v=52a7e0b989-69918" alt="Now learning and building" width="100%"/>
 </p>
 <!-- ENGINE:LEARNING:END -->
 
@@ -167,13 +167,13 @@ I don't just *use* models — I've **shipped with the ecosystems behind them**: 
 
 <!-- ENGINE:BESTGAME:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=904c3cd552-69917" alt="Best game" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=904c3cd552-69918" alt="Best game" width="100%"/>
 </p>
 <!-- ENGINE:BESTGAME:END -->
 
 <!-- ENGINE:GAMES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=490d3789a9-69917" alt="Now playing" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=994618da7b-69918" alt="Now playing" width="100%"/>
 </p>
 <!-- ENGINE:GAMES:END -->
 
@@ -182,7 +182,7 @@ I don't just *use* models — I've **shipped with the ecosystems behind them**: 
 
 <!-- ENGINE:VIBE:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/vibe.svg?v=3c2529c696-69917" alt="Current vibe" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/vibe.svg?v=906f9cf717-69918" alt="Current vibe" width="100%"/>
 </p>
 <!-- ENGINE:VIBE:END -->
 
@@ -225,22 +225,22 @@ One number can lie; a fleet of them lies less. Everything below is pulled fresh 
 
 <!-- ENGINE:STATS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=381bdfa1e7-69917" alt="Live telemetry: stats, activity, languages" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=de83d36413-69918" alt="Live telemetry: stats, activity, languages" width="100%"/>
 </p>
 <!-- ENGINE:STATS:END -->
 
 <!-- ENGINE:PLATFORMS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms_all.svg?v=067bf29637-69917" alt="All platforms combined" width="100%"/>
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_vai-git.svg?v=3f7c960497-69917" alt="Platform stats: vai-git" width="100%"/>
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_github.svg?v=139a5b0127-69917" alt="Platform stats: github" width="100%"/>
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_codeberg.svg?v=4f9d77e1b9-69917" alt="Platform stats: codeberg" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms_all.svg?v=069d0e3225-69918" alt="All platforms combined" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_vai-git.svg?v=471c1fcbc4-69918" alt="Platform stats: vai-git" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_github.svg?v=8ac4b1457a-69918" alt="Platform stats: github" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platform_codeberg.svg?v=4f9d77e1b9-69918" alt="Platform stats: codeberg" width="100%"/>
 </p>
 <!-- ENGINE:PLATFORMS:END -->
 
 <!-- ENGINE:FOOTER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=ed39ced7ad-69917" alt="Generated by the VAI Profile Engine" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=1c2e72c605-69918" alt="Generated by the VAI Profile Engine" width="100%"/>
 </p>
 <!-- ENGINE:FOOTER:END -->
 
