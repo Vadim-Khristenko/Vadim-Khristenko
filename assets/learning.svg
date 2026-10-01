@@ -51,8 +51,8 @@
     
     
     <text x="24" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#9ece6a" letter-spacing="1">📚 NOW LEARNING</text>
-    <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="17" font-weight="700" fill="#c0caf5">SVG as a UI target</text>
-    <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="11.5" fill="#9aa5ce">camo-proxy-safe animation, SMIL, static-first frames</text>
+    <text x="24" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="17" font-weight="700" fill="#c0caf5">Rust internals</text>
+    <text x="24" y="88" font-family="'Segoe UI','Inter',system-ui,-apple-system,'Helvetica Neue',sans-serif" font-size="11.5" fill="#9aa5ce">zero-cost everything — allocators, async guts, unsa…</text>
     
     <text x="360" y="40" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="12" fill="#ff9e64" letter-spacing="1">🔨 BUILDING</text>
     <text x="360" y="68" font-family="'JetBrains Mono','Cascadia Code','Fira Code','SFMono-Regular','Consolas','Liberation Mono',monospace" font-size="17" font-weight="700" fill="#c0caf5">Vadim-Khristenko.github.io</text>
