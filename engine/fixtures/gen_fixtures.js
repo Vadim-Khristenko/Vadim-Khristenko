@@ -46,31 +46,37 @@ const github = {
   profile: { login: "Vadim-Khristenko", name: "Vadim Khristenko", followers: 61, following: 18 },
   repos: [
     repo("Vadim-Khristenko", { stars: 9, forks: 2, open_issues: 1, language: "Rust", pushed_at: "2026-07-19T06:04:00Z", html_url: "https://github.com/Vadim-Khristenko/Vadim-Khristenko", description: "Self-regenerating profile" }),
-    repo("AmneziaWG-Architect", { stars: 218, forks: 31, open_issues: 14, language: "TypeScript", pushed_at: "2026-07-18T21:12:00Z", html_url: "https://github.com/Vadim-Khristenko/AmneziaWG-Architect", description: "Client-side DPI-evasion profile generator" }),
+    repo("Any-Tech-ARCHITECT", { stars: 218, forks: 31, open_issues: 14, language: "TypeScript", pushed_at: "2026-07-18T21:12:00Z", html_url: "https://github.com/Vadim-Khristenko/Any-Tech-ARCHITECT", description: "Client-side DPI-evasion profile generator" }),
     repo("TheWall", { stars: 37, forks: 6, open_issues: 5, language: "TypeScript", pushed_at: "2026-07-17T19:40:00Z", html_url: "https://github.com/Vadim-Khristenko/TheWall", description: "Community tooling for the Filian world" }),
-    repo("HatsuneMikuEditorTheme-VSC", { stars: 24, forks: 4, open_issues: 2, language: "JSON", pushed_at: "2026-06-28T15:00:00Z", html_url: "https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC", description: "Teal all the way down" }),
+    repo("HatsuneMikuEditorTheme", { stars: 24, forks: 4, open_issues: 2, language: "JSON", pushed_at: "2026-06-28T15:00:00Z", html_url: "https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme", description: "Teal all the way down" }),
     repo("aethelgard", { stars: 12, forks: 1, open_issues: 3, language: "Python", pushed_at: "2026-07-15T09:30:00Z", html_url: "https://github.com/Vadim-Khristenko/aethelgard", description: "TQ-1.58 HVRL mirror" }),
     repo("kumir3-core", { stars: 46, forks: 7, open_issues: 6, language: "Rust", pushed_at: "2026-07-16T14:20:00Z", html_url: "https://github.com/Vadim-Khristenko/kumir3-core", description: "Kumir 3 — modern compiler core for the classroom language" }),
+    repo("awg-containers-and-tools", { stars: 19, forks: 3, open_issues: 2, language: "Rust", pushed_at: "2026-07-12T15:37:00Z", html_url: "https://github.com/Vadim-Khristenko/awg-containers-and-tools", description: "AmneziaWG containers and tools" }),
+    repo("NotAnOtherVTUBERwiki", { stars: 14, forks: 2, open_issues: 4, language: "Rust", pushed_at: "2026-07-14T05:26:00Z", html_url: "https://github.com/Vadim-Khristenko/NotAnOtherVTUBERwiki", description: "NotAnotherWiki engine" }),
     repo("fleet-scripts", { stars: 5, forks: 0, open_issues: 0, language: "Shell", pushed_at: "2026-05-02T08:00:00Z" }),
     repo("upstream-fork", { fork: true, stars: 2, forks: 0, open_issues: 0, language: "C++", pushed_at: "2026-04-01T08:00:00Z" }),
   ],
   languages: {
     "Vadim-Khristenko": { Rust: 92000, Python: 41000 },
-    "AmneziaWG-Architect": { TypeScript: 310000, Vue: 88000, CSS: 21000 },
+    "Any-Tech-ARCHITECT": { TypeScript: 310000, Vue: 88000, CSS: 21000 },
     "TheWall": { TypeScript: 150000, HTML: 12000 },
-    "HatsuneMikuEditorTheme-VSC": { JavaScript: 8000 },
+    "HatsuneMikuEditorTheme": { JavaScript: 8000 },
     "aethelgard": { Python: 60000 },
     "kumir3-core": { Rust: 265000, Kumir: 12000 },
     "fleet-scripts": { Shell: 15000 },
+    "awg-containers-and-tools": { Rust: 182000, Dockerfile: 9000, Shell: 6000 },
+    "NotAnOtherVTUBERwiki": { Rust: 241000, TypeScript: 64000, Vue: 22000 },
   },
   heatmap: heatmap(140, 0.72, 14),
   commit_windows: { d7: 26, d30: 104, y1: 1483 },
   pulses: {
-    "AmneziaWG-Architect": { total_commits: 347, daily_30: daily30(0.55, 5) },
+    "Any-Tech-ARCHITECT": { total_commits: 347, daily_30: daily30(0.55, 5) },
     "TheWall": { total_commits: 152, daily_30: daily30(0.4, 4) },
-    "HatsuneMikuEditorTheme-VSC": { total_commits: 41, daily_30: daily30(0.12, 2) },
+    "HatsuneMikuEditorTheme": { total_commits: 41, daily_30: daily30(0.12, 2) },
     // Literal series (no rnd() draws) so every other fixture stays byte-identical.
     "kumir3-core": { total_commits: 128, daily_30: [2, 0, 1, 3, 0, 0, 4, 1, 0, 2, 5, 0, 1, 0, 3, 2, 0, 0, 1, 4, 0, 2, 0, 1, 3, 0, 2, 1, 0, 2] },
+    "awg-containers-and-tools": { total_commits: 96, daily_30: [1, 0, 2, 0, 0, 3, 1, 0, 0, 2, 0, 1, 4, 0, 0, 2, 1, 0, 3, 0, 0, 1, 2, 0, 0, 1, 3, 0, 1, 2] },
+    "NotAnOtherVTUBERwiki": { total_commits: 214, daily_30: [3, 2, 0, 4, 1, 0, 5, 2, 3, 0, 1, 4, 2, 0, 3, 5, 1, 0, 2, 4, 3, 0, 1, 2, 5, 3, 0, 2, 4, 3] },
   },
   // Raw commit list (wins over pulses.TheWall) — exercises the
   // exclude_commit_authors filter: 2 human commits + 2 CI-bot commits.
@@ -87,19 +93,19 @@ const github = {
 const codeberg = {
   profile: { login: "VAI_PROG", name: "Vadim Khristenko", followers: 7, following: 3 },
   repos: [
-    repo("AmneziaWG-Architect", { stars: 11, forks: 2, open_issues: 1, open_prs: 1, language: "TypeScript", pushed_at: "2026-07-18T22:00:00Z", html_url: "https://codeberg.org/VAI_PROG/AmneziaWG-Architect", description: "Mirror" }),
+    repo("Any-Tech-ARCHITECT", { stars: 11, forks: 2, open_issues: 1, open_prs: 1, language: "TypeScript", pushed_at: "2026-07-18T22:00:00Z", html_url: "https://codeberg.org/VAI_PROG/Any-Tech-ARCHITECT", description: "Mirror" }),
     repo("TheWall", { stars: 3, forks: 0, open_issues: 0, open_prs: 0, language: "TypeScript", pushed_at: "2026-07-17T20:00:00Z", html_url: "https://codeberg.org/VAI_PROG/TheWall" }),
     repo("vai-scripts", { stars: 2, forks: 0, open_issues: 1, open_prs: 0, language: "Shell", pushed_at: "2026-06-10T12:00:00Z", html_url: "https://codeberg.org/VAI_PROG/vai-scripts" }),
   ],
   languages: {
-    "AmneziaWG-Architect": { TypeScript: 305000, Vue: 87000, CSS: 20000 },
+    "Any-Tech-ARCHITECT": { TypeScript: 305000, Vue: 87000, CSS: 20000 },
     "TheWall": { TypeScript: 149000, HTML: 12000 },
     "vai-scripts": { Shell: 22000 },
   },
   heatmap: heatmap(140, 0.18, 4),
   commit_windows: null,
   pulses: {
-    "AmneziaWG-Architect": { total_commits: 340, daily_30: daily30(0.3, 3) },
+    "Any-Tech-ARCHITECT": { total_commits: 340, daily_30: daily30(0.3, 3) },
   },
 };
 
@@ -107,14 +113,14 @@ const vaiGit = {
   profile: { login: "VAI_PROG", name: "Vadim Khristenko", followers: 4, following: 2 },
   repos: [
     repo("aethelgard", { stars: 6, forks: 0, open_issues: 4, open_prs: 2, language: "Python", pushed_at: "2026-07-19T05:45:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/aethelgard", description: "TQ-1.58 HVRL — source of truth" }),
-    repo("AmneziaWG-Architect", { stars: 4, forks: 1, open_issues: 2, open_prs: 1, language: "TypeScript", pushed_at: "2026-07-18T23:10:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/AmneziaWG-Architect" }),
+    repo("Any-Tech-ARCHITECT", { stars: 4, forks: 1, open_issues: 2, open_prs: 1, language: "TypeScript", pushed_at: "2026-07-18T23:10:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/Any-Tech-ARCHITECT" }),
     repo("TheWall", { stars: 2, forks: 0, open_issues: 1, open_prs: 0, language: "TypeScript", pushed_at: "2026-07-17T21:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/TheWall" }),
     repo("vai-rice-space", { stars: 3, forks: 0, open_issues: 2, open_prs: 0, language: "Vue", pushed_at: "2026-07-16T18:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/vai-rice-space", description: "The portfolio" }),
     repo("fleet-tools", { stars: 1, forks: 0, open_issues: 0, open_prs: 0, language: "Rust", pushed_at: "2026-07-12T14:00:00Z", html_url: "https://git.vai-rice.space/VAI_PROG/fleet-tools" }),
   ],
   languages: {
     "aethelgard": { Python: 512000, Rust: 148000, Cython: 36000 },
-    "AmneziaWG-Architect": { TypeScript: 308000, Vue: 88000, CSS: 20500 },
+    "Any-Tech-ARCHITECT": { TypeScript: 308000, Vue: 88000, CSS: 20500 },
     "TheWall": { TypeScript: 150500, HTML: 12000 },
     "vai-rice-space": { Vue: 96000, TypeScript: 44000, CSS: 18000 },
     "fleet-tools": { Rust: 83000 },
@@ -123,7 +129,7 @@ const vaiGit = {
   commit_windows: null,
   pulses: {
     "aethelgard": { total_commits: 611, daily_30: daily30(0.7, 6) },
-    "AmneziaWG-Architect": { total_commits: 344, daily_30: daily30(0.35, 3) },
+    "Any-Tech-ARCHITECT": { total_commits: 344, daily_30: daily30(0.35, 3) },
     "TheWall": { total_commits: 150, daily_30: daily30(0.3, 3) },
   },
 };

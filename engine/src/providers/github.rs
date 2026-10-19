@@ -87,7 +87,10 @@ impl GitHubProvider {
             forks: n("forks_count"),
             // The repo-list API has no true subscriber count (watchers_count
             // mirrors stars there); a single-repo GET refines it below.
-            watchers: v.get("subscribers_count").and_then(|x| x.as_u64()).unwrap_or(0),
+            watchers: v
+                .get("subscribers_count")
+                .and_then(|x| x.as_u64())
+                .unwrap_or(0),
             // GitHub folds open PRs into open_issues_count.
             open_issues: n("open_issues_count"),
             open_prs: None,
@@ -154,7 +157,10 @@ impl Provider for GitHubProvider {
     }
 
     fn languages(&self, repo: &Repo) -> Result<LangBytes> {
-        let v = self.rest(&format!("/repos/{}/{}/languages", self.entry.user, repo.name))?;
+        let v = self.rest(&format!(
+            "/repos/{}/{}/languages",
+            self.entry.user, repo.name
+        ))?;
         let mut out = LangBytes::new();
         if let Some(map) = v.as_object() {
             for (k, val) in map {
@@ -207,18 +213,10 @@ impl Provider for GitHubProvider {
         Ok(parse_contributions(&html))
     }
 
-    fn repo(&self, name: &str) -> Result<Option<Repo>> {
-        match self.rest(&format!("/repos/{}/{name}", self.entry.user)) {
-            Ok(v) => Ok(Some(Self::map_repo(&v))),
-            Err(e) if e.to_string().contains("404") => Ok(None),
-            Err(e) => Err(e),
-        }
-    }
-
     fn pulse(&self, repo: &Repo, stats: &crate::config::StatsConfig) -> RepoPulse {
         let mut pulse = RepoPulse::default();
         // Total commits: per_page=1 + the rel="last" page number of the Link
-        // header — the cheapest exact count GitHub offers. (Repo-wide; the
+        // header, the cheapest exact count GitHub offers. (Repo-wide; the
         // author filter applies to the 30-day series below.)
         let url = format!(
             "{API}/repos/{}/{}/commits?per_page=1",
@@ -235,10 +233,7 @@ impl Provider for GitHubProvider {
                     .get("link")
                     .and_then(|h| h.to_str().ok())
                     .map(|s| s.to_string());
-                pulse.total_commits = link
-                    .as_deref()
-                    .and_then(parse_last_page)
-                    .or(Some(1));
+                pulse.total_commits = link.as_deref().and_then(parse_last_page).or(Some(1));
             }
         }
         // 30-day activity: list commits since 30 days ago, drop excluded

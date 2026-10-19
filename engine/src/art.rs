@@ -61,7 +61,11 @@ fn download(url: &str) -> Result<Vec<u8>> {
             Ok(bytes) => return Ok(bytes),
             Err(e) => {
                 if i < DOWNLOAD_ATTEMPTS - 1 {
-                    log::warn(&format!("download retry {}/{}: {e}", i + 1, DOWNLOAD_ATTEMPTS - 1));
+                    log::warn(&format!(
+                        "download retry {}/{}: {e}",
+                        i + 1,
+                        DOWNLOAD_ATTEMPTS - 1
+                    ));
                     std::thread::sleep(Duration::from_millis(1200 * (i as u64 + 1)));
                 }
                 last = Some(e);
@@ -99,9 +103,7 @@ fn find_game_id(query: &str, token: &str) -> Result<Option<u64>> {
         })
         .collect();
     let data = sgdb_get(&format!("/search/autocomplete/{encoded}"), token)?;
-    Ok(data
-        .pointer("/data/0/id")
-        .and_then(|v| v.as_u64()))
+    Ok(data.pointer("/data/0/id").and_then(|v| v.as_u64()))
 }
 
 /// Prefer a 460x215 capsule, then 920x430, then any grid, then a hero.
@@ -145,7 +147,8 @@ fn cover_crop(im: &DynamicImage, tw: u32, th: u32) -> DynamicImage {
 fn save_jpeg(im: &DynamicImage, dest: &Path) -> Result<()> {
     let rgb = im.to_rgb8();
     let file = std::fs::File::create(dest)?;
-    let mut enc = image::codecs::jpeg::JpegEncoder::new_with_quality(std::io::BufWriter::new(file), 74);
+    let mut enc =
+        image::codecs::jpeg::JpegEncoder::new_with_quality(std::io::BufWriter::new(file), 74);
     enc.encode_image(&rgb)?;
     Ok(())
 }
@@ -185,7 +188,7 @@ fn save_media(raw: &[u8], dest_base: &Path, tw: u32, th: u32) -> Result<PathBuf>
             std::fs::write(&dest, raw)?;
             return Ok(dest);
         }
-        // Too heavy — fall back to a static cropped first frame if decodable.
+        // Too heavy, fall back to a static cropped first frame if decodable.
         if let Ok(im) = image::load_from_memory(raw) {
             let dest = dest_base.with_extension("jpg");
             save_jpeg(&cover_crop(&im, tw, th), &dest)?;
@@ -207,7 +210,9 @@ fn save_media(raw: &[u8], dest_base: &Path, tw: u32, th: u32) -> Result<PathBuf>
 }
 
 fn file_kb(path: &Path) -> f64 {
-    std::fs::metadata(path).map(|m| m.len() as f64 / 1024.0).unwrap_or(0.0)
+    std::fs::metadata(path)
+        .map(|m| m.len() as f64 / 1024.0)
+        .unwrap_or(0.0)
 }
 
 pub fn fetch_bestgame(cfg: &Config, root: &Path, token: Option<&str>) {
@@ -221,34 +226,49 @@ pub fn fetch_bestgame(cfg: &Config, root: &Path, token: Option<&str>) {
     let mut url = g.art_url.clone();
     if url.is_empty() {
         if let Some(tok) = token {
-            let query = if g.query.is_empty() { &g.title } else { &g.query };
-            match find_game_id(query, tok) {
-                Ok(Some(gid)) => {
-                    url = sgdb_get(&format!("/heroes/game/{gid}?types=static"), tok)
-                        .ok()
-                        .and_then(|d| d.pointer("/data/0/url").and_then(|v| v.as_str()).map(String::from))
-                        .or_else(|| pick_art_url(gid, tok))
-                        .unwrap_or_default();
-                }
-                _ => {}
+            let query = if g.query.is_empty() {
+                &g.title
+            } else {
+                &g.query
+            };
+            if let Ok(Some(gid)) = find_game_id(query, tok) {
+                url = sgdb_get(&format!("/heroes/game/{gid}?types=static"), tok)
+                    .ok()
+                    .and_then(|d| {
+                        d.pointer("/data/0/url")
+                            .and_then(|v| v.as_str())
+                            .map(String::from)
+                    })
+                    .or_else(|| pick_art_url(gid, tok))
+                    .unwrap_or_default();
             }
         }
     }
     if url.is_empty() {
         log::warn("cover: no art_url and no SteamGridDB key");
     } else {
-        match get_bytes(&url, root).and_then(|bytes| save_media(&bytes, &out.join("cover"), ctw, cth)) {
+        match get_bytes(&url, root)
+            .and_then(|bytes| save_media(&bytes, &out.join("cover"), ctw, cth))
+        {
             Ok(dest) => log::ok(
                 "cover",
-                &format!("{:.1} KB  {}", file_kb(&dest), dest.file_name().unwrap_or_default().to_string_lossy()),
+                &format!(
+                    "{:.1} KB  {}",
+                    file_kb(&dest),
+                    dest.file_name().unwrap_or_default().to_string_lossy()
+                ),
             ),
             Err(e) => log::fail("cover", &format!("all retries failed ({e})")),
         }
     }
 
-    for ch in &g.characters {
+    let mut seen = std::collections::BTreeSet::new();
+    for ch in g.characters.iter().chain(&g.loved) {
+        if !seen.insert(ch.key()) {
+            continue;
+        }
         if ch.art_url.is_empty() {
-            log::step(&ch.short, "—", "no art_url → avatar fallback");
+            log::step(&ch.short, "·", "no art_url → avatar fallback");
             continue;
         }
         match get_bytes(&ch.art_url, root)
@@ -256,14 +276,46 @@ pub fn fetch_bestgame(cfg: &Config, root: &Path, token: Option<&str>) {
         {
             Ok(dest) => log::ok(
                 &ch.short,
-                &format!("{:.1} KB  {}", file_kb(&dest), dest.file_name().unwrap_or_default().to_string_lossy()),
+                &format!(
+                    "{:.1} KB  {}",
+                    file_kb(&dest),
+                    dest.file_name().unwrap_or_default().to_string_lossy()
+                ),
             ),
-            Err(e) => log::fail(&ch.short, &format!("all retries failed → avatar fallback ({e})")),
+            Err(e) => log::fail(
+                &ch.short,
+                &format!("all retries failed → avatar fallback ({e})"),
+            ),
+        }
+    }
+
+    // The full-body Nikke for the lobby scene keeps its transparency and
+    // proportions; the card crops nothing, so neither does the fetch.
+    if !g.lobby.art_url.is_empty() {
+        let saved = get_bytes(&g.lobby.art_url, root).and_then(|bytes| {
+            let im = image::load_from_memory(&bytes).context("decode lobby art")?;
+            let im = if im.width() > 720 {
+                im.resize(720, 4000, image::imageops::FilterType::Lanczos3)
+            } else {
+                im
+            };
+            let dest = out.join("lobby.png");
+            im.to_rgba8().save(&dest)?;
+            Ok(dest)
+        });
+        match saved {
+            Ok(dest) => log::ok("lobby", &format!("{:.1} KB  lobby.png", file_kb(&dest))),
+            Err(e) => log::fail("lobby", &format!("all retries failed ({e})")),
         }
     }
 }
 
-pub fn fetch_games(cfg: &Config, root: &Path, token: Option<&str>, only: Option<&BTreeSet<String>>) {
+pub fn fetch_games(
+    cfg: &Config,
+    root: &Path,
+    token: Option<&str>,
+    only: Option<&BTreeSet<String>>,
+) {
     let out = root.join("assets").join("games");
     std::fs::create_dir_all(&out).ok();
     log::section("Fetching game-shelf covers");
@@ -295,7 +347,10 @@ pub fn fetch_games(cfg: &Config, root: &Path, token: Option<&str>, only: Option<
             Ok((gid, dest))
         })();
         match result {
-            Ok((gid, dest)) => log::ok(&g.key, &format!("{:.1} KB  (sgdb id={gid})", file_kb(&dest))),
+            Ok((gid, dest)) => log::ok(
+                &g.key,
+                &format!("{:.1} KB  (sgdb id={gid})", file_kb(&dest)),
+            ),
             Err(e) => log::fail(&g.key, &e.to_string()),
         }
         std::thread::sleep(Duration::from_millis(300));
@@ -304,5 +359,9 @@ pub fn fetch_games(cfg: &Config, root: &Path, token: Option<&str>, only: Option<
     if let Ok(json) = serde_json::to_string_pretty(&serde_json::Value::Object(manifest)) {
         let _ = std::fs::write(out.join("manifest.json"), json + "\n");
     }
-    log::step("shelf", &format!("{count}/{}", games.len()), "covers → assets/games/");
+    log::step(
+        "shelf",
+        &format!("{count}/{}", games.len()),
+        "covers → assets/games/",
+    );
 }

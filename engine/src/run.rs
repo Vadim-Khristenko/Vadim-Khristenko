@@ -18,17 +18,15 @@ pub struct Ctx {
     pub cfg: Config,
     pub agg: Aggregate,
     pub flagship: Vec<FlagshipLive>,
-    /// Last.fm music data (live fetch or fixtures) — None = graceful skip.
+    /// Last.fm music data (live fetch or fixtures), None = graceful skip.
     pub music: Option<crate::lastfm::Music>,
     /// ISO year*100 + ISO week (weekly rotations).
     pub seed: u64,
-    /// Day-ordinal / 2 — rotates the vibe card every 2 days.
+    /// Day-ordinal / 2, rotates the vibe card every 2 days.
     pub vibe_seed: u64,
     /// Manual rotation lever (`--pin-game` / `PIN_GAME`): forces which game
     /// key sits in the hero/vibe "in rotation" slot. None = seed rotation.
     pub pin_game: Option<String>,
-    pub week: u32,
-    pub year: i32,
     pub stamp: String,
     pub root: PathBuf,
     pub assets: PathBuf,
@@ -38,24 +36,10 @@ pub struct Ctx {
 impl Ctx {
     /// Is this card enabled? (`[cards.<name>] enabled = false` disables it.)
     pub fn card_enabled(&self, name: &str) -> bool {
-        self.cfg
-            .profile
-            .cards
-            .get(name)
-            .map_or(true, |tw| tw.enabled)
+        self.cfg.profile.cards.get(name).is_none_or(|tw| tw.enabled)
     }
 
-    /// The card's accent colour: config override, else the given default.
-    pub fn accent(&self, name: &str, default: &str) -> String {
-        self.cfg
-            .profile
-            .cards
-            .get(name)
-            .and_then(|tw| tw.accent.clone())
-            .unwrap_or_else(|| default.to_string())
-    }
-
-    /// The game in the "in rotation" slot — shared by the vibe card and the
+    /// The game in the "in rotation" slot, shared by the vibe card and the
     /// games hero shelf so they always agree. A valid pin (`--pin-game` /
     /// `PIN_GAME` matching a configured key) beats the vibe-seed rotation.
     pub fn featured_game(&self) -> &crate::config::profile::Game {
@@ -72,16 +56,23 @@ impl Ctx {
 type CardFn = fn(&Ctx) -> Result<Vec<(String, String)>>;
 
 pub const CARDS: &[(&str, CardFn)] = &[
+    ("badges", cards::badges::build),
     ("header", cards::header::build),
     ("divider", cards::divider::build),
+    ("themes", cards::themes::build),
+    ("architect", cards::architect::build),
+    ("acat", cards::acat::build),
+    ("wiki", cards::wiki::build),
+    ("thewall", cards::thewall::build),
+    ("kumir", cards::kumir::build),
     ("research", cards::research::build),
-    ("flagship", cards::flagship::build),
-    ("dashboard", cards::dashboard::build),
-    ("platforms", cards::platforms::build),
-    ("learning", cards::learning::build),
-    ("vibe", cards::vibe::build),
+    ("snackers", cards::snackers::build),
     ("bestgame", cards::bestgame::build),
     ("games", cards::games::build),
+    ("music", cards::music::build),
+    ("dashboard", cards::dashboard::build),
+    ("platforms", cards::platforms::build),
+    ("homelab", cards::homelab::build),
     ("footer", cards::footer::build),
 ];
 
@@ -89,7 +80,7 @@ pub fn build_context(fixtures: bool) -> Result<Ctx> {
     build_context_at(crate::paths::repo_root()?, fixtures)
 }
 
-/// Build the full render context rooted at an explicit repo directory —
+/// Build the full render context rooted at an explicit repo directory,
 /// `build_context` for normal runs, direct calls from tests.
 pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
     let cfg = Config::load(&root.join("config"))?;
@@ -99,7 +90,7 @@ pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
     let seed = iso.year() as u64 * 100 + iso.week() as u64;
     let vibe_seed = (now.date_naive().num_days_from_ce() / 2) as u64;
     log::banner(
-        "VAI Profile Engine v3",
+        "VAI Profile Engine v4",
         &format!(
             "{} providers  ·  week {}/{}  ·  vibe-bucket={}{}",
             cfg.providers.provider.len(),
@@ -130,7 +121,13 @@ pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
     let music = if fixtures {
         crate::lastfm::from_fixtures(&fixtures_dir)
     } else {
-        cfg.profile.lastfm.as_ref().and_then(crate::lastfm::fetch)
+        {
+            let cache = root.join("assets").join("state").join("lastfm.json");
+            cfg.profile
+                .lastfm
+                .as_ref()
+                .and_then(|l| crate::lastfm::fetch(l, &cache))
+        }
     };
 
     let gh_user = cfg
@@ -150,8 +147,6 @@ pub fn build_context_at(root: PathBuf, fixtures: bool) -> Result<Ctx> {
         seed,
         vibe_seed,
         pin_game: None,
-        week: iso.week(),
-        year: iso.year(),
         stamp: now.format("%Y-%m-%d %H:%M UTC").to_string(),
         cfg,
         root,
@@ -166,7 +161,7 @@ pub fn render(ctx: &Ctx, only: Option<&BTreeSet<String>>) -> Vec<String> {
         for req in only {
             if !CARDS.iter().any(|(name, _)| name == req) {
                 log::warn(&format!(
-                    "--only: unknown card '{req}' — known: {}",
+                    "--only: unknown card '{req}', known: {}",
                     CARDS.iter().map(|(n, _)| *n).collect::<Vec<_>>().join(", ")
                 ));
             }
@@ -180,7 +175,7 @@ pub fn render(ctx: &Ctx, only: Option<&BTreeSet<String>>) -> Vec<String> {
             }
         }
         if !ctx.card_enabled(name) {
-            log::warn(&format!("{name}: disabled via [cards.{name}] — skipped"));
+            log::warn(&format!("{name}: disabled via [cards.{name}], skipped"));
             continue;
         }
         match builder(ctx) {
@@ -189,7 +184,10 @@ pub fn render(ctx: &Ctx, only: Option<&BTreeSet<String>>) -> Vec<String> {
                     match svg::validate_xml(&svg_text) {
                         Ok(()) => match std::fs::write(ctx.assets.join(&file), &svg_text) {
                             Ok(()) => {
-                                log::ok(&file, &format!("{:.1} KB", svg_text.len() as f64 / 1024.0));
+                                log::ok(
+                                    &file,
+                                    &format!("{:.1} KB", svg_text.len() as f64 / 1024.0),
+                                );
                                 built.push(file);
                             }
                             Err(e) => log::fail(&file, &e.to_string()),
@@ -205,36 +203,43 @@ pub fn render(ctx: &Ctx, only: Option<&BTreeSet<String>>) -> Vec<String> {
     built
 }
 
-/// Ordered platform-card asset names that exist on disk (combined card first).
-pub fn platform_assets(ctx: &Ctx) -> Vec<String> {
-    let mut names = vec!["platforms_all.svg".to_string()];
-    for p in &ctx.agg.platforms {
-        names.push(format!("platform_{}.svg", p.id));
-    }
-    names.retain(|n| ctx.assets.join(n).is_file());
-    names
+/// Every README the engine keeps in sync: the English one, plus each
+/// translation that exists next to it. All of them share the same markers.
+pub fn readme_paths(root: &std::path::Path) -> Vec<std::path::PathBuf> {
+    ["README.md", "README.ru.md"]
+        .iter()
+        .map(|name| root.join(name))
+        .filter(|p| p.is_file())
+        .collect()
 }
 
 pub fn update_readme(ctx: &Ctx) -> Result<()> {
-    let readme_path = ctx.root.join("README.md");
-    if !readme_path.is_file() {
+    let paths = readme_paths(&ctx.root);
+    if paths.is_empty() {
         log::warn("README.md not found");
         return Ok(());
     }
     log::section("Updating README");
-    let mut text = std::fs::read_to_string(&readme_path).context("read README.md")?;
     // Cache also refreshes on the 2-day cadence.
     let seed_str = ctx.vibe_seed.to_string();
     let salt = &seed_str[seed_str.len().saturating_sub(5)..];
-    for (key, content) in readme::blocks(&ctx.raw_base, &ctx.assets, salt, &platform_assets(ctx)) {
-        text = readme::inject(&text, &key, &content);
+    let blocks = readme::blocks(&ctx.raw_base, &ctx.assets, salt, &ctx.cfg.profile.sections);
+    for path in paths {
+        let name = path
+            .file_name()
+            .and_then(|n| n.to_str())
+            .unwrap_or("README");
+        let mut text = std::fs::read_to_string(&path).with_context(|| format!("read {name}"))?;
+        for (key, content) in &blocks {
+            text = readme::inject(&text, key, content);
+        }
+        std::fs::write(&path, text).with_context(|| format!("write {name}"))?;
+        log::ok(name, "markers refreshed");
     }
-    std::fs::write(&readme_path, text).context("write README.md")?;
-    log::ok("README", "markers refreshed");
     Ok(())
 }
 
-/// Nudge when config references character art that hasn't been fetched yet —
+/// Nudge when config references character art that hasn't been fetched yet,
 /// the exact cause of "I added a character but it shows an avatar".
 pub fn warn_missing_art(ctx: &Ctx) {
     let dir = ctx.assets.join("bestgame");
@@ -248,7 +253,10 @@ pub fn warn_missing_art(ctx: &Ctx) {
         .map(|ch| ch.short.clone())
         .collect();
     if !missing.is_empty() {
-        log::warn(&format!("character art not fetched yet: {}", missing.join(", ")));
+        log::warn(&format!(
+            "character art not fetched yet: {}",
+            missing.join(", ")
+        ));
         log::warn("  run:  vai-profile bestgame   (or: vai-profile rebuild)");
     }
 }
@@ -262,11 +270,15 @@ pub fn build_all(
     let mut ctx = build_context(fixtures)?;
     if let Some(pin) = pin_game {
         if ctx.cfg.profile.games.iter().any(|g| g.key == pin) {
-            log::step("pin-game", &pin, "rotation slot forced (--pin-game / PIN_GAME)");
+            log::step(
+                "pin-game",
+                &pin,
+                "rotation slot forced (--pin-game / PIN_GAME)",
+            );
             ctx.pin_game = Some(pin);
         } else {
             log::warn(&format!(
-                "pin-game '{pin}' is not a configured game key — using the rotation pick. Known keys: {}",
+                "pin-game '{pin}' is not a configured game key, using the rotation pick. Known keys: {}",
                 ctx.cfg.profile.games.iter().map(|g| g.key.as_str()).collect::<Vec<_>>().join(", ")
             ));
         }
@@ -303,10 +315,12 @@ mod tests {
     fn pin_game_overrides_the_seed_pick_everywhere() {
         let mut ctx = fixture_ctx();
         // Pin a key that is NOT the current rotation pick, for every seed we
-        // try — the pin must always win.
+        // try, the pin must always win.
         for seed in [ctx.vibe_seed, ctx.vibe_seed + 1, ctx.vibe_seed + 7] {
             ctx.vibe_seed = seed;
-            let rotation = crate::cards::pick(&ctx.cfg.profile.games, seed, 1).key.clone();
+            let rotation = crate::cards::pick(&ctx.cfg.profile.games, seed, 1)
+                .key
+                .clone();
             let pin = ctx
                 .cfg
                 .profile
@@ -318,12 +332,9 @@ mod tests {
             ctx.pin_game = Some(pin.clone());
             assert_eq!(ctx.featured_game().key, pin, "pin must beat seed {seed}");
 
-            // Both consumers agree: the vibe card PLAYING slot and the games
-            // hero shelf feature the pinned title.
+            // The games hero shelf features the pinned title.
             let pinned_title = ctx.featured_game().title.clone();
-            let (_, vibe) = &crate::cards::vibe::build(&ctx).unwrap()[0];
             let (_, games) = &crate::cards::games::build(&ctx).unwrap()[0];
-            assert!(vibe.contains(&pinned_title), "vibe card must show the pin");
             assert!(
                 games.contains(&format!("featuring {pinned_title}")),
                 "games shelf hero must feature the pin"
@@ -347,5 +358,19 @@ mod tests {
         assert_eq!(ctx.featured_game().key, "miside");
         let (_, games) = &crate::cards::games::build(&ctx).unwrap()[0];
         assert!(games.contains("featuring MiSide"));
+    }
+
+    #[test]
+    fn readme_paths_picks_up_the_russian_translation_when_present() {
+        let dir = std::env::temp_dir().join(format!("vai-readmes-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("README.md"), "en").unwrap();
+        assert_eq!(readme_paths(&dir), vec![dir.join("README.md")]);
+        std::fs::write(dir.join("README.ru.md"), "ru").unwrap();
+        assert_eq!(
+            readme_paths(&dir),
+            vec![dir.join("README.md"), dir.join("README.ru.md")]
+        );
+        let _ = std::fs::remove_dir_all(dir);
     }
 }

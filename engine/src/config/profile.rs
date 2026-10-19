@@ -1,4 +1,4 @@
-//! Editorial data model — everything that used to be hard-coded content.
+//! Editorial data model, everything that used to be hard-coded content.
 //! Keeps the card modules about *layout*; the words live in `config/profile.toml`.
 
 use serde::Deserialize;
@@ -7,27 +7,76 @@ use serde::Deserialize;
 pub struct ProfileConfig {
     pub name: String,
     pub aliases: Vec<String>,
-    pub quotes: Vec<String>,
     pub research: Research,
     #[serde(default)]
     pub games: Vec<Game>,
     #[serde(default)]
     pub composers: Vec<NoteItem>,
-    #[serde(default)]
-    pub focus: Vec<NoteItem>,
-    #[serde(default)]
-    pub socials: Vec<Social>,
-    pub ai: AiLab,
-    #[serde(default)]
-    pub learning: Learning,
     pub best_game: BestGame,
     /// Optional per-card tweaks keyed by card name (`[cards.<name>]`):
     /// toggle a card off entirely or override its accent colour.
     #[serde(default)]
     pub cards: std::collections::BTreeMap<String, CardTweak>,
-    /// Optional Last.fm hookup (`[lastfm]`) — live now-playing / top artists.
+    /// Optional Last.fm hookup (`[lastfm]`), live now-playing / top artists.
     #[serde(default)]
     pub lastfm: Option<Lastfm>,
+    /// Keycap badges above the header (`[[badges]]`).
+    #[serde(default)]
+    pub badges: Vec<Badge>,
+    /// Words for the header card (`[header]`).
+    #[serde(default)]
+    pub header: Header,
+    /// README sections that get a labelled divider (`[[sections]]`).
+    #[serde(default)]
+    pub sections: Vec<Section>,
+    /// Free-form per-card facts (`[showcase.<card>] key = "value"`), so a
+    /// version bump is a config edit, not a code change.
+    #[serde(default)]
+    pub showcase:
+        std::collections::BTreeMap<String, std::collections::BTreeMap<String, toml::Value>>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Badge {
+    /// Small legend in the keycap corner ("portfolio", "lang"...).
+    pub legend: String,
+    pub label: String,
+    /// Keycap colour.
+    pub color: String,
+    /// Text colour; defaults to the dark ground.
+    #[serde(default)]
+    pub ink: Option<String>,
+}
+
+#[derive(Debug, Clone, Default, Deserialize)]
+pub struct Header {
+    #[serde(default)]
+    pub tagline: String,
+    /// Name in katakana, written top to bottom beside the name.
+    #[serde(default)]
+    pub katakana: String,
+    /// Words the piano-roll notes sing, one per note.
+    #[serde(default)]
+    pub lyric: Vec<String>,
+    #[serde(default)]
+    pub tracks: Vec<HeaderTrack>,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct HeaderTrack {
+    pub name: String,
+    #[serde(default)]
+    pub note: String,
+    pub accent: String,
+    /// The solo button lights up (the one project to look at first).
+    #[serde(default)]
+    pub solo: bool,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct Section {
+    pub key: String,
+    pub label: String,
 }
 
 /// Per-card overrides. Every field is optional so existing configs keep
@@ -38,9 +87,6 @@ pub struct CardTweak {
     /// simply stops being refreshed).
     #[serde(default = "default_true")]
     pub enabled: bool,
-    /// Accent colour override for the card chrome (e.g. "#bb9af7").
-    #[serde(default)]
-    pub accent: Option<String>,
 }
 
 fn default_true() -> bool {
@@ -65,11 +111,10 @@ fn default_lastfm_env() -> String {
 pub struct Research {
     pub name: String,
     pub subtitle: String,
-    pub blurb: String,
     /// Short human phase label, e.g. "architecture & data pipeline".
     #[serde(default)]
     pub phase: String,
-    /// 0.0..=1.0 — rendered as a progress bar on the learning card.
+    /// 0.0..=1.0, the progress bar on the research card.
     #[serde(default)]
     pub progress: f64,
     #[serde(default)]
@@ -98,29 +143,8 @@ pub struct NoteItem {
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct Social {
-    pub label: String,
-    pub url: String,
-}
-
-#[derive(Debug, Clone, Deserialize)]
-pub struct AiLab {
-    /// "Companions", not autopilot.
-    pub models: Vec<String>,
-    pub favourites: Vec<String>,
-}
-
-#[derive(Debug, Clone, Default, Deserialize)]
-pub struct Learning {
-    #[serde(default)]
-    pub topics: Vec<NoteItem>,
-}
-
-#[derive(Debug, Clone, Deserialize)]
 pub struct BestGame {
     pub title: String,
-    #[serde(default)]
-    pub subtitle: String,
     /// SteamGridDB search term used when `art_url` is empty.
     #[serde(default)]
     pub query: String,
@@ -131,8 +155,6 @@ pub struct BestGame {
     #[serde(default = "default_cover_mode")]
     pub cover_mode: String,
     #[serde(default)]
-    pub accent: String,
-    #[serde(default)]
     pub nick: String,
     #[serde(default)]
     pub level: String,
@@ -141,58 +163,63 @@ pub struct BestGame {
     #[serde(default)]
     pub game_id: String,
     #[serde(default)]
-    pub blurb: String,
-    /// Free-form labelled stats (`[[best_game.extra]]`): anything you want on
-    /// the card — friends, union, playtime… Add `current` + `max` to get a
-    /// small progress bar under the value.
-    #[serde(default)]
-    pub extra: Vec<ExtraStat>,
-    #[serde(default)]
     pub characters: Vec<Character>,
+    /// Every Nikke loved for the lore (`[[best_game.loved]]`).
+    #[serde(default)]
+    pub loved: Vec<Character>,
+    /// The lobby scene of the best-game card (`[best_game.lobby]`).
+    #[serde(default)]
+    pub lobby: Lobby,
 }
 
-/// One user-defined stat on the best-game card.
-#[derive(Debug, Clone, Deserialize)]
-pub struct ExtraStat {
-    pub label: String,
-    /// Display string ("" + current/max set → rendered as "current/max").
+/// Numbers and names for the lobby scene. Strings are shown as written.
+#[derive(Debug, Clone, Default, Deserialize)]
+pub struct Lobby {
+    /// Short name of the Nikke standing in the lobby.
     #[serde(default)]
-    pub value: String,
-    /// Optional progress pair — renders a micro progress bar.
+    pub character: String,
+    /// Full-body art for that Nikke (fetched by `vai-profile bestgame`).
     #[serde(default)]
-    pub current: Option<f64>,
+    pub art_url: String,
+    /// Short name of the Nikke used as the commander avatar.
     #[serde(default)]
-    pub max: Option<f64>,
-}
-
-impl ExtraStat {
-    /// The string shown as the value (explicit value wins; else current/max).
-    pub fn display(&self) -> String {
-        if !self.value.is_empty() {
-            return self.value.clone();
-        }
-        match (self.current, self.max) {
-            (Some(c), Some(m)) => format!("{}/{}", trim_f(c), trim_f(m)),
-            (Some(c), None) => trim_f(c),
-            _ => "—".into(),
-        }
-    }
-
-    /// Fill fraction for the micro bar, when both numbers are present.
-    pub fn fraction(&self) -> Option<f64> {
-        match (self.current, self.max) {
-            (Some(c), Some(m)) if m > 0.0 => Some((c / m).clamp(0.0, 1.0)),
-            _ => None,
-        }
-    }
-}
-
-fn trim_f(v: f64) -> String {
-    if (v - v.round()).abs() < 1e-9 {
-        format!("{}", v.round() as i64)
-    } else {
-        format!("{v}")
-    }
+    pub avatar: String,
+    #[serde(default)]
+    pub gems: u64,
+    #[serde(default)]
+    pub credits: u64,
+    #[serde(default)]
+    pub next_stage: String,
+    #[serde(default)]
+    pub normal: String,
+    #[serde(default)]
+    pub hard: String,
+    #[serde(default)]
+    pub cleared_at: String,
+    #[serde(default)]
+    pub clear_power: u64,
+    #[serde(default)]
+    pub standard_power: u64,
+    #[serde(default)]
+    pub union: String,
+    #[serde(default)]
+    pub union_level: u32,
+    #[serde(default)]
+    pub union_members: String,
+    #[serde(default)]
+    pub union_rank: String,
+    #[serde(default)]
+    pub outpost_defense_level: u32,
+    #[serde(default)]
+    pub research: String,
+    #[serde(default)]
+    pub synchro: String,
+    #[serde(default)]
+    pub towers: String,
+    #[serde(default)]
+    pub nikkes: String,
+    #[serde(default)]
+    pub overclock: String,
 }
 
 fn default_cover_mode() -> String {
@@ -207,6 +234,12 @@ pub struct Character {
     pub accent: String,
     #[serde(default)]
     pub art_url: String,
+    /// Character level shown on the squad card.
+    #[serde(default)]
+    pub level: Option<u32>,
+    /// Combat power as shown in game ("26 340").
+    #[serde(default)]
+    pub power: String,
 }
 
 impl Character {

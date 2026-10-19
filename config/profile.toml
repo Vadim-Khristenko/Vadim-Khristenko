@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# profile.toml — editorial content for the VAI Profile Engine.
+# profile.toml, editorial content for the VAI Profile Engine.
 # Edit words here; the cards stay about layout. Rebuild with `vai-profile build`.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -7,12 +7,12 @@ name = "Vadim Khristenko"
 aliases = ["VAI_PROG", "VAI_Programmer", "VAI", "VOLT"]
 
 quotes = [
-  "I generate a billion ideas on the fly — time is the only bottleneck.",
-  "Fast prototype, validate, harden — then build something weird for fun.",
+  "I generate a billion ideas on the fly, time is the only bottleneck.",
+  "Fast prototype, validate, harden, then build something weird for fun.",
   "From banal scripts to absolutely unhinged solutions. Both ship.",
   "Backend by trade, chaos by hobby.",
   "If it can be automated, it probably already is.",
-  "Servers under any OS bend the same way — with patience and good logs.",
+  "Servers under any OS bend the same way, with patience and good logs.",
   "Tiny stories between commits keep the compiler honest.",
   "Three states are enough: minus one, zero, plus one.",
 ]
@@ -34,7 +34,7 @@ favourites = ["Fable 5", "Grok 4.5", "Qwen 3.8 Max", "MiMo V2.5 Pro"]
 # ── Learning / building rotation (learning card) ────────────────────────────
 [[learning.topics]]
 name = "Rust internals"
-note = "zero-cost everything — allocators, async guts, unsafe hygiene"
+note = "zero-cost everything, allocators, async guts, unsafe hygiene"
 
 [[learning.topics]]
 name = "ternary quantization"
@@ -89,7 +89,7 @@ url = "https://youtube.com/@VAI_PROG"
 label = "Telegram"
 url = "https://t.me/vscreator_life"
 
-# Reddit was banned due to a misunderstanding — will be back eventually.
+# Reddit was banned due to a misunderstanding, will be back eventually.
 
 [[socials]]
 label = "Patreon"
@@ -101,12 +101,12 @@ url = "https://codeforces.com/profile/VAI_Programmer"
 
 # ── Last.fm (live music in the vibe card) ───────────────────────────────────
 # The engine shows the now-playing track (with a tiny equalizer), the last
-# scrobble, or the month's top artist — in that order of preference. The API
+# scrobble, or the month's top artist, in that order of preference. The API
 # key is ONLY read from the environment variable below (never stored here);
 # without it the composers list is used as the fallback.
 [lastfm]
 username = "vai_prog"
-# api_key_env = "LASTFM_API_KEY"   # default — override to read another var
+# api_key_env = "LASTFM_API_KEY"   # default, override to read another var
 
 # ── Per-card tweaks (all optional) ──────────────────────────────────────────
 # Any card can be switched off or re-accented without touching the code:
@@ -151,8 +151,8 @@ name = "Aethelgard TQ-1.58"
 note = "low-bit reasoning research"
 
 [[focus]]
-name = "Any Tech ARCHITECT"
-note = "shipping mimicry profiles"
+name = "Any Tech Architect"
+note = "AmneziaWG 3.1 and XRay, explained"
 
 [[focus]]
 name = "The Wall Dev"
@@ -302,53 +302,312 @@ art_url = "https://cdn2.steamgriddb.com/grid/6125432a1d4dfa1f33dbffe6bb0b9a0e.jp
 cover_mode = "portrait"
 accent = "#e23b5a"
 nick = "VAI"
-level = "115"
+level = "193"
 server = "Global"
 game_id = "12405515"
-blurb = "My main since launch — holding the surface against the Raptures."
+blurb = "Holding the surface against the Raptures since December 2024."
 
 # Free-form labelled stats for the spotlight card. `value` is any string;
 # add numeric `current` + `max` instead to get a micro progress bar
 # (value defaults to "current/max" when omitted).
+# Account numbers from SHIFTYPAD on Blablalink, updated 2026-10-19.
+profile_url = "https://www.blablalink.com/user?openid=MjkwODAtNjA0NTA5MTUyNjQxNzk5OTA3MA=="
+
 [[best_game.extra]]
-label = "Friends"
-current = 30
-max = 30
+label = "Squad power"
+value = "193 258"
+
+[[best_game.extra]]
+label = "Synchro"
+value = "Lv 160"
+
+[[best_game.extra]]
+label = "Normal"
+value = "20-15"
+
+[[best_game.extra]]
+label = "Hard"
+value = "6-24"
+
+[[best_game.extra]]
+label = "Towers"
+value = "75"
+
+[[best_game.extra]]
+label = "Nikkes"
+value = "79"
 
 [[best_game.extra]]
 label = "Playing since"
 value = "Dec 12, 2024"
 
-[[best_game.extra]]
-label = "Outpost"
-value = "always defended"
-
+# Campaign squad from SHIFTYPAD (Campaign NORMAL 20-15, cleared 2026-09-26).
 [[best_game.characters]]
-name = "Rapi: Red Hood"
-short = "Red Hood"
-accent = "#f7768e"
-art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c016_00_s.png"
+name = "Tia"
+short = "Tia"
+accent = "#FFD27A"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c451_00_s.png"
+level = 160
+power = "26 340"
 
 [[best_game.characters]]
 name = "Anis: Star"
 short = "Anis"
 accent = "#FFC107"
 art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c017_00_s.png"
+level = 160
+power = "43 218"
 
 [[best_game.characters]]
+name = "Naga"
+short = "Naga"
+accent = "#C08261"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c450_00_s.png"
+level = 160
+power = "29 981"
+
+[[best_game.characters]]
+name = "NEON: Vision Eye"
+short = "NEON"
+accent = "#C9A0FF"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c018_00_s.png"
+level = 160
+power = "44 146"
+
+[[best_game.characters]]
+name = "Cinderella: Crystal Wave"
+short = "Cinderella"
+accent = "#9FD8FF"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c515_00_s.png"
+level = 160
+power = "31 690"
+
+
+# Lobby scene of the best-game card (numbers from the in-game lobby and
+# SHIFTYPAD on Blablalink, updated 2026-10-19).
+[best_game.lobby]
+character = "Anis"
+art_url = "https://static.dotgg.gg/nikke/characters-big/17.webp"
+avatar = "Naga"
+gems = 84695
+credits = 77777
+next_stage = "20-18"
+normal = "20-15"
+hard = "6-24"
+cleared_at = "2026.09.26"
+clear_power = 175375
+standard_power = 120340
+union = "POGG"
+union_level = 5
+union_members = "29 / 32"
+union_rank = "Gold"
+outpost_defense_level = 127
+research = "60"
+synchro = "160"
+towers = "75"
+nikkes = "79"
+overclock = "7"
+
+# Every Nikke VAI loves, for the lore. Shown as the "Loved" shelf on the
+# new best-game card; same fields as characters.
+[[best_game.loved]]
+name = "Rapi: Red Hood"
+short = "Red Hood"
+accent = "#F7768E"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c016_00_s.png"
+
+[[best_game.loved]]
+name = "Anis: Star"
+short = "Anis"
+accent = "#FFC107"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c017_00_s.png"
+
+[[best_game.loved]]
 name = "Soda: Twinkling Bunny"
 short = "Soda"
-accent = "#98ffd9"
+accent = "#98FFD9"
 art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c314_00_s.png"
 
-[[best_game.characters]]
-name = "Frima: Sea Of Sloth"
-short = "Frima"
-accent = "#C08261"
-art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c142_01_00_s.png"
+[[best_game.loved]]
+name = "NEON: Vision Eye"
+short = "NEON"
+accent = "#C9A0FF"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c018_00_s.png"
 
-[[best_game.characters]]
+[[best_game.loved]]
 name = "Snow Crane"
 short = "Snow Crane"
 accent = "#EBF1F5"
 art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c620_00_s.png"
+
+[[best_game.loved]]
+name = "Cinderella: Crystal Wave"
+short = "Cinderella"
+accent = "#9FD8FF"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c515_00_s.png"
+
+[[best_game.loved]]
+name = "Little Mermaid"
+short = "Little Mermaid"
+accent = "#3FD0C9"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c513_00_s.png"
+
+[[best_game.loved]]
+name = "Naga"
+short = "Naga"
+accent = "#C08261"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c450_00_s.png"
+
+[[best_game.loved]]
+name = "Tia"
+short = "Tia"
+accent = "#FFD27A"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c451_00_s.png"
+
+[[best_game.loved]]
+name = "Marciana: Marine Study"
+short = "Marciana"
+accent = "#FF8A6B"
+art_url = "https://nikke-db-legacy.pages.dev/images/sprite/si_c322_00_s.png"
+
+# ── Header card ────────────────────────────────────────────────────────────
+[header]
+tagline = "backend & systems engineer. Rust first, always curious."
+katakana = "ヴァディム・フリステンコ"
+lyric = ["build", "fast,", "ship", "weird", "things", "for", "fun"]
+
+[[header.tracks]]
+name = "Any Tech Architect"
+note = "obfuscation configs, every number explained"
+accent = "#e8a840"
+
+[[header.tracks]]
+name = "A CAT"
+note = "awg-containers-and-tools"
+accent = "#39c5bb"
+
+[[header.tracks]]
+name = "FilianWIKI"
+note = "on my NotAnOtherVTUBERwiki engine"
+accent = "#ff3d8b"
+
+[[header.tracks]]
+name = "Hatsune Miku themes"
+note = "4 looks · 6 editors · more coming"
+accent = "#e87ea1"
+solo = true
+
+[[header.tracks]]
+name = "Aethelgard TQ-1.58"
+note = "ternary {-1, 0, +1} research"
+accent = "#d4a0ff"
+
+# ── Keycap badges above the header ─────────────────────────────────────────
+[[badges]]
+legend = "portfolio"
+label = "vai-rice.space"
+color = "#39c5bb"
+
+[[badges]]
+legend = "alias"
+label = "VAI_PROG"
+color = "#2a2e52"
+ink = "#eef2ff"
+
+[[badges]]
+legend = "lang"
+label = "Rust first"
+color = "#dea584"
+
+[[badges]]
+legend = "theme"
+label = "Miku Dark"
+color = "#39c5bb"
+
+[[badges]]
+legend = "fandom"
+label = "Snackers RU"
+color = "#e87ea1"
+
+[[badges]]
+legend = "game"
+label = "NIKKE 193"
+color = "#ffc21a"
+
+[[badges]]
+legend = "status"
+label = "open to collab"
+color = "#2a2e52"
+ink = "#eef2ff"
+
+# ── Labelled dividers, one per README section ──────────────────────────────
+[[sections]]
+key = "projects"
+label = "PROJECTS"
+
+[[sections]]
+key = "research"
+label = "RESEARCH"
+
+[[sections]]
+key = "snackers"
+label = "SNACKERS"
+
+[[sections]]
+key = "offclock"
+label = "OFF THE CLOCK"
+
+[[sections]]
+key = "telemetry"
+label = "TELEMETRY"
+
+[[sections]]
+key = "infra"
+label = "INFRA"
+
+[[sections]]
+key = "contact"
+label = "REACH ME"
+
+# ── Facts the project cards print. Bump a version here, not in code. ───────
+[showcase.miku_themes]
+repo = "HatsuneMikuEditorTheme"
+editors = ["VS Code", "Zed", "JetBrains", "Neovim", "Sublime Text", "Notepad++"]
+next_ports = 2
+
+[showcase.architect]
+repo = "Any-Tech-ARCHITECT"
+site = "architect.vai-rice.space"
+version = "4.5.1"
+engines = "AmneziaWG 3.1 · XRay REALITY"
+params = "25 + 74"
+
+[showcase.acat]
+repo = "awg-containers-and-tools"
+version = "0.5.0"
+images = "vaiprog/amnezia-wg-*"
+
+[showcase.wiki]
+repo = "NotAnOtherVTUBERwiki"
+wiki = "filian.wiki"
+beta = "beta.filian.wiki"
+ru = "filian.ru"
+
+[showcase.thewall]
+repo = "TheWall"
+site = "the-wall.vai-rice.space"
+
+[showcase.kumir]
+repo = "kumir3-core"
+
+# The homelab card. home: laptops working as servers, one system each.
+# main: the everyday laptop, every system it boots. vps: one entry per server.
+# Known systems: arch, nixos, ubuntu, debian, windows.
+[showcase.homelab]
+tagline = "Most of my infrastructure runs at home: two laptops as servers, plus my main one."
+home = ["arch", "nixos"]
+main = ["windows", "arch"]
+vps = ["arch", "nixos", "ubuntu", "debian"]
+
+[showcase.snackers]
+gift = "Hatsune Miku"

@@ -1,4 +1,4 @@
-//! Offline provider backed by recorded JSON — powers `--fixtures` dry runs and
+//! Offline provider backed by recorded JSON, powers `--fixtures` dry runs and
 //! keeps every provider/aggregation test off the network.
 
 use super::Provider;
@@ -27,7 +27,7 @@ pub struct FixtureData {
     /// Pulses keyed by repo name.
     #[serde(default)]
     pub pulses: BTreeMap<String, RepoPulse>,
-    /// Raw 30-day commit lists keyed by repo name — used instead of `pulses`
+    /// Raw 30-day commit lists keyed by repo name, used instead of `pulses`
     /// when present, so author-exclusion filtering is exercised end-to-end.
     /// Fixture commits use `days_ago` so they never age out of the window.
     #[serde(default)]
@@ -50,10 +50,6 @@ impl FixtureProvider {
             entry: entry.clone(),
             data,
         })
-    }
-
-    pub fn from_data(entry: ProviderEntry, data: FixtureData) -> Self {
-        FixtureProvider { entry, data }
     }
 }
 
@@ -82,7 +78,12 @@ impl Provider for FixtureProvider {
     }
 
     fn languages(&self, repo: &Repo) -> Result<LangBytes> {
-        Ok(self.data.languages.get(&repo.name).cloned().unwrap_or_default())
+        Ok(self
+            .data
+            .languages
+            .get(&repo.name)
+            .cloned()
+            .unwrap_or_default())
     }
 
     fn activity(&self) -> Result<Heatmap> {
@@ -93,16 +94,6 @@ impl Provider for FixtureProvider {
             }
         }
         Ok(Heatmap::from_map(map))
-    }
-
-    fn repo(&self, name: &str) -> Result<Option<Repo>> {
-        let key = normalize_repo_name(name);
-        Ok(self
-            .data
-            .repos
-            .iter()
-            .find(|r| normalize_repo_name(&r.name) == key)
-            .cloned())
     }
 
     fn commit_windows(&self) -> Option<CommitWindows> {
@@ -133,11 +124,13 @@ impl Provider for FixtureProvider {
                 .or(Some(resolved.len() as u64));
             return RepoPulse {
                 total_commits: total,
-                daily_30: super::github::bucket_commit_days(
-                    stats.filter_commit_dates(&resolved),
-                ),
+                daily_30: super::github::bucket_commit_days(stats.filter_commit_dates(&resolved)),
             };
         }
-        self.data.pulses.get(&repo.name).cloned().unwrap_or_default()
+        self.data
+            .pulses
+            .get(&repo.name)
+            .cloned()
+            .unwrap_or_default()
     }
 }

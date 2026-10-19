@@ -1,12 +1,12 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# providers.toml — every platform the engine aggregates.
+# providers.toml, every platform the engine aggregates.
 #
 # kind = "github"  → api.github.com (REST + GraphQL + calendar scrape)
 # kind = "forgejo" → any Gitea-compatible /api/v1 host (Codeberg, self-hosted…)
 #
 # token_env names an environment variable holding a READ-ONLY API token.
 # A missing token degrades to tokenless public reads; an unreachable host is
-# logged and skipped — never fatal. Adding a platform = one more entry here.
+# logged and skipped, never fatal. Adding a platform = one more entry here.
 # ─────────────────────────────────────────────────────────────────────────────
 
 [[provider]]

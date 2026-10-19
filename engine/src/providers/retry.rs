@@ -3,7 +3,7 @@
 //! Every provider sends through `send_retrying`, so a transient failure (network
 //! blip, 429, 5xx, or a GitHub secondary rate limit) rides out a short backoff
 //! instead of silently dropping a card. Waits honor `Retry-After` and
-//! `X-RateLimit-Reset`, but are capped so a CI run never hangs on a long limit —
+//! `X-RateLimit-Reset`, but are capped so a CI run never hangs on a long limit,
 //! past the cap it returns the response and the caller degrades gracefully.
 
 use anyhow::{anyhow, Result};
@@ -23,7 +23,7 @@ pub fn send_retrying(req: RequestBuilder) -> Result<Response> {
         attempt += 1;
         let this = req
             .try_clone()
-            .ok_or_else(|| anyhow!("request body not cloneable — cannot retry"))?;
+            .ok_or_else(|| anyhow!("request body not cloneable, cannot retry"))?;
         match this.send() {
             Ok(resp) => {
                 let code = resp.status().as_u16();
@@ -33,7 +33,7 @@ pub fn send_retrying(req: RequestBuilder) -> Result<Response> {
                 if retryable && attempt < MAX_ATTEMPTS {
                     let wait = retry_after(&resp).unwrap_or_else(|| backoff(attempt));
                     log::warn(&format!(
-                        "HTTP {code} — retry {attempt}/{} in {}s",
+                        "HTTP {code}, retry {attempt}/{} in {}s",
                         MAX_ATTEMPTS - 1,
                         wait.as_secs()
                     ));
@@ -45,7 +45,7 @@ pub fn send_retrying(req: RequestBuilder) -> Result<Response> {
             Err(e) if attempt < MAX_ATTEMPTS => {
                 let wait = backoff(attempt);
                 log::warn(&format!(
-                    "request failed ({e}) — retry {attempt}/{} in {}s",
+                    "request failed ({e}), retry {attempt}/{} in {}s",
                     MAX_ATTEMPTS - 1,
                     wait.as_secs()
                 ));

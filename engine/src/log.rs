@@ -60,9 +60,19 @@ fn elapsed() -> String {
 pub fn banner(title: &str, subtitle: &str) {
     let bar = "═".repeat(58);
     println!("{}", rust(&format!("╔{bar}╗")));
-    println!("{}{}{}", rust("║"), bold(&format!("  {title:<56}")), rust("║"));
+    println!(
+        "{}{}{}",
+        rust("║"),
+        bold(&format!("  {title:<56}")),
+        rust("║")
+    );
     if !subtitle.is_empty() {
-        println!("{}{}{}", rust("║"), dim(&format!("  {subtitle:<56}")), rust("║"));
+        println!(
+            "{}{}{}",
+            rust("║"),
+            dim(&format!("  {subtitle:<56}")),
+            rust("║")
+        );
     }
     println!("{}", rust(&format!("╚{bar}╝")));
 }

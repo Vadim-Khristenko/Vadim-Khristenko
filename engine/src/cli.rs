@@ -9,7 +9,7 @@
 //!   vai-profile art                   # (re)download the game-shelf covers
 //!
 //! Art commands accept a SteamGridDB key via --key or the environment
-//! (SGDB_KEY / STEAMGRIDDB_KEY / STEAMGRIDDB_API_KEY — first non-empty wins).
+//! (SGDB_KEY / STEAMGRIDDB_KEY / STEAMGRIDDB_API_KEY, first non-empty wins).
 //! The rotation slot can be forced with --pin-game <key> (or PIN_GAME).
 
 use crate::{art, log, run};
@@ -107,7 +107,7 @@ fn parse_only(only: &Option<String>) -> Option<BTreeSet<String>> {
 }
 
 fn env_fixtures(flag: bool) -> bool {
-    flag || std::env::var("VAI_FIXTURES").map_or(false, |v| v == "1" || v == "true")
+    flag || std::env::var("VAI_FIXTURES").is_ok_and(|v| v == "1" || v == "true")
 }
 
 /// `--pin-game` beats the PIN_GAME environment variable; empty values are
@@ -120,7 +120,7 @@ fn pin_game(flag: &Option<String>) -> Option<String> {
 }
 
 /// Every env var accepted for the SteamGridDB key, in precedence order.
-/// STEAMGRIDDB_API_KEY is the historical CI secret name — all three work.
+/// STEAMGRIDDB_API_KEY is the historical CI secret name, all three work.
 const SGDB_KEY_VARS: [&str; 3] = ["SGDB_KEY", "STEAMGRIDDB_KEY", "STEAMGRIDDB_API_KEY"];
 
 /// Key resolution as a pure function (env injected) so tests never race on
@@ -140,7 +140,7 @@ fn resolve_sgdb_key(
     None
 }
 
-/// Resolve the key and log WHERE it came from — set/not-set only, never the
+/// Resolve the key and log WHERE it came from, set/not-set only, never the
 /// value.
 fn sgdb_key(key: &Option<String>) -> Option<String> {
     match resolve_sgdb_key(key.clone(), |var| std::env::var(var).ok()) {
@@ -172,7 +172,12 @@ pub fn main() -> Result<()> {
             fixtures,
             pin_game: pin,
         } => {
-            run::build_all(parse_only(&only), no_readme, env_fixtures(fixtures), pin_game(&pin))?;
+            run::build_all(
+                parse_only(&only),
+                no_readme,
+                env_fixtures(fixtures),
+                pin_game(&pin),
+            )?;
         }
         Cmd::Rebuild {
             only,
@@ -189,12 +194,19 @@ pub fn main() -> Result<()> {
                 art::fetch_bestgame(&cfg, &root, key.as_deref());
                 if games {
                     let only_games = std::env::var("GAME_ONLY").ok().map(|s| {
-                        s.split(',').map(|x| x.trim().to_string()).collect::<BTreeSet<_>>()
+                        s.split(',')
+                            .map(|x| x.trim().to_string())
+                            .collect::<BTreeSet<_>>()
                     });
                     art::fetch_games(&cfg, &root, key.as_deref(), only_games.as_ref());
                 }
             }
-            run::build_all(parse_only(&only), false, env_fixtures(fixtures), pin_game(&pin))?;
+            run::build_all(
+                parse_only(&only),
+                false,
+                env_fixtures(fixtures),
+                pin_game(&pin),
+            )?;
         }
         Cmd::Preview {
             only,
@@ -216,9 +228,11 @@ pub fn main() -> Result<()> {
             let cfg = crate::config::Config::load(&root.join("config"))?;
             let key = sgdb_key(&key);
             log::banner("Game Art Fetcher", "SteamGridDB → uniform covers");
-            let only_games = only
-                .or_else(|| std::env::var("GAME_ONLY").ok())
-                .map(|s| s.split(',').map(|x| x.trim().to_string()).collect::<BTreeSet<_>>());
+            let only_games = only.or_else(|| std::env::var("GAME_ONLY").ok()).map(|s| {
+                s.split(',')
+                    .map(|x| x.trim().to_string())
+                    .collect::<BTreeSet<_>>()
+            });
             if bestgame {
                 art::fetch_bestgame(&cfg, &root, key.as_deref());
             }
@@ -241,29 +255,12 @@ pub fn main() -> Result<()> {
 
 /// Assemble tmp_prev/preview.html from the rendered cards and open it.
 fn preview(ctx: &run::Ctx, only: Option<&BTreeSet<String>>, no_open: bool) -> Result<()> {
-    let mut names: Vec<String> = Vec::new();
-    for (card, _) in run::CARDS {
-        if let Some(only) = only {
-            if !only.contains(*card) {
-                continue;
-            }
-        }
-        match *card {
-            "divider" => names.extend(
-                [
-                    "divider",
-                    "divider_wave",
-                    "divider_circuit",
-                    "divider_pulse",
-                    "divider_editor",
-                ]
-                .iter()
-                .map(|s| s.to_string()),
-            ),
-            "platforms" => names.extend(run::platform_assets(ctx).iter().map(|n| n.trim_end_matches(".svg").to_string())),
-            other => names.push(other.to_string()),
-        }
-    }
+    let names: Vec<String> = crate::readme::layout(&ctx.cfg.profile.sections)
+        .into_iter()
+        .flat_map(|(_, images)| images.into_iter().map(|(file, _)| file))
+        .filter(|file| only.is_none_or(|o| o.iter().any(|card| file.contains(card.as_str()))))
+        .map(|file| file.trim_end_matches(".svg").to_string())
+        .collect();
     let mut parts = String::new();
     for name in names {
         let p = ctx.assets.join(format!("{name}.svg"));
@@ -285,6 +282,21 @@ fn preview(ctx: &run::Ctx, only: Option<&BTreeSet<String>>, no_open: bool) -> Re
         open_browser(&out);
     }
     Ok(())
+}
+
+fn open_browser(path: &std::path::Path) {
+    let url = format!("file:///{}", path.display().to_string().replace('\\', "/"));
+    #[cfg(target_os = "windows")]
+    let result = std::process::Command::new("cmd")
+        .args(["/C", "start", "", &url])
+        .spawn();
+    #[cfg(target_os = "macos")]
+    let result = std::process::Command::new("open").arg(&url).spawn();
+    #[cfg(all(not(target_os = "windows"), not(target_os = "macos")))]
+    let result = std::process::Command::new("xdg-open").arg(&url).spawn();
+    if let Err(e) = result {
+        log::warn(&format!("could not open browser: {e}"));
+    }
 }
 
 #[cfg(test)]
@@ -339,18 +351,5 @@ mod tests {
         assert_eq!(pin_game(&Some(" nikke ".into())), Some("nikke".into()));
         // An explicitly empty flag never resolves to a pin.
         assert_eq!(pin_game(&Some("  ".into())), None);
-    }
-}
-
-fn open_browser(path: &std::path::Path) {
-    let url = format!("file:///{}", path.display().to_string().replace('\\', "/"));
-    #[cfg(target_os = "windows")]
-    let result = std::process::Command::new("cmd").args(["/C", "start", "", &url]).spawn();
-    #[cfg(target_os = "macos")]
-    let result = std::process::Command::new("open").arg(&url).spawn();
-    #[cfg(all(not(target_os = "windows"), not(target_os = "macos")))]
-    let result = std::process::Command::new("xdg-open").arg(&url).spawn();
-    if let Err(e) = result {
-        log::warn(&format!("could not open browser: {e}"));
     }
 }

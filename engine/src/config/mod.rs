@@ -1,8 +1,8 @@
 //! TOML configuration: load + validate the three files under `config/`.
 //!
-//! * `profile.toml`   — editorial content (aliases, games, research, AI lab…)
-//! * `providers.toml` — the platform list (github / forgejo instances)
-//! * `flagship.toml`  — the coolest-projects card
+//! * `profile.toml`  , editorial content (aliases, games, research, AI lab…)
+//! * `providers.toml`, the platform list (github / forgejo instances)
+//! * `flagship.toml` , the coolest-projects card
 //!
 //! Validation is strict and fails early with a readable message: a broken
 //! config should stop the run before any card is touched.
@@ -25,13 +25,13 @@ pub struct Config {
     pub profile: ProfileConfig,
     pub providers: ProvidersConfig,
     pub flagship: FlagshipConfig,
-    /// Optional `stats.toml` — rollup exclusions (defaults to none).
+    /// Optional `stats.toml`, rollup exclusions (defaults to none).
     pub stats: StatsConfig,
 }
 
 fn load_toml<T: serde::de::DeserializeOwned>(path: &Path) -> Result<T> {
-    let text = std::fs::read_to_string(path)
-        .with_context(|| format!("cannot read {}", path.display()))?;
+    let text =
+        std::fs::read_to_string(path).with_context(|| format!("cannot read {}", path.display()))?;
     toml::from_str(&text).with_context(|| format!("cannot parse {}", path.display()))
 }
 
@@ -65,9 +65,6 @@ impl Config {
         if self.profile.games.is_empty() {
             bail!("profile.toml: at least one [[games]] entry is required");
         }
-        if self.profile.quotes.is_empty() {
-            bail!("profile.toml: `quotes` must not be empty");
-        }
         if self.providers.provider.is_empty() {
             bail!("providers.toml: at least one [[provider]] entry is required");
         }
@@ -86,14 +83,7 @@ impl Config {
                 );
             }
         }
-        if self
-            .providers
-            .provider
-            .iter()
-            .filter(|p| p.primary)
-            .count()
-            > 1
-        {
+        if self.providers.provider.iter().filter(|p| p.primary).count() > 1 {
             bail!("providers.toml: at most one provider may set primary = true");
         }
         for pr in &self.flagship.project {
@@ -118,12 +108,18 @@ mod tests {
         let cfg = Config::load(&repo_config_dir()).expect("config/ must load");
         assert!(cfg.profile.aliases.contains(&"VAI_PROG".to_string()));
         assert_eq!(cfg.providers.provider.len(), 3);
-        assert!(cfg.providers.provider.iter().any(|p| p.id == "vai-git" && p.primary));
+        assert!(cfg
+            .providers
+            .provider
+            .iter()
+            .any(|p| p.id == "vai-git" && p.primary));
         assert!(cfg.flagship.project.len() >= 4);
-        // The editorial lists are user-tuned — assert shape, not exact counts.
-        assert!(!cfg.profile.ai.models.is_empty());
-        assert!(!cfg.profile.ai.favourites.is_empty());
-        assert!(cfg.profile.ai.favourites.len() <= cfg.profile.ai.models.len());
+        // Editorial lists are user-tuned: assert shape, not exact counts.
+        assert!(!cfg.profile.badges.is_empty());
+        assert!(!cfg.profile.sections.is_empty());
+        assert!(!cfg.profile.header.tracks.is_empty());
+        assert!(cfg.profile.best_game.characters.len() <= 5);
+        assert!(!cfg.profile.best_game.loved.is_empty());
     }
 
     #[test]
@@ -137,7 +133,6 @@ mod tests {
             .expect("Kumir 3 flagship entry");
         assert_eq!(kumir.repo, "kumir3-core");
         assert_eq!(kumir.prefer.as_deref(), Some("github"));
-        assert!(!kumir.tags.is_empty() && !kumir.blurb.is_empty());
 
         let miside = cfg
             .profile

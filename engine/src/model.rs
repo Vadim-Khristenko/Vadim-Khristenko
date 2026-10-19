@@ -1,10 +1,10 @@
 //! Core data model shared by providers, the aggregator and the cards.
 //!
 //! Lines of code are estimated from total language bytes (always available and
-//! immediate) — per-commit statistics endpoints are too flaky to depend on for
+//! immediate), per-commit statistics endpoints are too flaky to depend on for
 //! a live profile.
 
-use chrono::{Datelike, NaiveDate};
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -110,34 +110,12 @@ impl Heatmap {
         self.days.iter().map(|d| d.1 as u64).max().unwrap_or(0)
     }
 
-    /// Date of the single best day (most contributions).
-    pub fn best_day_date(&self) -> Option<NaiveDate> {
-        self.days
-            .iter()
-            .max_by_key(|d| d.1)
-            .filter(|d| d.1 > 0)
-            .map(|d| d.0)
-    }
-
     pub fn sum_last(&self, n: usize) -> u64 {
         let len = self.days.len();
         self.days[len.saturating_sub(n)..]
             .iter()
             .map(|d| d.1 as u64)
             .sum()
-    }
-
-    pub fn total(&self) -> u64 {
-        self.days.iter().map(|d| d.1 as u64).sum()
-    }
-
-    /// Contribution totals bucketed by weekday, Monday = index 0.
-    pub fn weekday_totals(&self) -> [u64; 7] {
-        let mut out = [0u64; 7];
-        for (date, count) in &self.days {
-            out[date.weekday().num_days_from_monday() as usize] += *count as u64;
-        }
-        out
     }
 
     /// Merge several calendars by summing per-date counts.
@@ -152,7 +130,7 @@ impl Heatmap {
     }
 }
 
-/// One commit's authorship metadata — enough for the stats-exclusion filter.
+/// One commit's authorship metadata, enough for the stats-exclusion filter.
 /// `days_ago` is a fixture convenience (relative dates stay fresh in tests).
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct CommitMeta {
@@ -234,33 +212,12 @@ pub struct Aggregate {
     pub heatmap: Heatmap,
     /// Followers summed across platforms (people, not mirrors).
     pub followers_total: u64,
-    pub following_total: u64,
-}
-
-impl Aggregate {
-    pub fn platform(&self, id: &str) -> Option<&PlatformData> {
-        self.platforms.iter().find(|p| p.id == id)
-    }
-
-    /// The primary platform if configured (else the first reachable one).
-    pub fn primary(&self) -> Option<&PlatformData> {
-        self.platforms
-            .iter()
-            .find(|p| p.primary && p.reachable)
-            .or_else(|| self.platforms.iter().find(|p| p.reachable))
-    }
 }
 
 /// A flagship project resolved against live platform data.
 #[derive(Debug, Clone, Default)]
 pub struct FlagshipLive {
-    /// Display name from config.
-    pub name: String,
     pub repo_key: String,
-    pub site: Option<String>,
-    pub tags: Vec<String>,
-    pub blurb: String,
-    pub accent: Option<String>,
     /// Which platform the live stats came from (display name).
     pub source: Option<String>,
     pub repo: Option<Repo>,
@@ -274,7 +231,7 @@ pub struct FlagshipLive {
 
 pub fn format_count(n: Option<u64>) -> String {
     match n {
-        None => "—".into(),
+        None => "·".into(),
         Some(n) => {
             if n >= 1_000_000 {
                 let s = format!("{:.1}M", n as f64 / 1_000_000.0);
@@ -297,7 +254,10 @@ mod tests {
     fn normalize_strips_git_and_lowers() {
         assert_eq!(normalize_repo_name("The-Wall.GIT"), "the-wall"); // lowercased before strip
         assert_eq!(normalize_repo_name("The-Wall.git"), "the-wall");
-        assert_eq!(normalize_repo_name("AmneziaWG-Architect"), "amneziawg-architect");
+        assert_eq!(
+            normalize_repo_name("AmneziaWG-Architect"),
+            "amneziawg-architect"
+        );
     }
 
     #[test]
@@ -323,7 +283,11 @@ mod tests {
     fn heatmap_streak_broken_by_gap() {
         let d = |s: &str| NaiveDate::parse_from_str(s, "%Y-%m-%d").unwrap();
         let hm = Heatmap {
-            days: vec![(d("2026-07-17"), 2), (d("2026-07-18"), 0), (d("2026-07-19"), 4)],
+            days: vec![
+                (d("2026-07-17"), 2),
+                (d("2026-07-18"), 0),
+                (d("2026-07-19"), 4),
+            ],
         };
         assert_eq!(hm.streak(), 1);
     }
@@ -340,13 +304,17 @@ mod tests {
         let m = Heatmap::merge([&a, &b]);
         assert_eq!(
             m.days,
-            vec![(d("2026-07-18"), 2), (d("2026-07-19"), 4), (d("2026-07-20"), 7)]
+            vec![
+                (d("2026-07-18"), 2),
+                (d("2026-07-19"), 4),
+                (d("2026-07-20"), 7)
+            ]
         );
     }
 
     #[test]
     fn format_count_scales() {
-        assert_eq!(format_count(None), "—");
+        assert_eq!(format_count(None), "·");
         assert_eq!(format_count(Some(999)), "999");
         assert_eq!(format_count(Some(1500)), "1.5k");
         assert_eq!(format_count(Some(2000)), "2k");

@@ -20,7 +20,7 @@
       "description": "TQ-1.58 HVRL — source of truth"
     },
     {
-      "name": "AmneziaWG-Architect",
+      "name": "Any-Tech-ARCHITECT",
       "fork": false,
       "stars": 4,
       "forks": 1,
@@ -29,7 +29,7 @@
       "open_prs": 1,
       "language": "TypeScript",
       "pushed_at": "2026-07-18T23:10:00Z",
-      "html_url": "https://git.vai-rice.space/VAI_PROG/AmneziaWG-Architect",
+      "html_url": "https://git.vai-rice.space/VAI_PROG/Any-Tech-ARCHITECT",
       "description": null
     },
     {
@@ -78,7 +78,7 @@
       "Rust": 148000,
       "Cython": 36000
     },
-    "AmneziaWG-Architect": {
+    "Any-Tech-ARCHITECT": {
       "TypeScript": 308000,
       "Vue": 88000,
       "CSS": 20500
@@ -695,7 +695,7 @@
         6
       ]
     },
-    "AmneziaWG-Architect": {
+    "Any-Tech-ARCHITECT": {
       "total_commits": 344,
       "daily_30": [
         0,

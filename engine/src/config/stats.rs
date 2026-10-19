@@ -1,10 +1,10 @@
-//! Stats hygiene rules (`config/stats.toml`) — keeps rollup metrics honest.
+//! Stats hygiene rules (`config/stats.toml`), keeps rollup metrics honest.
 //!
-//! * `exclude_repos` — repositories dropped from EVERY rollup metric
+//! * `exclude_repos`, repositories dropped from EVERY rollup metric
 //!   (languages, LOC, stars, forks, open items, most-active, flagship hits).
 //!   Matched with the same normalization as mirror dedup (lowercase,
 //!   trailing `.git` stripped), so one entry covers all platforms.
-//! * `exclude_commit_authors` — commit authors (email, name or login,
+//! * `exclude_commit_authors`, commit authors (email, name or login,
 //!   case-insensitive) filtered out of per-repo commit series so CI
 //!   auto-commits never inflate activity.
 //!
