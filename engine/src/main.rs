@@ -2,6 +2,7 @@ mod art;
 mod cards;
 mod cli;
 mod config;
+mod img;
 mod lastfm;
 mod log;
 mod model;
@@ -10,7 +11,7 @@ mod providers;
 mod readme;
 mod run;
 mod svg;
-mod theme;
+mod typo;
 
 fn main() {
     log::init();

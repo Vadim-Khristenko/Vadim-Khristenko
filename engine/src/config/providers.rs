@@ -1,4 +1,4 @@
-//! Provider list model — one entry per platform. Adding a platform is a
+//! Provider list model, one entry per platform. Adding a platform is a
 //! config entry (plus, for a new API family, one `Provider` impl).
 
 use serde::Deserialize;
@@ -13,7 +13,7 @@ pub struct ProvidersConfig {
 #[serde(rename_all = "lowercase")]
 pub enum ProviderKind {
     Github,
-    /// Gitea-compatible API — covers Codeberg and any self-hosted Forgejo.
+    /// Gitea-compatible API, covers Codeberg and any self-hosted Forgejo.
     Forgejo,
 }
 

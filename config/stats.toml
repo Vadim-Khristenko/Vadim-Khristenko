@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────────────────────
-# stats.toml — hygiene rules for the rollup metrics. Optional file: delete it
+# stats.toml, hygiene rules for the rollup metrics. Optional file: delete it
 # (or leave the lists empty) and nothing is excluded.
 #
 # exclude_repos
@@ -8,17 +8,17 @@
 #   Names are matched like mirrors are deduped (case-insensitive, trailing
 #   ".git" ignored), so one entry covers the same repo on every platform.
 #   Note: platform-level contribution CALENDARS are account-wide and cannot be
-#   split per repo — repo exclusion applies to everything derived from repo
+#   split per repo, repo exclusion applies to everything derived from repo
 #   lists and language bytes.
 #
 # exclude_commit_authors
-#   Commit author identities (email, display name or login — case-insensitive)
+#   Commit author identities (email, display name or login, case-insensitive)
 #   filtered out of per-repo commit series (the flagship 30-day pulse and any
 #   future commit bucketing), so CI auto-commits never count as activity.
 # ─────────────────────────────────────────────────────────────────────────────
 
 exclude_repos = [
-  "Vadim-Khristenko",            # GitHub profile repo — engine commits ≠ work
+  "Vadim-Khristenko",            # GitHub profile repo, engine commits ≠ work
   ".profile",                    # Forgejo/Codeberg profile repo (same engine)
 ]
 

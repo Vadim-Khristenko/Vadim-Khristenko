@@ -20,7 +20,7 @@
       "description": "Self-regenerating profile"
     },
     {
-      "name": "AmneziaWG-Architect",
+      "name": "Any-Tech-ARCHITECT",
       "fork": false,
       "stars": 218,
       "forks": 31,
@@ -29,7 +29,7 @@
       "open_prs": null,
       "language": "TypeScript",
       "pushed_at": "2026-07-18T21:12:00Z",
-      "html_url": "https://github.com/Vadim-Khristenko/AmneziaWG-Architect",
+      "html_url": "https://github.com/Vadim-Khristenko/Any-Tech-ARCHITECT",
       "description": "Client-side DPI-evasion profile generator"
     },
     {
@@ -46,7 +46,7 @@
       "description": "Community tooling for the Filian world"
     },
     {
-      "name": "HatsuneMikuEditorTheme-VSC",
+      "name": "HatsuneMikuEditorTheme",
       "fork": false,
       "stars": 24,
       "forks": 4,
@@ -55,7 +55,7 @@
       "open_prs": null,
       "language": "JSON",
       "pushed_at": "2026-06-28T15:00:00Z",
-      "html_url": "https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme-VSC",
+      "html_url": "https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme",
       "description": "Teal all the way down"
     },
     {
@@ -83,6 +83,32 @@
       "pushed_at": "2026-07-16T14:20:00Z",
       "html_url": "https://github.com/Vadim-Khristenko/kumir3-core",
       "description": "Kumir 3 — modern compiler core for the classroom language"
+    },
+    {
+      "name": "awg-containers-and-tools",
+      "fork": false,
+      "stars": 19,
+      "forks": 3,
+      "watchers": 0,
+      "open_issues": 2,
+      "open_prs": null,
+      "language": "Rust",
+      "pushed_at": "2026-07-12T15:37:00Z",
+      "html_url": "https://github.com/Vadim-Khristenko/awg-containers-and-tools",
+      "description": "AmneziaWG containers and tools"
+    },
+    {
+      "name": "NotAnOtherVTUBERwiki",
+      "fork": false,
+      "stars": 14,
+      "forks": 2,
+      "watchers": 0,
+      "open_issues": 4,
+      "open_prs": null,
+      "language": "Rust",
+      "pushed_at": "2026-07-14T05:26:00Z",
+      "html_url": "https://github.com/Vadim-Khristenko/NotAnOtherVTUBERwiki",
+      "description": "NotAnotherWiki engine"
     },
     {
       "name": "fleet-scripts",
@@ -116,7 +142,7 @@
       "Rust": 92000,
       "Python": 41000
     },
-    "AmneziaWG-Architect": {
+    "Any-Tech-ARCHITECT": {
       "TypeScript": 310000,
       "Vue": 88000,
       "CSS": 21000
@@ -125,7 +151,7 @@
       "TypeScript": 150000,
       "HTML": 12000
     },
-    "HatsuneMikuEditorTheme-VSC": {
+    "HatsuneMikuEditorTheme": {
       "JavaScript": 8000
     },
     "aethelgard": {
@@ -137,6 +163,16 @@
     },
     "fleet-scripts": {
       "Shell": 15000
+    },
+    "awg-containers-and-tools": {
+      "Rust": 182000,
+      "Dockerfile": 9000,
+      "Shell": 6000
+    },
+    "NotAnOtherVTUBERwiki": {
+      "Rust": 241000,
+      "TypeScript": 64000,
+      "Vue": 22000
     }
   },
   "heatmap": [
@@ -707,7 +743,7 @@
     "y1": 1483
   },
   "pulses": {
-    "AmneziaWG-Architect": {
+    "Any-Tech-ARCHITECT": {
       "total_commits": 347,
       "daily_30": [
         3,
@@ -777,7 +813,7 @@
         0
       ]
     },
-    "HatsuneMikuEditorTheme-VSC": {
+    "HatsuneMikuEditorTheme": {
       "total_commits": 41,
       "daily_30": [
         0,
@@ -845,6 +881,76 @@
         1,
         0,
         2
+      ]
+    },
+    "awg-containers-and-tools": {
+      "total_commits": 96,
+      "daily_30": [
+        1,
+        0,
+        2,
+        0,
+        0,
+        3,
+        1,
+        0,
+        0,
+        2,
+        0,
+        1,
+        4,
+        0,
+        0,
+        2,
+        1,
+        0,
+        3,
+        0,
+        0,
+        1,
+        2,
+        0,
+        0,
+        1,
+        3,
+        0,
+        1,
+        2
+      ]
+    },
+    "NotAnOtherVTUBERwiki": {
+      "total_commits": 214,
+      "daily_30": [
+        3,
+        2,
+        0,
+        4,
+        1,
+        0,
+        5,
+        2,
+        3,
+        0,
+        1,
+        4,
+        2,
+        0,
+        3,
+        5,
+        1,
+        0,
+        2,
+        4,
+        3,
+        0,
+        1,
+        2,
+        5,
+        3,
+        0,
+        2,
+        4,
+        3
       ]
     }
   },

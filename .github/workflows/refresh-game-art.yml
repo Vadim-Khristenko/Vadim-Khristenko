@@ -1,7 +1,7 @@
 name: Refresh Game Art
 
 # Re-downloads uniform game cover art from SteamGridDB and commits it.
-# Manual only — covers rarely change, so this is not on a schedule.
+# Manual only, covers rarely change, so this is not on a schedule.
 #
 # Setup: add a repository secret named STEAMGRIDDB_API_KEY
 #   (Settings → Secrets and variables → Actions → New repository secret).
@@ -40,7 +40,7 @@ jobs:
           key: cargo-${{ hashFiles('engine/Cargo.lock') }}
           restore-keys: cargo-
 
-      - name: Guard — key present?
+      - name: Guard, key present?
         env:
           SGDB_KEY: ${{ secrets.STEAMGRIDDB_API_KEY }}
         run: |

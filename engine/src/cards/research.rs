@@ -1,146 +1,298 @@
-//! Active research — Aethelgard TQ-1.58 HVRL, with flipping ternary weight
-//! cells. Every state is legible at rest; the flicker only recolours.
+//! Active research: Aethelgard TQ-1.58 HVRL. A ternary weight matrix that
+//! slowly re-quantizes, the log2(3) arithmetic behind the name, a manager and
+//! worker tree for the hierarchical RL, and the real phase and progress from
+//! `[research]`.
 
+use super::kit::{self, pal};
 use crate::run::Ctx;
-use crate::svg::{esc, fit_text};
-use crate::theme as t;
-use crate::theme::{CardSpec, Texture};
+use crate::typo::{self, Doc, Font, T};
 use anyhow::Result;
+use std::fmt::Write;
 
-/// A lattice of {-1, 0, +1} cells that recolour — a live 1.58-bit weight tile.
-fn weight_grid(x: u32, y: u32, cols: u32, rows: u32) -> String {
-    let cell = 22;
-    let states = ["−1", "0", "+1"];
-    let color = |s: &str| match s {
-        "−1" => t::RED,
-        "+1" => t::GREEN,
-        _ => t::MUTED,
-    };
-    let mut out = String::new();
-    let mut k = 0u32;
-    for r in 0..rows {
-        for c in 0..cols {
-            let cx = x + c * cell;
-            let cy = y + r * cell;
-            let s0 = states[((r + c) % 3) as usize];
-            let s1 = states[((r + c + 1) % 3) as usize];
-            let s2 = states[((r + c + 2) % 3) as usize];
-            let dur = 3.0 + (k % 5) as f64 * 0.7;
-            let begin = (k % 8) as f64 * 0.3;
-            out.push_str(&format!(
-                r#"<g transform="translate({cx},{cy})"><rect x="1" y="-13" width="{rw}" height="{rh}" rx="3" fill="{bgd}" stroke="{bghl}" stroke-width="0.6"/><text x="{tx}" y="2" text-anchor="middle" font-family="{mono}" font-size="10" fill="{c0}">{s0}<animate attributeName="fill" values="{c0};{c1};{c2};{c0}" dur="{dur}s" begin="{begin}s" repeatCount="indefinite"/></text></g>"#,
-                rw = cell - 3,
-                rh = cell - 3,
-                bgd = t::BG_DARK,
-                bghl = t::BG_HL,
-                tx = (cell - 2) / 2,
-                mono = t::MONO,
-                c0 = color(s0),
-                c1 = color(s1),
-                c2 = color(s2),
-            ));
-            k += 1;
-        }
+const H: f64 = 400.0;
+
+/// Small deterministic generator so the matrix is stable between runs.
+struct Lcg(u64);
+
+impl Lcg {
+    fn next(&mut self) -> f64 {
+        self.0 = self
+            .0
+            .wrapping_mul(6364136223846793005)
+            .wrapping_add(1442695040888963407);
+        (self.0 >> 33) as f64 / (1u64 << 31) as f64
     }
-    out
 }
 
-/// Greedy two-line word wrap for the blurb (the prose must never run under
-/// the weight lattice on the right).
-fn two_lines(text: &str, max_chars: usize) -> (String, String) {
-    let mut line1 = String::new();
-    let mut line2 = String::new();
-    for word in text.split_whitespace() {
-        if line2.is_empty() && line1.len() + word.len() + 1 <= max_chars {
-            if !line1.is_empty() {
-                line1.push(' ');
-            }
-            line1.push_str(word);
-        } else {
-            if !line2.is_empty() {
-                line2.push(' ');
-            }
-            line2.push_str(word);
-        }
+fn val_color(v: i32) -> Option<&'static str> {
+    match v {
+        1 => Some(pal::TEAL),
+        -1 => Some(pal::SAKURA),
+        _ => None,
     }
-    (line1, line2)
 }
 
 pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
-    let w = t::CARD_W;
-    let h = 256;
     let r = &ctx.cfg.profile.research;
+    let mut doc = Doc::new();
+    let mut b = String::new();
+    let w = kit::W;
+    let mut rng = Lcg(158);
 
-    // Tag chips flow left→right and STOP before the weight lattice; a "+N"
-    // marker owns whatever doesn't fit instead of running under the grid.
-    let chips_end = (w - 245 - 16) as f64;
-    let mut chips = String::new();
-    let mut cx = 40f64;
-    let cy = 196;
-    for (i, tag) in r.tags.iter().enumerate() {
-        let tw = 20.0 + crate::svg::text_width_px(tag, 12.0, true);
-        if cx + tw > chips_end {
-            let left = r.tags.len() - i;
-            chips.push_str(&format!(
-                r#"<text x="{cx:.0}" y="{cy}" font-family="{mono}" font-size="12" fill="{muted}">+{left} more</text>"#,
-                mono = t::MONO,
-                muted = t::MUTED,
-            ));
-            break;
+    let _ = write!(b, r#"<rect width="{w}" height="{H}" fill="{}"/>"#, pal::BG);
+    let (mx, my, c, cols, rows) = (40.0, 120.0, 15.0, 24, 12);
+    b.push_str(&doc.text(
+        mx,
+        my - 14.0,
+        "W ∈ {-1, 0, +1}  ·  a sample block",
+        &T::new(Font::Mono, 9.5).fill(pal::DIM).ls(1.6),
+    ));
+    let mut cells = String::new();
+    let mut solid: std::collections::BTreeMap<&str, String> = Default::default();
+    for row in 0..rows {
+        for col in 0..cols {
+            let pick = |x: f64| [-1, 0, 0, 1][((x * 4.0) as usize).min(3)];
+            let v = pick(rng.next());
+            let (x, y) = (mx + col as f64 * c, my + row as f64 * c);
+            let _ = write!(
+                solid.entry("frame").or_default(),
+                "M{} {}h{}v{}h-{}z",
+                x + 1.0,
+                y + 1.0,
+                c - 2.0,
+                c - 2.0,
+                c - 2.0
+            );
+            if rng.next() < 0.18 {
+                let v2 = [-1, 0, 1]
+                    .into_iter()
+                    .filter(|u| *u != v)
+                    .nth((rng.next() * 2.0) as usize % 2)
+                    .unwrap_or(0);
+                let d = format!("animation-delay:{:.2}s", rng.next() * 7.0);
+                if let Some(col1) = val_color(v) {
+                    let _ = write!(
+                        cells,
+                        r#"<rect class="flip" style="{d}" x="{}" y="{}" width="{}" height="{}" rx="2" fill="{col1}"/>"#,
+                        x + 2.0,
+                        y + 2.0,
+                        c - 4.0,
+                        c - 4.0
+                    );
+                }
+                if let Some(col2) = val_color(v2) {
+                    let _ = write!(
+                        cells,
+                        r#"<rect class="flop" style="{d}" x="{}" y="{}" width="{}" height="{}" rx="2" fill="{col2}"/>"#,
+                        x + 2.0,
+                        y + 2.0,
+                        c - 4.0,
+                        c - 4.0
+                    );
+                }
+            } else if let Some(col1) = val_color(v) {
+                let _ = write!(
+                    solid.entry(col1).or_default(),
+                    "M{} {}h{}v{}h-{}z",
+                    x + 2.0,
+                    y + 2.0,
+                    c - 4.0,
+                    c - 4.0,
+                    c - 4.0
+                );
+            }
         }
-        chips.push_str(&format!(
-            r#"<rect x="{cx:.0}" y="{ry}" width="{tw:.0}" height="24" rx="12" fill="{bghl}" stroke="{purple}" stroke-width="0.8" opacity="0.9"/><text x="{tx:.0}" y="{cy}" text-anchor="middle" font-family="{mono}" font-size="12" fill="{fgd}">{tag}</text>"#,
-            ry = cy - 16,
-            bghl = t::BG_HL,
-            purple = t::PURPLE,
-            tx = cx + tw / 2.0,
-            mono = t::MONO,
-            fgd = t::FG_DIM,
-            tag = esc(tag),
-        ));
-        cx += tw + 12.0;
+    }
+    for (k, d) in &solid {
+        if *k == "frame" {
+            let _ = write!(
+                b,
+                r#"<path d="{d}" fill="none" stroke="{}" stroke-opacity=".5"/>"#,
+                pal::LINE
+            );
+        } else {
+            let _ = write!(b, r#"<path d="{d}" fill="{k}" fill-opacity=".85"/>"#);
+        }
+    }
+    b.push_str(&cells);
+    let ly = my + rows as f64 * c + 22.0;
+    for (i, (v, lab)) in [(1, "+1  add"), (0, "0  skip"), (-1, "-1  subtract")]
+        .iter()
+        .enumerate()
+    {
+        let x = mx + i as f64 * 120.0;
+        let _ = write!(
+            b,
+            r#"<rect x="{x}" y="{}" width="11" height="11" rx="2" fill="{}" stroke="{}"/>"#,
+            ly - 10.0,
+            val_color(*v).unwrap_or("none"),
+            pal::LINE
+        );
+        b.push_str(&doc.text(x + 18.0, ly, lab, &T::new(Font::Mono, 11.0).fill(pal::FG)));
     }
 
-    let (line1, line2) = two_lines(&r.blurb, 64);
-    let inner = format!(
-        r#"
-    <text x="40" y="44" font-family="{mono}" font-size="12" fill="{red}" letter-spacing="2">● ACTIVE RESEARCH · low-bit ML</text>
-    <text x="40" y="84" font-family="{mono}" font-size="29" font-weight="800" fill="{purple}" filter="url(#softglow)">{name}</text>
-    <text x="40" y="108" font-family="{mono}" font-size="14" fill="{cyan}">{subtitle}</text>
-    <text x="40" y="132" font-family="{sans}" font-size="13" fill="{fgd}">{line1}</text>
-    <text x="40" y="150" font-family="{sans}" font-size="13" fill="{fgd}">{line2}</text>
-    <line x1="40" y1="172" x2="700" y2="172" stroke="{bghl}" stroke-width="1" opacity="0.7"/>
-    {chips}
-    <text x="{wx}" y="36" font-family="{mono}" font-size="11" fill="{muted}">weights ∈ {{-1, 0, +1}}</text>
-    {grid}
-    "#,
-        mono = t::MONO,
-        sans = t::SANS,
-        red = t::RED,
-        purple = t::PURPLE,
-        cyan = t::CYAN,
-        fgd = t::FG_DIM,
-        muted = t::MUTED,
-        bghl = t::BG_HL,
-        name = esc(&fit_text(&r.name, (w - 245 - 56) as f64, 29.0, true)),
-        subtitle = esc(&fit_text(&r.subtitle, (w - 245 - 56) as f64, 14.0, true)),
-        line1 = esc(&fit_text(&line1, (w - 245 - 56) as f64, 13.0, false)),
-        line2 = esc(&fit_text(&line2, (w - 245 - 56) as f64, 13.0, false)),
-        wx = w - 245,
-        grid = weight_grid(w - 245, 56, 10, 5),
-    );
+    let hx = 450.0;
+    b.push_str(&doc.text(
+        hx,
+        58.0,
+        "ACTIVE RESEARCH",
+        &T::new(Font::Mono, 11.0).fill(pal::VIOLET).ls(2.4),
+    ));
+    let mut name = r.name.split_whitespace();
+    let first = name.next().unwrap_or("Aethelgard").to_string();
+    let second: String = name.next().unwrap_or("").to_string();
+    let t1 = T::new(Font::ZenBlack, 40.0).fill(pal::FG_HI);
+    b.push_str(&doc.text(hx - 2.0, 104.0, &first, &t1));
+    b.push_str(&doc.text(
+        hx + typo::width(&first, &t1) + 24.0,
+        104.0,
+        &second,
+        &T::new(Font::ZenLight, 40.0).fill(pal::TEAL),
+    ));
+    for (i, line) in [
+        "a low-bit agentic reasoning model",
+        "with verifiable training, hierarchical RL",
+        "and a software engineering specialization",
+    ]
+    .iter()
+    .enumerate()
+    {
+        b.push_str(&doc.text(
+            hx,
+            132.0 + i as f64 * 20.0,
+            line,
+            &T::new(Font::ZenLight, 15.0).fill(pal::FG),
+        ));
+    }
+    let m = T::new(Font::Mono, 13.0).fill(pal::DIM);
+    let tl = T::new(Font::MonoBold, 13.0).fill(pal::TEAL);
+    b.push_str(&doc.spans(
+        hx,
+        210.0,
+        &[("log₂ 3 = ", &m), ("1.585", &tl), (" bits per weight", &m)],
+    ));
+    let plus = T::new(Font::Mono, 13.0).fill(pal::TEAL);
+    let zero = T::new(Font::Mono, 13.0).fill(pal::FG);
+    let minus = T::new(Font::Mono, 13.0).fill(pal::SAKURA);
+    b.push_str(&doc.spans(
+        hx,
+        232.0,
+        &[
+            ("w · x  →  ", &m),
+            ("+x", &plus),
+            (",  ", &m),
+            ("0", &zero),
+            ("  or  ", &m),
+            ("−x", &minus),
+            (": no multiply", &m),
+        ],
+    ));
 
-    let svg = t::card(
-        &CardSpec {
-            w,
-            h,
-            title: "~/research/aethelgard.rs",
-            badge: "TQ-1.58 HVRL",
-            accent: t::PURPLE,
-            texture: Texture::Ternary,
-            alt: "Active research: Aethelgard TQ-1.58 HVRL, a low-bit agentic reasoning architecture",
-        },
-        &inner,
+    let (tx, ty) = (870.0, 200.0);
+    let nodes = [
+        (tx, ty - 28.0, "manager"),
+        (tx - 62.0, ty + 30.0, "plan"),
+        (tx, ty + 30.0, "code"),
+        (tx + 62.0, ty + 30.0, "verify"),
+    ];
+    for (x, y, _) in &nodes[1..] {
+        let _ = write!(
+            b,
+            r#"<line x1="{tx}" y1="{}" x2="{x}" y2="{}" stroke="{}"/>"#,
+            ty - 16.0,
+            y - 12.0,
+            pal::LINE
+        );
+    }
+    for (i, (x, y, lab)) in nodes.iter().enumerate() {
+        let col = if i == 0 {
+            pal::VIOLET
+        } else if *lab == "verify" {
+            pal::TEAL
+        } else {
+            pal::FG
+        };
+        let _ = write!(
+            b,
+            r#"<rect x="{}" y="{}" width="60" height="22" rx="11" fill="{}" stroke="{col}" stroke-opacity=".8"/>"#,
+            x - 30.0,
+            y - 12.0,
+            pal::BG_DEEP
+        );
+        b.push_str(&doc.text(*x, y + 3.0, lab, &T::new(Font::Mono, 10.0).fill(col).mid()));
+    }
+    let _ = write!(
+        b,
+        r#"<circle class="pulse" cx="{}" cy="{}" r="4" fill="{}"/>"#,
+        tx + 92.0,
+        ty + 30.0,
+        pal::TEAL
     );
-    Ok(vec![("research.svg".into(), svg)])
+    b.push_str(&doc.text(
+        tx,
+        ty + 64.0,
+        "rewards you can check",
+        &T::new(Font::Mono, 9.5).fill(pal::DIM).mid(),
+    ));
+
+    let py = 300.0;
+    let progress = r.progress.clamp(0.0, 1.0);
+    b.push_str(&doc.text(
+        hx,
+        py,
+        "PHASE",
+        &T::new(Font::Mono, 9.5).fill(pal::DIM).ls(1.6),
+    ));
+    let phase_t = T::new(Font::ZenBlack, 16.0).fill(pal::FG_HI);
+    b.push_str(&doc.text(
+        hx,
+        py + 22.0,
+        &typo::fit(&r.phase, &phase_t, 420.0),
+        &phase_t,
+    ));
+    let _ = write!(
+        b,
+        r#"<rect x="{hx}" y="{a}" width="500" height="6" rx="3" fill="{}" fill-opacity=".6"/><rect class="bar" x="{hx}" y="{a}" width="{pw:.1}" height="6" rx="3" fill="{}"/>"#,
+        pal::LINE,
+        pal::TEAL,
+        a = py + 38.0,
+        pw = 500.0 * progress
+    );
+    b.push_str(&doc.text(
+        hx + 500.0,
+        py + 22.0,
+        &format!("{}%", (progress * 100.0).round()),
+        &T::new(Font::ZenBlack, 22.0).fill(pal::TEAL).end(),
+    ));
+    let tag_t = T::new(Font::Mono, 10.0).fill(pal::FG);
+    let mut x = hx;
+    for t in &r.tags {
+        let tw = typo::width(t, &tag_t) + 16.0;
+        if x + tw > w - 20.0 {
+            break;
+        }
+        let _ = write!(
+            b,
+            r#"<rect x="{x}" y="{}" width="{tw}" height="20" rx="10" fill="none" stroke="{}"/>"#,
+            py + 58.0,
+            pal::LINE
+        );
+        b.push_str(&doc.text(x + 8.0, py + 72.0, t, &tag_t));
+        x += tw + 8.0;
+    }
+
+    let frame = format!(
+        r#"<g clip-path="url(#card)">{b}</g><rect x=".5" y=".5" width="{}" height="{}" rx="14" fill="none" stroke="{}" stroke-opacity=".9"/>"#,
+        w - 1.0,
+        H - 1.0,
+        pal::LINE
+    );
+    let css = ".flip{animation:flip 7s steps(1) infinite}@keyframes flip{0%,62%{opacity:1}63%,100%{opacity:0}}.flop{opacity:0;animation:flop 7s steps(1) infinite}@keyframes flop{0%,62%{opacity:0}63%,100%{opacity:1}}.pulse{animation:pulse 2.4s ease-in-out infinite}@keyframes pulse{50%{opacity:.35}}.bar{transform-box:fill-box;transform-origin:left;animation:bar 2.6s cubic-bezier(.16,1,.3,1) both}@keyframes bar{from{transform:scaleX(0)}}";
+    let defs =
+        format!(r#"<clipPath id="card"><rect width="{w}" height="{H}" rx="14"/></clipPath>"#);
+    let label = format!("Active research: {}, {}", r.name, r.subtitle);
+    Ok(vec![(
+        "research.svg".into(),
+        kit::svg(w, H, &label, css, &defs, &doc, &frame),
+    )])
 }

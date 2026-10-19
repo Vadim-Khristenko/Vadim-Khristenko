@@ -2,7 +2,7 @@
 //!
 //! A `Provider` is one code-hosting platform. Everything degrades gracefully:
 //! a missing token means tokenless public reads, an unreachable host is logged
-//! and skipped — never fatal. Adding a platform = implement this trait (or
+//! and skipped, never fatal. Adding a platform = implement this trait (or
 //! reuse `ForgejoProvider` with a different `base_url`) + a providers.toml entry.
 
 pub mod fixture;
@@ -29,8 +29,6 @@ pub trait Provider {
     fn languages(&self, repo: &Repo) -> Result<LangBytes>;
     /// Daily contribution calendar (best available source).
     fn activity(&self) -> Result<Heatmap>;
-    /// Live lookup of a single repo (for the flagship card). Ok(None) = absent.
-    fn repo(&self, name: &str) -> Result<Option<Repo>>;
 
     /// Precise commit-count windows when the platform can provide them
     /// (GitHub GraphQL with a token). `None` → derived from the calendar.
@@ -48,10 +46,7 @@ pub trait Provider {
 
 /// Build the provider set from config. `fixtures` switches every provider to
 /// recorded JSON under that directory (offline / dry-run mode).
-pub fn make_providers(
-    cfg: &ProvidersConfig,
-    fixtures: Option<&Path>,
-) -> Vec<Box<dyn Provider>> {
+pub fn make_providers(cfg: &ProvidersConfig, fixtures: Option<&Path>) -> Vec<Box<dyn Provider>> {
     let mut out: Vec<Box<dyn Provider>> = Vec::new();
     for entry in &cfg.provider {
         if let Some(dir) = fixtures {
@@ -166,7 +161,7 @@ pub fn collect(provider: &dyn Provider, stats: &StatsConfig) -> PlatformData {
         .iter()
         .max_by_key(|kv| *kv.1)
         .map(|kv| kv.0.clone())
-        .unwrap_or_else(|| "—".into());
+        .unwrap_or_else(|| "·".into());
     log::step(
         "languages",
         &r.lang_bytes.len().to_string(),
@@ -223,7 +218,7 @@ pub fn collect(provider: &dyn Provider, stats: &StatsConfig) -> PlatformData {
 
     log::step(
         "most active",
-        r.most_active_repo.as_deref().unwrap_or("—"),
+        r.most_active_repo.as_deref().unwrap_or("·"),
         "where changes land",
     );
     pd
@@ -231,10 +226,10 @@ pub fn collect(provider: &dyn Provider, stats: &StatsConfig) -> PlatformData {
 
 /// Combine per-platform data into one `Aggregate` (see design §2.5):
 ///
-/// * **Mirror dedup by normalized repo name** — the same name on several
+/// * **Mirror dedup by normalized repo name**, the same name on several
 ///   platforms is a mirror. Code metrics (language bytes → LOC, repo count)
 ///   are counted ONCE, from the copy with the largest language byte total.
-/// * **Social metrics are SUMMED across every platform** — stars, forks,
+/// * **Social metrics are SUMMED across every platform**, stars, forks,
 ///   watchers, open issues, open PRs (a mirror earns its own stars).
 pub fn aggregate(platforms: Vec<PlatformData>) -> Aggregate {
     let mut combined = Rollup::default();
@@ -285,7 +280,10 @@ pub fn aggregate(platforms: Vec<PlatformData>) -> Aggregate {
     combined.active_days = heatmap.active_days();
     combined.best_day = heatmap.best_day();
     let sum_opt = |f: fn(&CommitWindows) -> Option<u64>| -> Option<u64> {
-        let vals: Vec<u64> = platforms.iter().filter_map(|p| f(&p.rollup.commits)).collect();
+        let vals: Vec<u64> = platforms
+            .iter()
+            .filter_map(|p| f(&p.rollup.commits))
+            .collect();
         if vals.is_empty() {
             None
         } else {
@@ -317,29 +315,25 @@ pub fn aggregate(platforms: Vec<PlatformData>) -> Aggregate {
                 continue;
             }
             if let Some(pushed) = repo.pushed_at.as_deref() {
-                if freshest.map_or(true, |(best, _)| pushed > best) {
+                if freshest.is_none_or(|(best, _)| pushed > best) {
                     freshest = Some((pushed, &repo.name));
                 }
             }
         }
     }
-    combined.most_active_repo = freshest
-        .map(|(_, name)| name.to_string())
-        .or_else(|| {
-            platforms
-                .iter()
-                .find_map(|p| p.rollup.most_active_repo.clone())
-        });
+    combined.most_active_repo = freshest.map(|(_, name)| name.to_string()).or_else(|| {
+        platforms
+            .iter()
+            .find_map(|p| p.rollup.most_active_repo.clone())
+    });
 
     let followers_total = platforms.iter().map(|p| p.profile.followers).sum();
-    let following_total = platforms.iter().map(|p| p.profile.following).sum();
 
     Aggregate {
         platforms,
         combined,
         heatmap,
         followers_total,
-        following_total,
     }
 }
 
@@ -353,12 +347,7 @@ pub fn resolve_flagship(
 ) -> FlagshipLive {
     let key = normalize_repo_name(&project.repo);
     let mut live = FlagshipLive {
-        name: project.name.clone(),
         repo_key: key.clone(),
-        site: project.site.clone(),
-        tags: project.tags.clone(),
-        blurb: project.blurb.clone(),
-        accent: project.accent.clone(),
         ..Default::default()
     };
 
@@ -418,7 +407,13 @@ mod tests {
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("fixtures")
     }
 
-    fn entry(id: &str, kind: ProviderKind, display: &str, user: &str, primary: bool) -> ProviderEntry {
+    fn entry(
+        id: &str,
+        kind: ProviderKind,
+        display: &str,
+        user: &str,
+        primary: bool,
+    ) -> ProviderEntry {
         ProviderEntry {
             id: id.into(),
             kind,
@@ -432,9 +427,27 @@ mod tests {
 
     fn fixture_providers() -> Vec<Box<dyn Provider>> {
         let entries = [
-            entry("vai-git", ProviderKind::Forgejo, "VAI Git", "VAI_PROG", true),
-            entry("github", ProviderKind::Github, "GitHub", "Vadim-Khristenko", false),
-            entry("codeberg", ProviderKind::Forgejo, "Codeberg", "VAI_PROG", false),
+            entry(
+                "vai-git",
+                ProviderKind::Forgejo,
+                "VAI Git",
+                "VAI_PROG",
+                true,
+            ),
+            entry(
+                "github",
+                ProviderKind::Github,
+                "GitHub",
+                "Vadim-Khristenko",
+                false,
+            ),
+            entry(
+                "codeberg",
+                ProviderKind::Forgejo,
+                "Codeberg",
+                "VAI_PROG",
+                false,
+            ),
         ];
         entries
             .iter()
@@ -476,20 +489,23 @@ mod tests {
         let gh = providers.iter().find(|p| p.id() == "github").unwrap();
         let pd = collect(gh.as_ref(), &no_stats());
         assert!(pd.reachable);
-        assert_eq!(pd.rollup.repo_count, 7); // fork excluded
-        assert_eq!(pd.rollup.stars, 353); // summed incl. the fork
+        assert_eq!(pd.rollup.repo_count, 9); // fork excluded
+        assert_eq!(pd.rollup.stars, 386); // summed incl. the fork
         assert_eq!(pd.rollup.commit_label, "commits"); // GraphQL windows present
         assert_eq!(pd.rollup.commits.d7, Some(26));
         // Profile repo is skipped as "most active" despite freshest push.
-        assert_eq!(pd.rollup.most_active_repo.as_deref(), Some("AmneziaWG-Architect"));
+        assert_eq!(
+            pd.rollup.most_active_repo.as_deref(),
+            Some("Any-Tech-ARCHITECT")
+        );
         assert!(pd.rollup.streak >= 5); // fixture keeps last 5 days active
     }
 
     #[test]
     fn aggregate_sums_social_metrics_across_mirrors() {
         let (agg, _) = fixture_aggregate();
-        // Stars: every platform copy counts (github 353 + codeberg 16 + vai-git 16).
-        assert_eq!(agg.combined.stars, 385);
+        // Stars: every platform copy counts (github 386 + codeberg 16 + vai-git 16).
+        assert_eq!(agg.combined.stars, 418);
         // Followers are people: summed across platforms.
         assert_eq!(agg.followers_total, 61 + 7 + 4);
     }
@@ -497,12 +513,12 @@ mod tests {
     #[test]
     fn aggregate_counts_code_metrics_once_per_mirror_group() {
         let (agg, _) = fixture_aggregate();
-        // 10 distinct owned repo names across the three platforms.
-        assert_eq!(agg.combined.repo_count, 10);
+        // 12 distinct owned repo names across the three platforms.
+        assert_eq!(agg.combined.repo_count, 12);
         // aethelgard's canonical copy is vai-git (largest byte total), so its
         // Cython bytes appear exactly once.
         assert_eq!(agg.combined.lang_bytes.get("Cython"), Some(&36000));
-        // Python = profile repo (github, 41k) + aethelgard canonical (512k) —
+        // Python = profile repo (github, 41k) + aethelgard canonical (512k),
         // NOT the smaller github aethelgard mirror (60k).
         assert_eq!(agg.combined.lang_bytes.get("Python"), Some(&553_000));
         // TypeScript must not be triple-counted across the three mirrors.
@@ -513,7 +529,10 @@ mod tests {
             .sum();
         let ts_combined = agg.combined.lang_bytes.get("TypeScript").copied().unwrap();
         assert!(ts_combined < ts_all, "{ts_combined} !< {ts_all}");
-        assert_eq!(agg.combined.loc, agg.combined.total_bytes / AVG_BYTES_PER_LINE);
+        assert_eq!(
+            agg.combined.loc,
+            agg.combined.total_bytes / AVG_BYTES_PER_LINE
+        );
     }
 
     #[test]
@@ -533,12 +552,8 @@ mod tests {
         let (agg, providers) = fixture_aggregate();
         let project = FlagshipProject {
             name: "AmneziaWG Architect".into(),
-            repo: "AmneziaWG-Architect".into(),
+            repo: "Any-Tech-ARCHITECT".into(),
             prefer: Some("github".into()),
-            site: Some("https://architect.vai-rice.space".into()),
-            tags: vec!["vpn".into()],
-            blurb: String::new(),
-            accent: None,
         };
         let live = resolve_flagship(&project, &agg, &providers, &no_stats());
         assert_eq!(live.stars, 218 + 11 + 4);
@@ -561,7 +576,7 @@ mod tests {
             let live = resolve_flagship(project, &agg, &providers, &no_stats());
             assert!(
                 live.repo.is_some(),
-                "flagship '{}' (repo {}) has no fixture entry — offline runs would render a dead row",
+                "flagship '{}' (repo {}) has no fixture entry, offline runs would render a dead row",
                 project.name,
                 project.repo
             );
@@ -587,10 +602,6 @@ mod tests {
             name: "Ghost".into(),
             repo: "does-not-exist".into(),
             prefer: None,
-            site: None,
-            tags: vec![],
-            blurb: String::new(),
-            accent: None,
         };
         let live = resolve_flagship(&project, &agg, &providers, &no_stats());
         assert!(live.repo.is_none());
@@ -614,7 +625,7 @@ mod tests {
             .map(|p| collect(p.as_ref(), &seeded_stats()))
             .collect();
         let agg = aggregate(platforms);
-        assert_eq!(agg.combined.repo_count, 9); // 10 distinct − the profile repo
+        assert_eq!(agg.combined.repo_count, 11); // 12 distinct minus the profile repo
     }
 
     #[test]
@@ -624,10 +635,6 @@ mod tests {
             name: "The Wall Dev".into(),
             repo: "TheWall".into(),
             prefer: Some("github".into()),
-            site: None,
-            tags: vec![],
-            blurb: String::new(),
-            accent: None,
         };
         // Unfiltered: all 4 fixture commits (2 human + VIA GIT + gh-actions).
         let all = resolve_flagship(&project, &agg, &providers, &no_stats());

@@ -1,8 +1,8 @@
 [package]
 name = "vai-profile"
-version = "3.0.0"
+version = "4.0.0"
 edition = "2021"
-description = "Self-regenerating multi-provider profile engine — Tokyo-Night animated SVG cards + live stats (GitHub · Codeberg · Forgejo)."
+description = "Self-regenerating multi-forge profile engine: Hatsune Miku Dark SVG cards with real fonts drawn as paths, live stats from GitHub, Codeberg and Forgejo."
 license = "MIT"
 publish = false
 
@@ -12,6 +12,7 @@ path = "src/main.rs"
 
 [dependencies]
 anyhow = "1"
+rustybuzz = "0.20"
 base64 = "0.22"
 chrono = { version = "0.4", default-features = false, features = ["clock", "std", "serde"] }
 clap = { version = "4", features = ["derive"] }

@@ -68,7 +68,7 @@ impl ForgejoProvider {
             stars: n("stars_count"),
             forks: n("forks_count"),
             watchers: n("watchers_count"),
-            // Forgejo keeps issues and PRs separate — exactly what we want.
+            // Forgejo keeps issues and PRs separate, exactly what we want.
             open_issues: n("open_issues_count"),
             open_prs: Some(n("open_pr_counter")),
             language: s("language").filter(|l| !l.is_empty()),
@@ -106,8 +106,14 @@ impl Provider for ForgejoProvider {
                 .and_then(|x| x.as_str())
                 .filter(|s| !s.is_empty())
                 .map(|x| x.into()),
-            followers: v.get("followers_count").and_then(|x| x.as_u64()).unwrap_or(0),
-            following: v.get("following_count").and_then(|x| x.as_u64()).unwrap_or(0),
+            followers: v
+                .get("followers_count")
+                .and_then(|x| x.as_u64())
+                .unwrap_or(0),
+            following: v
+                .get("following_count")
+                .and_then(|x| x.as_u64())
+                .unwrap_or(0),
         })
     }
 
@@ -170,14 +176,6 @@ impl Provider for ForgejoProvider {
         Ok(Heatmap::from_map(map))
     }
 
-    fn repo(&self, name: &str) -> Result<Option<Repo>> {
-        match self.json(&format!("/repos/{}/{name}", self.entry.user)) {
-            Ok(v) => Ok(Some(Self::map_repo(&v))),
-            Err(e) if e.to_string().contains("404") => Ok(None),
-            Err(e) => Err(e),
-        }
-    }
-
     fn pulse(&self, repo: &Repo, stats: &crate::config::StatsConfig) -> RepoPulse {
         let mut pulse = RepoPulse::default();
         // Exact total via the X-Total-Count header on a limit=1 commit list.
@@ -219,7 +217,11 @@ fn commit_meta_from_forgejo(c: &serde_json::Value) -> CommitMeta {
     };
     let date = {
         let d = s("/commit/author/date");
-        if d.is_empty() { s("/created") } else { d }
+        if d.is_empty() {
+            s("/created")
+        } else {
+            d
+        }
     };
     CommitMeta {
         date,

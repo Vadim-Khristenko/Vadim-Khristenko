@@ -7,7 +7,7 @@
   },
   "repos": [
     {
-      "name": "AmneziaWG-Architect",
+      "name": "Any-Tech-ARCHITECT",
       "fork": false,
       "stars": 11,
       "forks": 2,
@@ -16,7 +16,7 @@
       "open_prs": 1,
       "language": "TypeScript",
       "pushed_at": "2026-07-18T22:00:00Z",
-      "html_url": "https://codeberg.org/VAI_PROG/AmneziaWG-Architect",
+      "html_url": "https://codeberg.org/VAI_PROG/Any-Tech-ARCHITECT",
       "description": "Mirror"
     },
     {
@@ -47,7 +47,7 @@
     }
   ],
   "languages": {
-    "AmneziaWG-Architect": {
+    "Any-Tech-ARCHITECT": {
       "TypeScript": 305000,
       "Vue": 87000,
       "CSS": 20000
@@ -624,7 +624,7 @@
   ],
   "commit_windows": null,
   "pulses": {
-    "AmneziaWG-Architect": {
+    "Any-Tech-ARCHITECT": {
       "total_commits": 340,
       "daily_30": [
         0,

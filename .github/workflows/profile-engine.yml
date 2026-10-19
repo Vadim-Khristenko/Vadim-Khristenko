@@ -3,11 +3,11 @@ name: VAI Profile Engine (receiver)
 # ─────────────────────────────────────────────────────────────────────────────
 # FALLBACK pipeline. The PRIMARY regeneration runs on git.vai-rice.space
 # (.forgejo/workflows/profile-engine.yml) on the user's own runner and
-# mirror-pushes here — so this workflow has NO schedule on purpose.
+# mirror-pushes here, so this workflow has NO schedule on purpose.
 #
 # It exists so the profile can still be regenerated from GitHub if the
 # Forgejo runner is down: manual dispatch only, same binary, commits as
-# `VIA GIT`, and pushes ONLY to this repository — never to other hosts.
+# `VIA GIT`, and pushes ONLY to this repository, never to other hosts.
 # Secrets & variables are documented in engine/README.md.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "Comma list of cards to regenerate (e.g. vibe,games). Empty = everything + README refresh."
+        description: "Comma list of cards to regenerate (e.g. music,games). Empty = everything + README refresh."
         type: string
         required: false
         default: ""
@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v7
 
       # Names + set/not-set only. Values are NEVER printed.
-      - name: Preflight — secret & variable inventory
+      - name: Preflight, secret & variable inventory
         env:
           PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
           VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
         run: |
           state() { [ -n "$(printenv "$1" 2>/dev/null)" ] && echo "set" || echo "not set"; }
           {
-            echo "### Preflight — configuration inventory"
+            echo "### Preflight, configuration inventory"
             echo ""
             echo "| Name | Kind | State |"
             echo "|---|---|---|"
@@ -130,10 +130,10 @@ jobs:
         run: |
           git config user.name  "VIA GIT"
           git config user.email "actions@git.vai-rice.space"
-          git add assets README.md
+          git add assets README.md README.ru.md
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Nothing changed — profile already fresh."
+            echo "Nothing changed, profile already fresh."
           else
             git commit -m "chore(profile): regenerate cards & live stats [skip ci]"
             git push
@@ -142,7 +142,7 @@ jobs:
           fi
 
       # ── Optional notifications (each skipped cleanly when unset) ──────────
-      - name: Notify — Telegram (optional)
+      - name: Notify, Telegram (optional)
         id: notify-telegram
         if: steps.commit.outputs.changed == 'true'
         continue-on-error: true
@@ -152,7 +152,7 @@ jobs:
           SHA: ${{ steps.commit.outputs.sha }}
         run: |
           if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
-            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set — skipping Telegram notification."
+            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set, skipping Telegram notification."
             exit 0
           fi
           providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
@@ -166,7 +166,7 @@ jobs:
             "https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
           echo "Telegram notification sent."
 
-      - name: Notify — webhook (optional)
+      - name: Notify, webhook (optional)
         id: notify-webhook
         if: steps.commit.outputs.changed == 'true'
         continue-on-error: true
@@ -175,7 +175,7 @@ jobs:
           SHA: ${{ steps.commit.outputs.sha }}
         run: |
           if [ -z "$WEBHOOK" ]; then
-            echo "NOTIFY_WEBHOOK_URL not set — skipping webhook notification."
+            echo "NOTIFY_WEBHOOK_URL not set, skipping webhook notification."
             exit 0
           fi
           providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
@@ -206,7 +206,7 @@ jobs:
             echo ""
             echo "| Stage | Result |"
             echo "|---|---|"
-            echo "| binary cache | $([ "$CACHE_HIT" = "true" ] && echo 'hit — build skipped' || echo 'miss — compiled') |"
+            echo "| binary cache | $([ "$CACHE_HIT" = "true" ] && echo 'hit, build skipped' || echo 'miss, compiled') |"
             echo "| cargo build | ${O_BUILD:-skipped} |"
             echo "| art refetch | ${O_ART:-skipped} |"
             echo "| engine run | ${O_ENGINE:-skipped} |"

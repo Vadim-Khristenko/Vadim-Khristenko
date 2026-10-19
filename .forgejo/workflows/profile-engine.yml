@@ -1,7 +1,7 @@
 name: VAI Profile Engine
 
 # ─────────────────────────────────────────────────────────────────────────────
-# PRIMARY pipeline — source of truth is git.vai-rice.space (Forgejo Actions).
+# PRIMARY pipeline, source of truth is git.vai-rice.space (Forgejo Actions).
 # Automatic regeneration happens ONLY here, on the self-hosted runner
 # (the GitHub twin is a dispatch-only fallback).
 #
@@ -11,10 +11,10 @@ name: VAI Profile Engine
 #   * read-only provider tokens (VAI_GIT_TOKEN / GH_TOKEN / CODEBERG_TOKEN)
 #     are only visible to the engine step;
 #   * each mirror push token is only ever used against its own host, in its
-#     own step — no token crosses hosts.
+#     own step, no token crosses hosts.
 #
 # Secrets & repo variables are documented in engine/README.md. Notifications
-# (Telegram / generic webhook) are fully optional — each is skipped cleanly
+# (Telegram / generic webhook) are fully optional, each is skipped cleanly
 # when its secret is absent. No step ever prints a secret value.
 # ─────────────────────────────────────────────────────────────────────────────
 
@@ -25,7 +25,7 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "Comma list of cards to regenerate (e.g. vibe,games). Empty = everything + README refresh."
+        description: "Comma list of cards to regenerate (e.g. music,games). Empty = everything + README refresh."
         type: string
         required: false
         default: ""
@@ -64,7 +64,7 @@ jobs:
           fetch-depth: 0
 
       # Names + set/not-set only. Values are NEVER printed.
-      - name: Preflight — secret & variable inventory
+      - name: Preflight, secret & variable inventory
         env:
           VAI_GIT_TOKEN: ${{ secrets.VAI_GIT_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -82,7 +82,7 @@ jobs:
         run: |
           state() { [ -n "$(printenv "$1" 2>/dev/null)" ] && echo "set" || echo "not set"; }
           {
-            echo "### Preflight — configuration inventory"
+            echo "### Preflight, configuration inventory"
             echo ""
             echo "| Name | Kind | State |"
             echo "|---|---|---|"
@@ -157,10 +157,10 @@ jobs:
         run: |
           git config user.name  "VIA GIT"
           git config user.email "actions@git.vai-rice.space"
-          git add assets README.md
+          git add assets README.md README.ru.md
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "Nothing changed — profile already fresh."
+            echo "Nothing changed, profile already fresh."
           else
             git commit -m "chore(profile): regenerate cards & live stats [skip ci]"
             git push origin HEAD:main
@@ -177,7 +177,7 @@ jobs:
           MIRROR: ${{ vars.GH_MIRROR_REPO || 'Vadim-Khristenko/Vadim-Khristenko' }}
         run: |
           if [ -z "$TOKEN" ]; then
-            echo "GH_MIRROR_TOKEN not set — skipping GitHub mirror."
+            echo "GH_MIRROR_TOKEN not set, skipping GitHub mirror."
             exit 0
           fi
           git push "https://x-access-token:${TOKEN}@github.com/${MIRROR}.git" HEAD:main
@@ -191,13 +191,13 @@ jobs:
           MIRROR: ${{ vars.CODEBERG_MIRROR_REPO || 'VAI_PROG/.profile' }}
         run: |
           if [ -z "$TOKEN" ]; then
-            echo "CODEBERG_MIRROR_TOKEN not set — skipping Codeberg mirror."
+            echo "CODEBERG_MIRROR_TOKEN not set, skipping Codeberg mirror."
             exit 0
           fi
           git push "https://${TOKEN}@codeberg.org/${MIRROR}.git" HEAD:main
 
       # ── Optional notifications (each skipped cleanly when unset) ──────────
-      - name: Notify — Telegram (optional)
+      - name: Notify, Telegram (optional)
         id: notify-telegram
         if: steps.commit.outputs.changed == 'true'
         continue-on-error: true
@@ -207,7 +207,7 @@ jobs:
           SHA: ${{ steps.commit.outputs.sha }}
         run: |
           if [ -z "$TG_TOKEN" ] || [ -z "$TG_CHAT" ]; then
-            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set — skipping Telegram notification."
+            echo "TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID not set, skipping Telegram notification."
             exit 0
           fi
           providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
@@ -221,7 +221,7 @@ jobs:
             "https://api.telegram.org/bot${TG_TOKEN}/sendMessage"
           echo "Telegram notification sent."
 
-      - name: Notify — webhook (optional)
+      - name: Notify, webhook (optional)
         id: notify-webhook
         if: steps.commit.outputs.changed == 'true'
         continue-on-error: true
@@ -230,7 +230,7 @@ jobs:
           SHA: ${{ steps.commit.outputs.sha }}
         run: |
           if [ -z "$WEBHOOK" ]; then
-            echo "NOTIFY_WEBHOOK_URL not set — skipping webhook notification."
+            echo "NOTIFY_WEBHOOK_URL not set, skipping webhook notification."
             exit 0
           fi
           providers=$(sed -n 's/^▸ Fetching \(.*\) data$/\1/p' /tmp/engine.log | paste -sd ',' -)
@@ -264,7 +264,7 @@ jobs:
             echo ""
             echo "| Stage | Result |"
             echo "|---|---|"
-            echo "| binary cache | $([ "$CACHE_HIT" = "true" ] && echo 'hit — build skipped' || echo 'miss — compiled') |"
+            echo "| binary cache | $([ "$CACHE_HIT" = "true" ] && echo 'hit, build skipped' || echo 'miss, compiled') |"
             echo "| cargo build | ${O_BUILD:-skipped} |"
             echo "| art refetch | ${O_ART:-skipped} |"
             echo "| engine run | ${O_ENGINE:-skipped} |"
