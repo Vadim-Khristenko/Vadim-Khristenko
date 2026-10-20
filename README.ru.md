@@ -64,7 +64,7 @@ impl Developer for Vadim {
 
 ### 💙 Главная репа: темы Hatsune Miku для редакторов
 
-**[HatsuneMikuEditorTheme](https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme)**: одна палитра, четыре варианта, шесть редакторов (VS Code, Zed, JetBrains, Neovim, Sublime Text, Notepad++). **Скоро будут темы и для других программ**, редакторы только начало. Весь этот профиль покрашен в её Miku Dark.
+**[HatsuneMikuEditorTheme](https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme)**: одна палитра, четыре варианта, шесть редакторов (VS Code, Zed, JetBrains, Neovim, Sublime Text, Notepad++). **А теперь и браузер:** новая вкладка с Мику для Chromium, Firefox, Zen и Firefox на Android, с четырьмя макетами, виджетами и !бэнгами как в Helium, плюс цвета окна для Chromium и мод для Zen. Весь этот профиль покрашен в её Miku Dark.
 
 <!-- ENGINE:THEMES:START -->
 <p align="center">

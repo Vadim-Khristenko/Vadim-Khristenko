@@ -12,7 +12,7 @@ name = "Hatsune Miku Editor Themes"
 repo = "HatsuneMikuEditorTheme"
 prefer = "github"
 tags = ["top repo", "themes", "miku"]
-blurb = "One palette, four looks, six editors. Themes for more programs are on the way."
+blurb = "One palette, four looks, six editors, and a Miku new tab for Chromium, Firefox and Zen."
 accent = "#39c5bb"
 
 [[project]]
