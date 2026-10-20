@@ -1,6 +1,6 @@
 //! The top repo: Hatsune Miku editor themes. Four real variants as mini
 //! editors in the theme's own token colours, a focus ring that walks between
-//! them, the editor ports as tabs and dashed slots for the programs to come.
+//! them, the editor and browser ports as tabs and a dashed slot for what comes next.
 
 use super::kit::{self, pal};
 use crate::run::Ctx;
@@ -150,7 +150,13 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
         .map(String::from)
         .to_vec();
     }
-    let next_ports = kit::show_num(ctx, "miku_themes", "next_ports", 2).clamp(0, 4) as usize;
+    let mut browsers = kit::show_list(ctx, "miku_themes", "browsers");
+    if browsers.is_empty() {
+        browsers = ["Chromium", "Firefox", "Zen", "Android"]
+            .map(String::from)
+            .to_vec();
+    }
+    let next_ports = kit::show_num(ctx, "miku_themes", "next_ports", 1).clamp(0, 4) as usize;
 
     let _ = write!(
         b,
@@ -184,11 +190,11 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     let body_t = T::new(Font::ZenLight, 14.5).fill(pal::FG);
     for (i, line) in [
         format!(
-            "One palette contract, four looks, {} editors.",
+            "One palette contract, four looks, {} editors,",
             editors.len()
         ),
-        "Readable for hours, checked by a contrast tool,".to_string(),
-        "not by eye. Themes for more programs are next.".to_string(),
+        "plus a Miku new tab for Chromium and Firefox.".to_string(),
+        "Readable for hours, checked by a contrast tool.".to_string(),
     ]
     .iter()
     .enumerate()
@@ -199,6 +205,7 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
     for (n, label) in [
         ("4".to_string(), "LOOKS"),
         (editors.len().to_string(), "EDITORS"),
+        (browsers.len().to_string(), "BROWSERS"),
         ("1".to_string(), "MIT LICENSE"),
     ] {
         b.push_str(&doc.text(
@@ -325,6 +332,24 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
         b.push_str(&doc.text(x + 9.0, ty + 29.0, e, &tab_t));
         x += tw + 8.0;
     }
+    // Browser ports wear the Sakura stripe, so the two families read apart at a glance.
+    x += 8.0;
+    for e in &browsers {
+        let tw = typo::width(e, &tab_t) + 18.0;
+        if x + tw > w - 20.0 {
+            break;
+        }
+        let _ = write!(
+            b,
+            r##"<rect x="{x}" y="{}" width="{tw}" height="26" rx="4" fill="#11121f" stroke="{}" stroke-opacity=".7"/><rect x="{x}" y="{}" width="{tw}" height="2" rx="1" fill="{}"/>"##,
+            ty + 12.0,
+            pal::LINE,
+            ty + 12.0,
+            pal::SAKURA
+        );
+        b.push_str(&doc.text(x + 9.0, ty + 29.0, e, &tab_t));
+        x += tw + 8.0;
+    }
     let ghost_t = T::new(Font::Mono, 11.0).fill(pal::SAKURA);
     for _ in 0..next_ports {
         let label = "+ next port";
@@ -370,8 +395,9 @@ pub fn build(ctx: &Ctx) -> Result<Vec<(String, String)>> {
         t = pal::TEAL
     );
     let label = format!(
-        "Hatsune Miku editor themes: four looks, {} editors, more coming",
-        editors.len()
+        "Hatsune Miku themes: four looks, {} editors and {} browsers",
+        editors.len(),
+        browsers.len()
     );
     Ok(vec![(
         "repo_miku_themes.svg".into(),

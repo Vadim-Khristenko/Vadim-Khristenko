@@ -573,7 +573,8 @@ label = "REACH ME"
 [showcase.miku_themes]
 repo = "HatsuneMikuEditorTheme"
 editors = ["VS Code", "Zed", "JetBrains", "Neovim", "Sublime Text", "Notepad++"]
-next_ports = 2
+browsers = ["Chromium", "Firefox", "Zen", "Android"]
+next_ports = 1
 
 [showcase.architect]
 repo = "Any-Tech-ARCHITECT"

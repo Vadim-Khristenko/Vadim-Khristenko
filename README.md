@@ -64,7 +64,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 ### 💙 Top repo: Hatsune Miku editor themes
 
-**[HatsuneMikuEditorTheme](https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme)**: one palette contract, four looks, six editors (VS Code, Zed, JetBrains, Neovim, Sublime Text, Notepad++). **Themes for more programs are coming**, the editor is only the start. This whole profile is painted in its Miku Dark.
+**[HatsuneMikuEditorTheme](https://github.com/Vadim-Khristenko/HatsuneMikuEditorTheme)**: one palette contract, four looks, six editors (VS Code, Zed, JetBrains, Neovim, Sublime Text, Notepad++). **And now the browser:** a Miku new tab for Chromium, Firefox, Zen and Firefox for Android, with four layouts, widgets and Helium style !bangs, plus window colors for Chromium and a Zen mod. This whole profile is painted in its Miku Dark.
 
 <!-- ENGINE:THEMES:START -->
 <p align="center">
