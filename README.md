@@ -8,13 +8,13 @@
 
 <!-- ENGINE:BADGES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/badges.svg?v=33a8be207f-69957" alt="Badges" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/badges.svg?v=33a8be207f-69958" alt="Badges" width="100%"/>
 </p>
 <!-- ENGINE:BADGES:END -->
 
 <!-- ENGINE:HEADER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=0d2745f78a-69957" alt="Vadim Khristenko" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=0d2745f78a-69958" alt="Vadim Khristenko" width="100%"/>
 </p>
 <!-- ENGINE:HEADER:END -->
 
@@ -54,7 +54,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:DIV_PROJECTS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_projects.svg?v=b3a19d026f-69957" alt="PROJECTS" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_projects.svg?v=b3a19d026f-69958" alt="PROJECTS" width="100%"/>
 </p>
 <!-- ENGINE:DIV_PROJECTS:END -->
 
@@ -68,7 +68,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:THEMES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_miku_themes.svg?v=7032f183be-69957" alt="Hatsune Miku editor themes" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_miku_themes.svg?v=7032f183be-69958" alt="Hatsune Miku editor themes" width="100%"/>
 </p>
 <!-- ENGINE:THEMES:END -->
 
@@ -78,7 +78,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:ARCHITECT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_architect.svg?v=b162f6ac8a-69957" alt="Any Tech Architect" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_architect.svg?v=b162f6ac8a-69958" alt="Any Tech Architect" width="100%"/>
 </p>
 <!-- ENGINE:ARCHITECT:END -->
 
@@ -88,7 +88,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:ACAT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_acat.svg?v=d70722236f-69957" alt="A CAT: awg-containers-and-tools" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_acat.svg?v=d70722236f-69958" alt="A CAT: awg-containers-and-tools" width="100%"/>
 </p>
 <!-- ENGINE:ACAT:END -->
 
@@ -98,7 +98,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:WIKI:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_wiki.svg?v=140e8e59e0-69957" alt="NotAnOtherVTUBERwiki and FilianWIKI" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_wiki.svg?v=140e8e59e0-69958" alt="NotAnOtherVTUBERwiki and FilianWIKI" width="100%"/>
 </p>
 <!-- ENGINE:WIKI:END -->
 
@@ -108,7 +108,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:THEWALL:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_thewall.svg?v=9a032c1ab4-69957" alt="The Wall Dev" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_thewall.svg?v=9a032c1ab4-69958" alt="The Wall Dev" width="100%"/>
 </p>
 <!-- ENGINE:THEWALL:END -->
 
@@ -118,13 +118,13 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:KUMIR:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_kumir.svg?v=31716f9fd2-69957" alt="Kumir 3" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_kumir.svg?v=31716f9fd2-69958" alt="Kumir 3" width="100%"/>
 </p>
 <!-- ENGINE:KUMIR:END -->
 
 <!-- ENGINE:DIV_RESEARCH:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_research.svg?v=097b911d31-69957" alt="RESEARCH" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_research.svg?v=097b911d31-69958" alt="RESEARCH" width="100%"/>
 </p>
 <!-- ENGINE:DIV_RESEARCH:END -->
 
@@ -134,7 +134,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:RESEARCH:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=5a453e6f3d-69957" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=5a453e6f3d-69958" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
 </p>
 <!-- ENGINE:RESEARCH:END -->
 
@@ -144,7 +144,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:DIV_SNACKERS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_snackers.svg?v=64285e0fae-69957" alt="SNACKERS" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_snackers.svg?v=64285e0fae-69958" alt="SNACKERS" width="100%"/>
 </p>
 <!-- ENGINE:DIV_SNACKERS:END -->
 
@@ -154,7 +154,7 @@ I write code that is **practical and a little playful**: backend services, bots 
 
 <!-- ENGINE:SNACKERS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/fandom_snackers.svg?v=6c579f7595-69957" alt="Snackers" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/fandom_snackers.svg?v=6c579f7595-69958" alt="Snackers" width="100%"/>
 </p>
 <!-- ENGINE:SNACKERS:END -->
 
@@ -170,7 +170,7 @@ I am part of the **Snackers**, the community around the VTuber **[Filian](https:
 
 <!-- ENGINE:DIV_TAILS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_tails.svg?v=87d308d876-69957" alt="" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_tails.svg?v=87d308d876-69958" alt="" width="100%"/>
 </p>
 <!-- ENGINE:DIV_TAILS:END -->
 
@@ -239,7 +239,7 @@ I have shipped with the ecosystems behind these: fine-tuning, prompt engineering
 
 <!-- ENGINE:DIV_OFFCLOCK:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_offclock.svg?v=f692caac08-69957" alt="OFF THE CLOCK" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_offclock.svg?v=f692caac08-69958" alt="OFF THE CLOCK" width="100%"/>
 </p>
 <!-- ENGINE:DIV_OFFCLOCK:END -->
 
@@ -249,7 +249,7 @@ I have shipped with the ecosystems behind these: fine-tuning, prompt engineering
 
 <!-- ENGINE:BESTGAME:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=037f9a3677-69957" alt="Best game: NIKKE" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=037f9a3677-69958" alt="Best game: NIKKE" width="100%"/>
 </p>
 <!-- ENGINE:BESTGAME:END -->
 
@@ -259,13 +259,13 @@ I have shipped with the ecosystems behind these: fine-tuning, prompt engineering
 
 <!-- ENGINE:GAMES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=abad112a81-69957" alt="Now playing" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=58312b97f6-69958" alt="Now playing" width="100%"/>
 </p>
 <!-- ENGINE:GAMES:END -->
 
 <!-- ENGINE:DIV_WAVE:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=6370f9cf59-69957" alt="" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=6370f9cf59-69958" alt="" width="100%"/>
 </p>
 <!-- ENGINE:DIV_WAVE:END -->
 
@@ -273,13 +273,13 @@ I have shipped with the ecosystems behind these: fine-tuning, prompt engineering
 
 <!-- ENGINE:MUSIC:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/music.svg?v=58d944212e-69957" alt="Music via Last.fm" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/music.svg?v=58d944212e-69958" alt="Music via Last.fm" width="100%"/>
 </p>
 <!-- ENGINE:MUSIC:END -->
 
 <!-- ENGINE:DIV_TELEMETRY:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_telemetry.svg?v=0208dca9aa-69957" alt="TELEMETRY" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_telemetry.svg?v=0208dca9aa-69958" alt="TELEMETRY" width="100%"/>
 </p>
 <!-- ENGINE:DIV_TELEMETRY:END -->
 
@@ -291,19 +291,19 @@ Everything here comes fresh from **three forges at once**: GitHub, Codeberg and 
 
 <!-- ENGINE:STATS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=ba20f7eda2-69957" alt="Live telemetry" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=3748a291cf-69958" alt="Live telemetry" width="100%"/>
 </p>
 <!-- ENGINE:STATS:END -->
 
 <!-- ENGINE:PLATFORMS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms.svg?v=cec07379a2-69957" alt="Platforms" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms.svg?v=30c92bb5df-69958" alt="Platforms" width="100%"/>
 </p>
 <!-- ENGINE:PLATFORMS:END -->
 
 <!-- ENGINE:DIV_INFRA:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_infra.svg?v=1c4e94f0bd-69957" alt="INFRA" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_infra.svg?v=1c4e94f0bd-69958" alt="INFRA" width="100%"/>
 </p>
 <!-- ENGINE:DIV_INFRA:END -->
 
@@ -317,13 +317,13 @@ Out in the world, **VPS on Arch, NixOS, Ubuntu and Debian** hold the edge.
 
 <!-- ENGINE:HOMELAB:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/homelab.svg?v=71eafad201-69957" alt="Homelab: laptops at home, VPS out in the world" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/homelab.svg?v=71eafad201-69958" alt="Homelab: laptops at home, VPS out in the world" width="100%"/>
 </p>
 <!-- ENGINE:HOMELAB:END -->
 
 <!-- ENGINE:DIV_CONTACT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_contact.svg?v=334d809edc-69957" alt="REACH ME" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_contact.svg?v=334d809edc-69958" alt="REACH ME" width="100%"/>
 </p>
 <!-- ENGINE:DIV_CONTACT:END -->
 
@@ -360,13 +360,13 @@ The fan addresses are the same ones printed on [filian.wiki](https://filian.wiki
 
 <!-- ENGINE:DIV_STAFF:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_staff.svg?v=39a2fcfb5d-69957" alt="" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_staff.svg?v=39a2fcfb5d-69958" alt="" width="100%"/>
 </p>
 <!-- ENGINE:DIV_STAFF:END -->
 
 <!-- ENGINE:FOOTER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=8f47c65e73-69957" alt="Fine. Rendered by the VAI Profile Engine" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=e66c728bf9-69958" alt="Fine. Rendered by the VAI Profile Engine" width="100%"/>
 </p>
 <!-- ENGINE:FOOTER:END -->
 
