@@ -8,13 +8,13 @@
 
 <!-- ENGINE:BADGES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/badges.svg?v=33a8be207f-69962" alt="Badges" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/badges.svg?v=33a8be207f-69963" alt="Badges" width="100%"/>
 </p>
 <!-- ENGINE:BADGES:END -->
 
 <!-- ENGINE:HEADER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=0d2745f78a-69962" alt="Vadim Khristenko" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/header.svg?v=0d2745f78a-69963" alt="Vadim Khristenko" width="100%"/>
 </p>
 <!-- ENGINE:HEADER:END -->
 
@@ -54,7 +54,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:DIV_PROJECTS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_projects.svg?v=b3a19d026f-69962" alt="PROJECTS" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_projects.svg?v=b3a19d026f-69963" alt="PROJECTS" width="100%"/>
 </p>
 <!-- ENGINE:DIV_PROJECTS:END -->
 
@@ -68,7 +68,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:THEMES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_miku_themes.svg?v=6ff4f993b0-69962" alt="Hatsune Miku editor themes" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_miku_themes.svg?v=6ff4f993b0-69963" alt="Hatsune Miku editor themes" width="100%"/>
 </p>
 <!-- ENGINE:THEMES:END -->
 
@@ -78,7 +78,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:ARCHITECT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_architect.svg?v=8af7933ec9-69962" alt="Any Tech Architect" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_architect.svg?v=1281cf1011-69963" alt="Any Tech Architect" width="100%"/>
 </p>
 <!-- ENGINE:ARCHITECT:END -->
 
@@ -88,7 +88,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:ACAT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_acat.svg?v=2eedfa4a36-69962" alt="A CAT: awg-containers-and-tools" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_acat.svg?v=3ac8f5db59-69963" alt="A CAT: awg-containers-and-tools" width="100%"/>
 </p>
 <!-- ENGINE:ACAT:END -->
 
@@ -98,7 +98,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:WIKI:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_wiki.svg?v=f56874f559-69962" alt="NotAnOtherVTUBERwiki and FilianWIKI" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_wiki.svg?v=f56874f559-69963" alt="NotAnOtherVTUBERwiki and FilianWIKI" width="100%"/>
 </p>
 <!-- ENGINE:WIKI:END -->
 
@@ -108,7 +108,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:THEWALL:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_thewall.svg?v=9a032c1ab4-69962" alt="The Wall Dev" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_thewall.svg?v=9a032c1ab4-69963" alt="The Wall Dev" width="100%"/>
 </p>
 <!-- ENGINE:THEWALL:END -->
 
@@ -118,13 +118,13 @@ impl Developer for Vadim {
 
 <!-- ENGINE:KUMIR:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_kumir.svg?v=31716f9fd2-69962" alt="Kumir 3" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_kumir.svg?v=31716f9fd2-69963" alt="Kumir 3" width="100%"/>
 </p>
 <!-- ENGINE:KUMIR:END -->
 
 <!-- ENGINE:DIV_RESEARCH:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_research.svg?v=097b911d31-69962" alt="RESEARCH" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_research.svg?v=097b911d31-69963" alt="RESEARCH" width="100%"/>
 </p>
 <!-- ENGINE:DIV_RESEARCH:END -->
 
@@ -134,7 +134,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:RESEARCH:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=5a453e6f3d-69962" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/research.svg?v=5a453e6f3d-69963" alt="Active research: Aethelgard TQ-1.58" width="100%"/>
 </p>
 <!-- ENGINE:RESEARCH:END -->
 
@@ -144,7 +144,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:DIV_SNACKERS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_snackers.svg?v=64285e0fae-69962" alt="SNACKERS" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_snackers.svg?v=64285e0fae-69963" alt="SNACKERS" width="100%"/>
 </p>
 <!-- ENGINE:DIV_SNACKERS:END -->
 
@@ -154,7 +154,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:SNACKERS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/fandom_snackers.svg?v=6c579f7595-69962" alt="Snackers" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/fandom_snackers.svg?v=6c579f7595-69963" alt="Snackers" width="100%"/>
 </p>
 <!-- ENGINE:SNACKERS:END -->
 
@@ -170,7 +170,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:DIV_TAILS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_tails.svg?v=87d308d876-69962" alt="" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_tails.svg?v=87d308d876-69963" alt="" width="100%"/>
 </p>
 <!-- ENGINE:DIV_TAILS:END -->
 
@@ -239,7 +239,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:DIV_OFFCLOCK:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_offclock.svg?v=f692caac08-69962" alt="OFF THE CLOCK" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_offclock.svg?v=f692caac08-69963" alt="OFF THE CLOCK" width="100%"/>
 </p>
 <!-- ENGINE:DIV_OFFCLOCK:END -->
 
@@ -249,7 +249,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:BESTGAME:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=037f9a3677-69962" alt="Best game: NIKKE" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/bestgame.svg?v=037f9a3677-69963" alt="Best game: NIKKE" width="100%"/>
 </p>
 <!-- ENGINE:BESTGAME:END -->
 
@@ -259,13 +259,13 @@ impl Developer for Vadim {
 
 <!-- ENGINE:GAMES:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=effef21203-69962" alt="Now playing" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/games.svg?v=c2ff7164b5-69963" alt="Now playing" width="100%"/>
 </p>
 <!-- ENGINE:GAMES:END -->
 
 <!-- ENGINE:DIV_WAVE:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=6370f9cf59-69962" alt="" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_wave.svg?v=6370f9cf59-69963" alt="" width="100%"/>
 </p>
 <!-- ENGINE:DIV_WAVE:END -->
 
@@ -273,13 +273,13 @@ impl Developer for Vadim {
 
 <!-- ENGINE:MUSIC:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/music.svg?v=58d944212e-69962" alt="Music via Last.fm" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/music.svg?v=58d944212e-69963" alt="Music via Last.fm" width="100%"/>
 </p>
 <!-- ENGINE:MUSIC:END -->
 
 <!-- ENGINE:DIV_TELEMETRY:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_telemetry.svg?v=0208dca9aa-69962" alt="TELEMETRY" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_telemetry.svg?v=0208dca9aa-69963" alt="TELEMETRY" width="100%"/>
 </p>
 <!-- ENGINE:DIV_TELEMETRY:END -->
 
@@ -291,19 +291,19 @@ impl Developer for Vadim {
 
 <!-- ENGINE:STATS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=02c6204cee-69962" alt="Live telemetry" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=bb75c7d513-69963" alt="Live telemetry" width="100%"/>
 </p>
 <!-- ENGINE:STATS:END -->
 
 <!-- ENGINE:PLATFORMS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms.svg?v=9eb1c008e6-69962" alt="Platforms" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms.svg?v=bf84479a0d-69963" alt="Platforms" width="100%"/>
 </p>
 <!-- ENGINE:PLATFORMS:END -->
 
 <!-- ENGINE:DIV_INFRA:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_infra.svg?v=1c4e94f0bd-69962" alt="INFRA" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_infra.svg?v=1c4e94f0bd-69963" alt="INFRA" width="100%"/>
 </p>
 <!-- ENGINE:DIV_INFRA:END -->
 
@@ -317,13 +317,13 @@ impl Developer for Vadim {
 
 <!-- ENGINE:HOMELAB:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/homelab.svg?v=71eafad201-69962" alt="Homelab: laptops at home, VPS out in the world" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/homelab.svg?v=71eafad201-69963" alt="Homelab: laptops at home, VPS out in the world" width="100%"/>
 </p>
 <!-- ENGINE:HOMELAB:END -->
 
 <!-- ENGINE:DIV_CONTACT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_contact.svg?v=334d809edc-69962" alt="REACH ME" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_contact.svg?v=334d809edc-69963" alt="REACH ME" width="100%"/>
 </p>
 <!-- ENGINE:DIV_CONTACT:END -->
 
@@ -360,13 +360,13 @@ impl Developer for Vadim {
 
 <!-- ENGINE:DIV_STAFF:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_staff.svg?v=39a2fcfb5d-69962" alt="" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/divider_staff.svg?v=39a2fcfb5d-69963" alt="" width="100%"/>
 </p>
 <!-- ENGINE:DIV_STAFF:END -->
 
 <!-- ENGINE:FOOTER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=8d769b9a63-69962" alt="Fine. Rendered by the VAI Profile Engine" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=dedc397170-69963" alt="Fine. Rendered by the VAI Profile Engine" width="100%"/>
 </p>
 <!-- ENGINE:FOOTER:END -->
 
