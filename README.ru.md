@@ -78,7 +78,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:ARCHITECT:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_architect.svg?v=1281cf1011-69963" alt="Any Tech Architect" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/repo_architect.svg?v=709fd2cb13-69963" alt="Any Tech Architect" width="100%"/>
 </p>
 <!-- ENGINE:ARCHITECT:END -->
 
@@ -291,13 +291,13 @@ impl Developer for Vadim {
 
 <!-- ENGINE:STATS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=bb75c7d513-69963" alt="Live telemetry" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/dashboard.svg?v=35e81a7080-69963" alt="Live telemetry" width="100%"/>
 </p>
 <!-- ENGINE:STATS:END -->
 
 <!-- ENGINE:PLATFORMS:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms.svg?v=bf84479a0d-69963" alt="Platforms" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/platforms.svg?v=4640f08a1a-69963" alt="Platforms" width="100%"/>
 </p>
 <!-- ENGINE:PLATFORMS:END -->
 
@@ -366,7 +366,7 @@ impl Developer for Vadim {
 
 <!-- ENGINE:FOOTER:START -->
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=dedc397170-69963" alt="Fine. Rendered by the VAI Profile Engine" width="100%"/>
+  <img src="https://raw.githubusercontent.com/Vadim-Khristenko/Vadim-Khristenko/main/assets/footer.svg?v=5ea202d8ae-69963" alt="Fine. Rendered by the VAI Profile Engine" width="100%"/>
 </p>
 <!-- ENGINE:FOOTER:END -->
 
